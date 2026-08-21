@@ -93,22 +93,12 @@
     text-decoration:none;
     color:var(--ink);
   }
-  .logo-mark{
-    width:34px;height:34px;
-    border-radius:9px;
-    background:linear-gradient(155deg, var(--blue), var(--blue-deep));
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 4px 10px -3px rgba(75,63,240,0.5);
+  .logo-img{
+    display:block;
+    width:auto;
+    height:34px;
     flex-shrink:0;
   }
-  .logo-mark svg{width:18px;height:18px;}
-  .logo-word{
-    font-family:'Inter',sans-serif;
-    font-weight:700;
-    font-size:18px;
-    letter-spacing:0.02em;
-  }
-  .logo-word .ai{color:var(--blue);}
 
   .back-home{
     display:flex;align-items:center;gap:6px;
@@ -157,26 +147,12 @@
   }
   .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);}
 
-  .headline{
-    font-family:'Fraunces',serif;
-    font-weight:500;
-    font-size:clamp(34px,3.6vw,46px);
-    line-height:1.12;
-    letter-spacing:-0.01em;
-    margin:0 0 20px 0;
-    color:var(--ink);
-  }
-  .headline .accent-word{color:var(--blue);}
-  .headline em{
-    font-style:italic;
-    font-weight:500;
-    color:var(--green);
-  }
-  .headline-underline{
+  .headline-img{
     display:block;
-    width:118px;
-    height:10px;
-    margin-top:2px;
+    width:100%;
+    max-width:480px;
+    height:auto;
+    margin:0 0 20px 0;
   }
 
   .subtext{
@@ -190,81 +166,29 @@
   /* Product illustration */
   .illustration{
     position:relative;
-    height:250px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     max-width:440px;
     margin-bottom:40px;
   }
-  .doc-card, .sheet-card{
+  .character-glow{
     position:absolute;
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:var(--radius-md);
-    box-shadow:var(--shadow-card);
-    padding:16px;
+    left:50%;
+    bottom:4%;
+    transform:translateX(-50%);
+    width:72%;
+    height:12%;
+    background:radial-gradient(ellipse at center, rgba(75,63,240,0.16) 0%, rgba(75,63,240,0) 72%);
+    border-radius:50%;
+    pointer-events:none;
   }
-  .doc-card{
-    top:0; left:0;
-    width:230px;
-    z-index:2;
-  }
-  .doc-card .card-top{
-    display:flex;align-items:center;gap:8px;margin-bottom:12px;
-  }
-  .doc-icon{
-    width:26px;height:26px;border-radius:7px;
-    background:var(--blue);
-    display:flex;align-items:center;justify-content:center;
-    flex-shrink:0;
-  }
-  .doc-icon svg{width:14px;height:14px;}
-  .card-top .card-title{font-size:12.5px;font-weight:700;color:var(--ink);}
-  .card-top .card-sub{font-size:10.5px;color:var(--ink-faint);}
-  .doc-lines{display:flex;flex-direction:column;gap:6px;}
-  .doc-lines span{display:block;height:6px;border-radius:3px;background:var(--border-soft);}
-  .doc-lines span:nth-child(1){width:100%;}
-  .doc-lines span:nth-child(2){width:88%;}
-  .doc-lines span:nth-child(3){width:94%;}
-  .doc-lines span:nth-child(4){width:60%;}
-
-  .sheet-card{
-    top:96px; left:150px;
-    width:210px;
-    z-index:3;
-  }
-  .sheet-card .card-top .doc-icon{background:var(--green);}
-  .sheet-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:4px;
-  }
-  .sheet-grid div{
-    height:16px;
-    border-radius:4px;
-    background:var(--green-soft);
-  }
-  .sheet-grid div.total{background:var(--green);}
-
-  .status-badge{
-    position:absolute;
-    bottom:6px; left:6px;
-    z-index:4;
-    display:flex;align-items:center;gap:6px;
-    background:var(--ink);
-    color:#fff;
-    font-size:11.5px;
-    font-weight:600;
-    padding:8px 13px;
-    border-radius:100px;
-    box-shadow:0 8px 18px -6px rgba(0,0,0,0.28);
-  }
-  .status-badge svg{width:12px;height:12px;color:var(--green);flex-shrink:0;}
-
-  .mascot{
-    position:absolute;
-    top:-10px;
-    right:6px;
-    width:78px;
-    opacity:0.94;
+  .character-img{
+    width:100%;
+    max-width:360px;
+    height:auto;
+    display:block;
+    filter:drop-shadow(0 26px 34px rgba(32,32,43,0.14));
   }
 
   .trust-row{
@@ -531,17 +455,17 @@
   @media (max-width:980px){
     .stage{grid-template-columns:1fr; min-height:auto;}
     .panel-left{padding-right:0; text-align:center;}
-    .headline{font-size:clamp(28px,7vw,36px);}
+    .headline-img{margin-left:auto;margin-right:auto;}
     .subtext{margin-left:auto;margin-right:auto;}
     .illustration{margin-left:auto;margin-right:auto;}
     .eyebrow{margin-left:auto;margin-right:auto;}
-    .mascot{display:none;}
+    .character-img{max-width:300px;}
     .trust-row{justify-content:center;}
   }
   @media (max-width:640px){
     .topnav{padding:18px 18px;}
     .stage{padding:16px;gap:28px;}
-    .illustration{height:220px;transform:scale(0.92);}
+    .character-img{max-width:240px;}
     .auth-card{padding:26px 20px;border-radius:16px;}
   }
 </style>
@@ -553,16 +477,10 @@
 <div class="bg-glow-green" aria-hidden="true"></div>
 
 <header class="topnav">
-  <a class="logo" href="#" aria-label="WORDY AI home">
-    <span class="logo-mark">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 4h11l5 5v11H4V4z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
-        <path d="M8 12h8M8 16h5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-      </svg>
-    </span>
-    <span class="logo-word">WORDY<span class="ai"> AI</span></span>
+  <a class="logo" href="index.html" aria-label="WORDY AI home">
+    <img class="logo-img" src="assets/images/wordy-ai-logo.gif" alt="WORDY AI" width="168" height="42">
   </a>
-  <a class="back-home" href="#">
+  <a class="back-home" href="index.html">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M15 5L8 12l7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
@@ -576,67 +494,15 @@
   <section class="panel-left">
     <span class="eyebrow"><span class="dot"></span> AI-POWERED DOCUMENT ENGINE</span>
 
-    <h1 class="headline">
-      Create. <span class="accent-word">Organize.</span><br>
-      <em>Accomplish.</em>
-    </h1>
+    <img class="headline-img" src="assets/images/heading-6-create-organize-accomplish-.gif" alt="Create. Organize. Accomplish." width="620" height="194">
 
     <p class="subtext">
       Create professional Word and Excel files faster with AI-powered automation, smart templates, and intelligent formatting.
     </p>
 
-    <div class="illustration" aria-hidden="true">
-      <svg class="mascot" viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="60" cy="142" rx="32" ry="6" fill="#20202b" opacity="0.08"/>
-        <path d="M35 40 L20 30" stroke="#20202b" stroke-width="6" stroke-linecap="round" fill="none"/>
-        <path d="M85 40 L100 30" stroke="#20202b" stroke-width="6" stroke-linecap="round" fill="none"/>
-        <path d="M40 8h40l6 8H34l6-8z" fill="#20202b"/>
-        <circle cx="60" cy="70" r="46" fill="#fbe9d5" stroke="#20202b" stroke-width="4"/>
-        <path d="M16 78a44 44 0 0 0 88 0z" fill="#5a3a22"/>
-        <circle cx="45" cy="62" r="4" fill="#20202b"/>
-        <circle cx="75" cy="62" r="4" fill="#20202b"/>
-        <path d="M50 74q10 8 20 0" stroke="#20202b" stroke-width="4" stroke-linecap="round" fill="none"/>
-        <path d="M28 108 L18 130" stroke="#20202b" stroke-width="6" stroke-linecap="round"/>
-        <path d="M92 108 L102 130" stroke="#20202b" stroke-width="6" stroke-linecap="round"/>
-        <path d="M46 116 L40 138" stroke="#20202b" stroke-width="6" stroke-linecap="round"/>
-        <path d="M74 116 L80 138" stroke="#20202b" stroke-width="6" stroke-linecap="round"/>
-      </svg>
-
-      <div class="doc-card">
-        <div class="card-top">
-          <span class="doc-icon">
-            <svg viewBox="0 0 24 24" fill="none"><path d="M6 4h9l4 4v12H6V4z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          </span>
-          <div>
-            <div class="card-title">Quarterly Report.docx</div>
-            <div class="card-sub">Generated 2 min ago</div>
-          </div>
-        </div>
-        <div class="doc-lines">
-          <span></span><span></span><span></span><span></span>
-        </div>
-      </div>
-
-      <div class="sheet-card">
-        <div class="card-top">
-          <span class="doc-icon">
-            <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M4 10h16M10 4v16" stroke="#fff" stroke-width="1.8"/></svg>
-          </span>
-          <div>
-            <div class="card-title">Budget.xlsx</div>
-            <div class="card-sub">Formulas ready</div>
-          </div>
-        </div>
-        <div class="sheet-grid">
-          <div></div><div></div><div class="total"></div>
-          <div></div><div></div><div class="total"></div>
-        </div>
-      </div>
-
-      <div class="status-badge">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        AI Generated
-      </div>
+    <div class="illustration">
+      <span class="character-glow" aria-hidden="true"></span>
+      <img class="character-img" src="assets/images/WORDY_CHA_sitting.svg" alt="WORDY CHA, the WORDY AI mascot, sitting and reading a document">
     </div>
 
     <div class="trust-row">
@@ -789,6 +655,22 @@
 </main>
 
 <script>
+  // Activate login or signup view based on ?view= query parameter
+  (function initView() {
+    var params = new URLSearchParams(window.location.search);
+    var target = params.get('view');
+    var login = document.getElementById('view-login');
+    var signup = document.getElementById('view-signup');
+    if (!login || !signup) return;
+    if (target === 'signup') {
+      login.classList.remove('active');
+      signup.classList.add('active');
+    } else {
+      signup.classList.remove('active');
+      login.classList.add('active');
+    }
+  })();
+
   // Switch between login / signup
   document.querySelectorAll('.switch-btn').forEach(btn => {
     btn.addEventListener('click', () => {

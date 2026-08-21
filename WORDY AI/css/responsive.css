@@ -48,10 +48,7 @@
   .hero-heading-img { width: 100%; }
   .hero-ctas .btn { flex: 1 1 auto; }
   .hero-visual { min-height: 340px; }
-  .mock-main { width: 92%; left: 0; top: 0; }
-  .mock-word { width: 78%; left: 8%; top: 44%; }
-  .mock-excel { width: 70%; right: 0; bottom: 0; }
-  .mock-status { top: -3%; right: 2%; padding: 8px 12px; font-size: 11px; }
+  .hero-character-img { max-width: 320px; }
 
   .feature-grid { grid-template-columns: 1fr; }
   .usecase-grid { grid-template-columns: 1fr 1fr; }

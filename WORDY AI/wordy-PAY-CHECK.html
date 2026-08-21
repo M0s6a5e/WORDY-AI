@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORDY AI — Complete Your Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #EAE6DC;
+    --cream-dark: #E0DBCF;
+    --cream-mid: #F2EFE8;
+    --white: #FFFFFF;
+    --cobalt: #3B5BDB;
+    --cobalt-hover: #2F4AC2;
+    --cobalt-light: #EEF2FF;
+    --cobalt-border: #C5CEF7;
+    --green: #2D9B6F;
+    --green-light: #E8F7F1;
+    --charcoal: #1A1A2E;
+    --charcoal-mid: #2C2C3E;
+    --muted: #6B7280;
+    --border: #D8D3C8;
+    --border-light: #E8E4DC;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+    --radius: 14px;
+    --radius-sm: 8px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Grid texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,91,219,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,91,219,0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Atmospheric glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(59,91,219,0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(234,230,220,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+
+  .header-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--cobalt);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal);
+    letter-spacing: -0.3px;
+  }
+
+  .logo-text span {
+    color: var(--cobalt);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--green);
+    font-weight: 500;
+  }
+
+  .secure-badge svg { width: 14px; height: 14px; }
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover { color: var(--cobalt); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-wrap {
+    position: relative;
+    z-index: 1;
+    padding: 20px 24px 0;
+  }
+
+  .progress-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    justify-content: center;
+  }
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--white);
+    transition: all 0.3s;
+    flex-shrink: 0;
+  }
+
+  .step.active .step-num {
+    background: var(--cobalt);
+    border-color: var(--cobalt);
+    color: white;
+  }
+
+  .step.active { color: var(--cobalt); }
+
+  .step.done .step-num {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+
+  .step.done { color: var(--green); }
+
+  .step-line {
+    width: 48px;
+    height: 2px;
+    background: var(--border);
+    margin: 0 8px;
+    border-radius: 1px;
+  }
+
+  /* ── PAGE HEADING ── */
+  .page-heading {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 28px 24px 0;
+  }
+
+  .heading-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cobalt);
+    margin-bottom: 10px;
+  }
+
+  .heading-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--charcoal);
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  .heading-sub {
+    font-size: 14px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .checkout-layout {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 28px auto 80px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+  }
+
+  .card-body { padding: 24px; }
+
+  .mb-card { margin-bottom: 16px; }
+
+  /* ── PLAN CARD ── */
+  .plan-display {
+    padding: 20px 24px;
+    background: var(--cobalt-light);
+    border-bottom: 1px solid var(--cobalt-border);
+    position: relative;
+  }
+
+  .plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--cobalt);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .plan-name-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .plan-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--charcoal);
+    letter-spacing: -0.3px;
+  }
+
+  .plan-price-inline {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--cobalt);
+    letter-spacing: -0.5px;
+  }
+
+  .plan-price-period {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .plan-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .plan-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+    list-style: none;
+  }
+
+  .plan-features li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--charcoal-mid);
+  }
+
+  .plan-features li svg {
+    width: 14px;
+    height: 14px;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  .plan-actions {
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .btn-change {
+    font-size: 13px;
+    color: var(--cobalt);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-change:hover { background: var(--cobalt-light); }
+
+  /* Plan switcher modal */
+  .plan-switcher {
+    display: none;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--cream-mid);
+  }
+
+  .plan-switcher.open { display: block; }
+
+  .plan-switcher-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .plan-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .plan-option {
+    padding: 14px 12px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .plan-option:hover { border-color: var(--cobalt); }
+
+  .plan-option.selected {
+    border-color: var(--cobalt);
+    background: var(--cobalt-light);
+  }
+
+  .plan-option-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 2px;
+  }
+
+  .plan-option-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--cobalt);
+    letter-spacing: -0.5px;
+  }
+
+  .plan-option-per {
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* ── FORM STYLES ── */
+  .field { margin-bottom: 18px; }
+
+  .field label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .field input, .field select {
+    width: 100%;
+    padding: 11px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--charcoal);
+    background: var(--white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  .field input:focus, .field select:focus {
+    border-color: var(--cobalt);
+    box-shadow: 0 0 0 3px rgba(59,91,219,0.1);
+  }
+
+  .field input::placeholder { color: #B0AAA0; }
+
+  .field-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Country selector */
+  .country-selector-wrap { position: relative; }
+
+  .country-selected {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 14px;
+    border-radius: var(--radius-sm);
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    user-select: none;
+  }
+
+  .country-selected:focus, .country-selected.open {
+    border-color: var(--cobalt);
+    box-shadow: 0 0 0 3px rgba(59,91,219,0.1);
+  }
+
+  .country-flag { font-size: 18px; line-height: 1; }
+
+  .country-name { font-size: 14px; color: var(--charcoal); flex: 1; }
+
+  .country-chevron {
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .country-selected.open .country-chevron { transform: rotate(180deg); }
+
+  .country-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: var(--white);
+    border: 1.5px solid var(--cobalt-border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
+    overflow: hidden;
+  }
+
+  .country-dropdown.open { display: block; }
+
+  .country-search {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .country-search input {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 13px;
+    outline: none;
+    background: var(--cream-mid);
+    color: var(--charcoal);
+  }
+
+  .country-search input:focus { border-color: var(--cobalt); }
+
+  .country-list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .country-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 13px;
+    color: var(--charcoal);
+  }
+
+  .country-item:hover { background: var(--cobalt-light); }
+
+  .country-item.active {
+    background: var(--cobalt-light);
+    color: var(--cobalt);
+    font-weight: 600;
+  }
+
+  /* ── PAYMENT PROVIDER ── */
+  .payment-provider-section { transition: all 0.3s; }
+
+  .provider-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--cobalt-border);
+    background: var(--cobalt-light);
+    position: relative;
+  }
+
+  .provider-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+  }
+
+  .provider-icon.paymob {
+    background: #1A3C8F;
+    color: white;
+  }
+
+  .provider-icon.lemonsqueezy {
+    background: #FFC107;
+    color: #1A1A2E;
+  }
+
+  .provider-info { flex: 1; }
+
+  .provider-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 2px;
+  }
+
+  .provider-desc {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .provider-check {
+    width: 20px;
+    height: 20px;
+    background: var(--cobalt);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .provider-check svg { width: 10px; height: 10px; color: white; }
+
+  /* ── PROMO CODE ── */
+  .promo-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--cobalt);
+    cursor: pointer;
+    font-weight: 600;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: opacity 0.2s;
+  }
+
+  .promo-toggle:hover { opacity: 0.75; }
+
+  .promo-body {
+    display: none;
+    margin-top: 12px;
+  }
+
+  .promo-body.open { display: flex; gap: 8px; }
+
+  .promo-body input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    color: var(--charcoal);
+  }
+
+  .promo-body input:focus { border-color: var(--cobalt); }
+
+  .btn-promo {
+    padding: 10px 16px;
+    background: var(--charcoal);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .btn-promo:hover { background: var(--cobalt); }
+
+  /* ── CHECKBOX ── */
+  .check-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .check-row input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: var(--cobalt);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .check-label {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .check-label a {
+    color: var(--cobalt);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .check-label a:hover { text-decoration: underline; }
+
+  /* ── CTA BUTTON ── */
+  .btn-pay {
+    width: 100%;
+    padding: 15px 24px;
+    background: var(--cobalt);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: -0.2px;
+    box-shadow: 0 4px 16px rgba(59,91,219,0.3);
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-pay:hover {
+    background: var(--cobalt-hover);
+    box-shadow: 0 6px 24px rgba(59,91,219,0.4);
+    transform: translateY(-1px);
+  }
+
+  .btn-pay:active { transform: translateY(0); }
+
+  .btn-pay svg { width: 18px; height: 18px; }
+
+  /* Trust row */
+  .trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .trust-item svg { width: 12px; height: 12px; color: var(--green); }
+
+  /* ── ORDER SUMMARY ── */
+  .order-summary { position: sticky; top: 88px; }
+
+  .order-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .order-logo-icon {
+    width: 28px;
+    height: 28px;
+    background: var(--cobalt);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .order-logo-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+
+  .order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .order-row:last-of-type { border-bottom: none; }
+
+  .order-label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .order-value {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  .order-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 0;
+    margin-top: 6px;
+    border-top: 2px solid var(--border);
+  }
+
+  .order-total-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+
+  .order-total-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--cobalt);
+    letter-spacing: -0.5px;
+  }
+
+  .order-secure {
+    margin-top: 20px;
+    padding: 14px;
+    background: var(--green-light);
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(45,155,111,0.15);
+  }
+
+  .order-secure-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+
+  .order-secure-title svg { width: 14px; height: 14px; }
+
+  .order-secure-text {
+    font-size: 11px;
+    color: #3a8a5f;
+    line-height: 1.5;
+  }
+
+  .order-plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--cobalt-light);
+    color: var(--cobalt);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--cobalt-border);
+    margin-bottom: 16px;
+  }
+
+  /* ── STATE SCREENS ── */
+  .state-screen {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+  }
+
+  .state-screen.active { display: block; }
+
+  .state-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .state-icon.success { background: var(--green-light); }
+  .state-icon.error { background: #FEF2F2; }
+  .state-icon.loading { background: var(--cobalt-light); }
+
+  .state-icon svg { width: 28px; height: 28px; }
+
+  .state-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+  }
+
+  .state-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border-radius: 50px;
+    border: 2px solid var(--border);
+    background: var(--white);
+    color: var(--charcoal);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin: 6px;
+  }
+
+  .btn-secondary:hover { border-color: var(--cobalt); color: var(--cobalt); }
+
+  .btn-primary-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border-radius: 50px;
+    border: none;
+    background: var(--cobalt);
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin: 6px;
+    box-shadow: 0 4px 12px rgba(59,91,219,0.25);
+  }
+
+  .btn-primary-sm:hover { background: var(--cobalt-hover); transform: translateY(-1px); }
+
+  /* Spinner */
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--cobalt-border);
+    border-top-color: var(--cobalt);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  /* Success animation */
+  @keyframes scaleIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .success-anim { animation: scaleIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+  /* ── MOBILE STICKY BAR ── */
+  .sticky-pay {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    padding: 12px 16px env(safe-area-inset-bottom, 0px);
+    background: rgba(234,230,220,0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  }
+
+  .sticky-pay .btn-pay { max-width: 480px; margin: 0 auto; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .checkout-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .order-summary { position: static; }
+    .sticky-pay { display: block; }
+
+    body { padding-bottom: 90px; }
+
+    .plan-features {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .header-inner { height: 56px; }
+    .secure-badge { display: none; }
+
+    .page-heading { padding: 20px 16px 0; }
+
+    .checkout-layout { padding: 0 16px; margin-top: 20px; }
+
+    .plan-options {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .field-row { grid-template-columns: 1fr; }
+
+    .progress-steps { gap: 0; }
+    .step-line { width: 28px; }
+
+    .step .step-label { display: none; }
+  }
+
+  /* ── PAGE FADE IN ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .checkout-layout { animation: fadeUp 0.4s ease both; }
+  .page-heading { animation: fadeUp 0.3s ease both; }
+  .progress-wrap { animation: fadeUp 0.25s ease both; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, .checkout-layout, .page-heading, .progress-wrap {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    height: 1px;
+    background: var(--border-light);
+    margin: 0 24px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header" role="banner">
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="WORDY AI Home">
+      <div class="logo-icon" aria-hidden="true">W</div>
+      <span class="logo-text">WORDY <span>AI</span></span>
+    </a>
+    <div class="header-right">
+      <div class="secure-badge" aria-label="Secure checkout">
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 1.5L2.5 4v4c0 3 2.2 5.6 5.5 6.5C11.3 13.6 13.5 11 13.5 8V4L8 1.5z" fill="currentColor" opacity=".2"/>
+          <path d="M8 1.5L2.5 4v4c0 3 2.2 5.6 5.5 6.5C11.3 13.6 13.5 11 13.5 8V4L8 1.5z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          <path d="M5.5 8l1.8 1.8L10 6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Secure Checkout
+      </div>
+      <a href="#" class="back-link" aria-label="Go back to plans">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to Plans
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ── PROGRESS ── -->
+<div class="progress-wrap" role="navigation" aria-label="Checkout progress">
+  <div class="progress-inner">
+    <div class="progress-steps">
+      <div class="step done" id="step-1">
+        <div class="step-num" aria-label="Step 1 complete">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="step-label">Plan</span>
+      </div>
+      <div class="step-line" aria-hidden="true"></div>
+      <div class="step active" id="step-2" aria-current="step">
+        <div class="step-num">2</div>
+        <span class="step-label">Payment</span>
+      </div>
+      <div class="step-line" aria-hidden="true"></div>
+      <div class="step" id="step-3">
+        <div class="step-num">3</div>
+        <span class="step-label">Complete</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PAGE HEADING ── -->
+<div class="page-heading">
+  <p class="heading-eyebrow">Subscription Checkout</p>
+  <h1 class="heading-title">Complete your WORDY AI plan</h1>
+  <p class="heading-sub">Choose your plan, confirm your details, and continue to secure payment.</p>
+</div>
+
+<!-- ── CHECKOUT LAYOUT ── -->
+<div class="checkout-layout" id="checkout-main">
+  <!-- LEFT COLUMN -->
+  <div class="left-col">
+
+    <!-- SELECTED PLAN CARD -->
+    <div class="card mb-card" id="plan-card">
+      <div class="card-header">
+        <span class="card-title">Selected Plan</span>
+      </div>
+
+      <div class="plan-display" id="plan-display">
+        <div class="plan-badge" id="plan-badge">Most Popular</div>
+        <div class="plan-name-row">
+          <span class="plan-name" id="plan-name">Professional</span>
+          <span class="plan-price-inline" id="plan-price">$19</span>
+          <span class="plan-price-period">/month</span>
+        </div>
+        <p class="plan-desc" id="plan-desc">For freelancers and individuals who create documents regularly.</p>
+        <ul class="plan-features" id="plan-features">
+          <li>
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Unlimited AI documents
+          </li>
+          <li>
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Full template library
+          </li>
+          <li>
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Advanced formatting & formulas
+          </li>
+          <li>
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Priority generation
+          </li>
+        </ul>
+      </div>
+
+      <div class="plan-actions">
+        <button class="btn-change" id="change-plan-btn" aria-expanded="false" aria-controls="plan-switcher">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 8h12M10 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Change Plan
+        </button>
+      </div>
+
+      <!-- PLAN SWITCHER -->
+      <div class="plan-switcher" id="plan-switcher" role="group" aria-label="Select a plan">
+        <p class="plan-switcher-title">Choose a different plan</p>
+        <div class="plan-options">
+          <button class="plan-option" data-plan="free" aria-label="Select Free plan">
+            <div class="plan-option-name">Free</div>
+            <div class="plan-option-price">$0</div>
+            <div class="plan-option-per">/ month</div>
+          </button>
+          <button class="plan-option selected" data-plan="professional" aria-label="Select Professional plan, currently selected">
+            <div class="plan-option-name">Professional</div>
+            <div class="plan-option-price">$19</div>
+            <div class="plan-option-per">/ month</div>
+          </button>
+          <button class="plan-option" data-plan="business" aria-label="Select Business plan">
+            <div class="plan-option-name">Business</div>
+            <div class="plan-option-price">$49</div>
+            <div class="plan-option-per">/ month</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BILLING INFO CARD -->
+    <div class="card mb-card">
+      <div class="card-header">
+        <span class="card-title">Billing Information</span>
+      </div>
+      <div class="card-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" name="full-name" placeholder="Enter your full name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="company">Company Name <span style="color:var(--muted);font-weight:400">(optional)</span></label>
+            <input type="text" id="company" name="company" placeholder="Your company" autocomplete="organization">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <p class="field-hint">You'll receive your subscription confirmation and receipt at this address.</p>
+        </div>
+
+        <!-- COUNTRY SELECTOR -->
+        <div class="field">
+          <label id="country-label">Country or Region</label>
+          <div class="country-selector-wrap" role="combobox" aria-expanded="false" aria-labelledby="country-label" aria-haspopup="listbox">
+            <div class="country-selected" id="country-selected" tabindex="0" role="button" aria-label="Select country">
+              <span class="country-flag" id="selected-flag" aria-hidden="true">🇪🇬</span>
+              <span class="country-name" id="selected-country-name">Egypt</span>
+              <svg class="country-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="country-dropdown" id="country-dropdown" role="listbox" aria-label="Countries">
+              <div class="country-search">
+                <input type="text" id="country-search-input" placeholder="Search country..." aria-label="Search for a country" autocomplete="off">
+              </div>
+              <ul class="country-list" id="country-list" role="presentation"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT METHOD CARD -->
+    <div class="card mb-card">
+      <div class="card-header">
+        <span class="card-title">Payment Method</span>
+      </div>
+      <div class="card-body">
+        <div class="payment-provider-section" id="payment-provider" aria-live="polite" aria-atomic="true">
+          <!-- dynamically updated -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDER ACTIONS CARD -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Promo code -->
+        <div style="margin-bottom: 20px;">
+          <button class="promo-toggle" id="promo-toggle" aria-expanded="false" aria-controls="promo-body">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            Have a promo code?
+          </button>
+          <div class="promo-body" id="promo-body" role="group" aria-label="Promo code">
+            <input type="text" id="promo-input" placeholder="Enter promo code" aria-label="Promo code">
+            <button class="btn-promo" onclick="applyPromo()">Apply</button>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="check-row">
+          <input type="checkbox" id="terms" name="terms" required aria-required="true">
+          <label class="check-label" for="terms">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. By completing this purchase, you authorize WORDY AI to charge your payment method on a recurring basis.
+          </label>
+        </div>
+
+        <!-- CTA -->
+        <button class="btn-pay" id="pay-btn" onclick="initiatePayment()">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M17 10H3M11 4l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span id="pay-btn-text">Continue to Secure Payment</span>
+        </button>
+
+        <!-- Trust indicators -->
+        <div class="trust-row" role="list">
+          <div class="trust-item" role="listitem">
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M7 1L2 3.5V7c0 2.6 2 4.9 5 5.5 3-0.6 5-2.9 5-5.5V3.5L7 1z" fill="currentColor" opacity=".2"/>
+              <path d="M7 1L2 3.5V7c0 2.6 2 4.9 5 5.5 3-0.6 5-2.9 5-5.5V3.5L7 1z" stroke="currentColor" stroke-width="1.1"/>
+              <path d="M5 7l1.5 1.5L9 5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Secure checkout
+          </div>
+          <div class="trust-item" role="listitem">
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Encrypted payment
+          </div>
+          <div class="trust-item" role="listitem">
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Cancel anytime
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN — ORDER SUMMARY -->
+  <aside class="order-summary" aria-label="Order summary">
+    <div class="card">
+      <div class="card-body">
+        <div class="order-logo" aria-hidden="true">
+          <div class="order-logo-icon">W</div>
+          <span class="order-logo-text">WORDY AI</span>
+        </div>
+
+        <div class="order-plan-badge" id="summary-plan-badge">
+          ★ Professional Plan
+        </div>
+
+        <div class="order-row">
+          <span class="order-label">Plan</span>
+          <span class="order-value" id="summary-plan-name">Professional</span>
+        </div>
+        <div class="order-row">
+          <span class="order-label">Billing</span>
+          <span class="order-value">Monthly</span>
+        </div>
+        <div class="order-row">
+          <span class="order-label">Subtotal</span>
+          <span class="order-value" id="summary-subtotal">$19.00</span>
+        </div>
+        <div class="order-row" id="discount-row" style="display:none">
+          <span class="order-label" style="color:var(--green)">Discount</span>
+          <span class="order-value" id="summary-discount" style="color:var(--green)">—</span>
+        </div>
+
+        <div class="order-total-row">
+          <span class="order-total-label">Total due</span>
+          <span class="order-total-amount" id="summary-total">$19.00</span>
+        </div>
+
+        <div class="order-secure" role="note">
+          <div class="order-secure-title">
+            <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M7 1L2 3.5V7c0 2.6 2 4.9 5 5.5 3-0.6 5-2.9 5-5.5V3.5L7 1z" fill="currentColor" opacity=".3"/>
+              <path d="M7 1L2 3.5V7c0 2.6 2 4.9 5 5.5 3-0.6 5-2.9 5-5.5V3.5L7 1z" stroke="currentColor" stroke-width="1.2"/>
+              <path d="M5 7l1.5 1.5L9 5.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Secure Checkout
+          </div>
+          <p class="order-secure-text">Payment processed securely. Your financial information is never stored on our servers.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- State: Processing -->
+    <div class="card" id="state-processing" style="display:none; margin-top:16px;">
+      <div class="state-screen active">
+        <div class="spinner" role="status" aria-label="Processing payment"></div>
+        <div class="state-title">Processing...</div>
+        <p class="state-sub">Please wait while we securely process your payment. Do not close this window.</p>
+      </div>
+    </div>
+
+    <!-- State: Success -->
+    <div class="card" id="state-success" style="display:none; margin-top:16px;">
+      <div class="state-screen active">
+        <div class="state-icon success success-anim" role="img" aria-label="Payment successful">
+          <svg viewBox="0 0 28 28" fill="none">
+            <path d="M5 14l6 6L23 7" stroke="#2D9B6F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="state-title">Payment successful</div>
+        <p class="state-sub">Your WORDY AI subscription is now active. A receipt has been sent to your email.</p>
+        <a href="#" class="btn-primary-sm" aria-label="Go to your dashboard">
+          Go to Dashboard
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- State: Failed -->
+    <div class="card" id="state-failed" style="display:none; margin-top:16px;">
+      <div class="state-screen active">
+        <div class="state-icon error" role="img" aria-label="Payment failed">
+          <svg viewBox="0 0 28 28" fill="none">
+            <path d="M7 7l14 14M21 7L7 21" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="state-title">Payment failed</div>
+        <p class="state-sub">We couldn't complete your payment. Please check your details and try again.</p>
+        <button class="btn-primary-sm" onclick="resetPayment()">Try Again</button>
+        <button class="btn-secondary" onclick="changePayment()">Change Payment Method</button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- ── MOBILE STICKY BAR ── -->
+<div class="sticky-pay" id="sticky-pay" role="complementary" aria-label="Checkout action">
+  <button class="btn-pay" onclick="initiatePayment()" aria-label="Continue to payment">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" width="18" height="18">
+      <path d="M17 10H3M11 4l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span id="sticky-pay-text">Pay $19.00</span>
+  </button>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────
+
+const PLANS = {
+  free: {
+    name: 'Free',
+    price: 0,
+    currency: '$',
+    badge: null,
+    desc: 'Try WORDY AI with a handful of documents each month.',
+    features: ['5 AI documents / month', 'Word & Excel export', 'Basic template access'],
+    summaryBadge: '✦ Free Plan',
+  },
+  professional: {
+    name: 'Professional',
+    price: 19,
+    currency: '$',
+    badge: 'Most Popular',
+    desc: 'For freelancers and individuals who create documents regularly.',
+    features: ['Unlimited AI documents', 'Full template library', 'Advanced formatting & formulas', 'Priority generation'],
+    summaryBadge: '★ Professional Plan',
+  },
+  business: {
+    name: 'Business',
+    price: 49,
+    currency: '$',
+    badge: 'For Teams',
+    desc: 'For teams and offices producing documents at scale.',
+    features: ['Everything in Professional', 'Shared team library', 'Brand-styled templates', 'Dedicated support', 'Priority generation', 'Advanced analytics'],
+    summaryBadge: '◆ Business Plan',
+  },
+};
+
+// Country → payment provider routing config
+// Easily configurable — change MENA_COUNTRIES array to adjust routing
+const MENA_COUNTRIES = [
+  'EG','SA','AE','KW','QA','BH','OM','IQ','JO','LB','LY','MA','DZ','TN','YE','PS','SY','SD','MR','SO','DJ','KM'
+];
+
+const PAYMENT_PROVIDERS = {
+  paymob: {
+    id: 'paymob',
+    name: 'Paymob',
+    label: 'Pay securely with Paymob',
+    desc: 'Accepted: Visa, Mastercard, Meeza, Fawry',
+    icon: 'PM',
+    iconClass: 'paymob',
+  },
+  lemonsqueezy: {
+    id: 'lemonsqueezy',
+    name: 'Lemon Squeezy',
+    label: 'Pay securely with Lemon Squeezy',
+    desc: 'Accepted: Visa, Mastercard, PayPal, and more',
+    icon: '🍋',
+    iconClass: 'lemonsqueezy',
+  },
+};
+
+const COUNTRIES = [
+  { code: 'EG', name: 'Egypt', flag: '🇪🇬' },
+  { code: 'SA', name: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: 'AE', name: 'United Arab Emirates', flag: '🇦🇪' },
+  { code: 'KW', name: 'Kuwait', flag: '🇰🇼' },
+  { code: 'QA', name: 'Qatar', flag: '🇶🇦' },
+  { code: 'BH', name: 'Bahrain', flag: '🇧🇭' },
+  { code: 'OM', name: 'Oman', flag: '🇴🇲' },
+  { code: 'JO', name: 'Jordan', flag: '🇯🇴' },
+  { code: 'LB', name: 'Lebanon', flag: '🇱🇧' },
+  { code: 'IQ', name: 'Iraq', flag: '🇮🇶' },
+  { code: 'MA', name: 'Morocco', flag: '🇲🇦' },
+  { code: 'DZ', name: 'Algeria', flag: '🇩🇿' },
+  { code: 'TN', name: 'Tunisia', flag: '🇹🇳' },
+  { code: 'LY', name: 'Libya', flag: '🇱🇾' },
+  { code: 'YE', name: 'Yemen', flag: '🇾🇪' },
+  { code: 'US', name: 'United States', flag: '🇺🇸' },
+  { code: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
+  { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+  { code: 'FR', name: 'France', flag: '🇫🇷' },
+  { code: 'CA', name: 'Canada', flag: '🇨🇦' },
+  { code: 'AU', name: 'Australia', flag: '🇦🇺' },
+  { code: 'NL', name: 'Netherlands', flag: '🇳🇱' },
+  { code: 'SE', name: 'Sweden', flag: '🇸🇪' },
+  { code: 'NO', name: 'Norway', flag: '🇳🇴' },
+  { code: 'DK', name: 'Denmark', flag: '🇩🇰' },
+  { code: 'PL', name: 'Poland', flag: '🇵🇱' },
+  { code: 'TR', name: 'Turkey', flag: '🇹🇷' },
+  { code: 'IN', name: 'India', flag: '🇮🇳' },
+  { code: 'PK', name: 'Pakistan', flag: '🇵🇰' },
+  { code: 'BD', name: 'Bangladesh', flag: '🇧🇩' },
+  { code: 'NG', name: 'Nigeria', flag: '🇳🇬' },
+  { code: 'ZA', name: 'South Africa', flag: '🇿🇦' },
+  { code: 'BR', name: 'Brazil', flag: '🇧🇷' },
+  { code: 'MX', name: 'Mexico', flag: '🇲🇽' },
+  { code: 'JP', name: 'Japan', flag: '🇯🇵' },
+  { code: 'KR', name: 'South Korea', flag: '🇰🇷' },
+  { code: 'SG', name: 'Singapore', flag: '🇸🇬' },
+];
+
+// ─── STATE ───────────────────────────────────────────────
+
+let currentPlan = 'professional';
+let currentCountry = null;
+let isDropdownOpen = false;
+
+// ─── INIT ────────────────────────────────────────────────
+
+function init() {
+  renderCountryList(COUNTRIES);
+  detectCountry();
+  updatePlanUI(currentPlan);
+
+  // Country selector click
+  const countrySelected = document.getElementById('country-selected');
+  countrySelected.addEventListener('click', toggleCountryDropdown);
+  countrySelected.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleCountryDropdown(); }
+    if (e.key === 'Escape') closeCountryDropdown();
+  });
+
+  // Close dropdown on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.country-selector-wrap')) closeCountryDropdown();
+  });
+
+  // Country search
+  document.getElementById('country-search-input').addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase();
+    const filtered = COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q));
+    renderCountryList(filtered);
+  });
+
+  // Plan options
+  document.querySelectorAll('.plan-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const plan = btn.dataset.plan;
+      selectPlan(plan);
+    });
+  });
+
+  // Change plan toggle
+  document.getElementById('change-plan-btn').addEventListener('click', togglePlanSwitcher);
+
+  // Promo toggle
+  document.getElementById('promo-toggle').addEventListener('click', togglePromo);
+}
+
+// ─── COUNTRY DETECTION ───────────────────────────────────
+
+function detectCountry() {
+  // Default to Egypt (Mos's location), in production use timezone/IP detection
+  selectCountry('EG');
+}
+
+function renderCountryList(countries) {
+  const list = document.getElementById('country-list');
+  list.innerHTML = '';
+  countries.forEach(c => {
+    const li = document.createElement('li');
+    li.className = 'country-item' + (currentCountry && currentCountry.code === c.code ? ' active' : '');
+    li.setAttribute('role', 'option');
+    li.setAttribute('aria-selected', currentCountry && currentCountry.code === c.code ? 'true' : 'false');
+    li.setAttribute('tabindex', '0');
+    li.innerHTML = `<span class="country-flag" aria-hidden="true">${c.flag}</span><span>${c.name}</span>`;
+    li.addEventListener('click', () => { selectCountry(c.code); closeCountryDropdown(); });
+    li.addEventListener('keydown', (e) => { if (e.key === 'Enter') { selectCountry(c.code); closeCountryDropdown(); } });
+    list.appendChild(li);
+  });
+}
+
+function selectCountry(code) {
+  const country = COUNTRIES.find(c => c.code === code) || COUNTRIES[0];
+  currentCountry = country;
+
+  document.getElementById('selected-flag').textContent = country.flag;
+  document.getElementById('selected-country-name').textContent = country.name;
+
+  updatePaymentProvider();
+  renderCountryList(document.getElementById('country-search-input').value
+    ? COUNTRIES.filter(c => c.name.toLowerCase().includes(document.getElementById('country-search-input').value.toLowerCase()))
+    : COUNTRIES);
+}
+
+function toggleCountryDropdown() {
+  isDropdownOpen = !isDropdownOpen;
+  const dropdown = document.getElementById('country-dropdown');
+  const selected = document.getElementById('country-selected');
+  dropdown.classList.toggle('open', isDropdownOpen);
+  selected.classList.toggle('open', isDropdownOpen);
+  selected.closest('[role="combobox"]').setAttribute('aria-expanded', isDropdownOpen);
+  if (isDropdownOpen) setTimeout(() => document.getElementById('country-search-input').focus(), 50);
+}
+
+function closeCountryDropdown() {
+  isDropdownOpen = false;
+  document.getElementById('country-dropdown').classList.remove('open');
+  document.getElementById('country-selected').classList.remove('open');
+  document.querySelector('[role="combobox"]').setAttribute('aria-expanded', 'false');
+}
+
+// ─── PAYMENT PROVIDER ROUTING ────────────────────────────
+
+function updatePaymentProvider() {
+  if (!currentCountry) return;
+  const isMENA = MENA_COUNTRIES.includes(currentCountry.code);
+  const provider = isMENA ? PAYMENT_PROVIDERS.paymob : PAYMENT_PROVIDERS.lemonsqueezy;
+  renderProvider(provider);
+}
+
+function renderProvider(provider) {
+  const container = document.getElementById('payment-provider');
+  const iconContent = provider.iconClass === 'lemonsqueezy'
+    ? `<span style="font-size:22px" aria-hidden="true">${provider.icon}</span>`
+    : `<span style="font-size:11px;font-weight:800;letter-spacing:-0.5px">${provider.icon}</span>`;
+
+  container.style.opacity = '0';
+  container.style.transform = 'translateY(6px)';
+
+  setTimeout(() => {
+    container.innerHTML = `
+      <div class="provider-card" role="region" aria-label="${provider.label}">
+        <div class="provider-icon ${provider.iconClass}" aria-hidden="true">${iconContent}</div>
+        <div class="provider-info">
+          <div class="provider-name">${provider.label}</div>
+          <div class="provider-desc">${provider.desc}</div>
+        </div>
+        <div class="provider-check" aria-hidden="true">
+          <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    `;
+    container.style.transition = 'all 0.25s ease';
+    container.style.opacity = '1';
+    container.style.transform = 'translateY(0)';
+  }, 80);
+}
+
+// ─── PLAN MANAGEMENT ────────────────────────────────────
+
+function selectPlan(planKey) {
+  currentPlan = planKey;
+
+  document.querySelectorAll('.plan-option').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.plan === planKey);
+  });
+
+  updatePlanUI(planKey);
+  closePlanSwitcher();
+}
+
+function updatePlanUI(planKey) {
+  const plan = PLANS[planKey];
+  if (!plan) return;
+
+  // Plan display
+  const badge = document.getElementById('plan-badge');
+  if (plan.badge) {
+    badge.textContent = plan.badge;
+    badge.style.display = 'inline-flex';
+  } else {
+    badge.style.display = 'none';
+  }
+
+  document.getElementById('plan-name').textContent = plan.name;
+  document.getElementById('plan-price').textContent = plan.currency + plan.price;
+  document.getElementById('plan-desc').textContent = plan.desc;
+
+  const featuresEl = document.getElementById('plan-features');
+  featuresEl.innerHTML = plan.features.map(f => `
+    <li>
+      <svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3 3 7-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ${f}
+    </li>
+  `).join('');
+
+  // Plan display background color
+  const planDisplay = document.getElementById('plan-display');
+  planDisplay.style.background = planKey === 'business' ? 'linear-gradient(135deg, #f0f2ff 0%, #e8f0fe 100%)' : '';
+
+  // Order summary
+  document.getElementById('summary-plan-name').textContent = plan.name;
+  document.getElementById('summary-plan-badge').textContent = plan.summaryBadge;
+  const priceStr = plan.price === 0 ? 'Free' : (plan.currency + plan.price + '.00');
+  document.getElementById('summary-subtotal').textContent = priceStr;
+  document.getElementById('summary-total').textContent = priceStr;
+
+  // Pay button + sticky
+  const payLabel = plan.price === 0 ? 'Continue for Free' : `Continue to Secure Payment`;
+  const stickyLabel = plan.price === 0 ? 'Continue for Free →' : `Pay ${plan.currency}${plan.price}.00`;
+  document.getElementById('pay-btn-text').textContent = payLabel;
+  document.getElementById('sticky-pay-text').textContent = stickyLabel;
+}
+
+function togglePlanSwitcher() {
+  const switcher = document.getElementById('plan-switcher');
+  const btn = document.getElementById('change-plan-btn');
+  const isOpen = switcher.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+
+function closePlanSwitcher() {
+  document.getElementById('plan-switcher').classList.remove('open');
+  document.getElementById('change-plan-btn').setAttribute('aria-expanded', 'false');
+}
+
+// ─── PROMO CODE ──────────────────────────────────────────
+
+function togglePromo() {
+  const body = document.getElementById('promo-body');
+  const btn = document.getElementById('promo-toggle');
+  const isOpen = body.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen);
+}
+
+function applyPromo() {
+  const code = document.getElementById('promo-input').value.trim();
+  if (!code) return;
+  // In production, validate via backend
+  alert('Promo code validation would be handled by your backend integration.');
+}
+
+// ─── PAYMENT FLOW ────────────────────────────────────────
+
+function initiatePayment() {
+  const terms = document.getElementById('terms');
+  const email = document.getElementById('email');
+  const name = document.getElementById('full-name');
+
+  if (!terms.checked) {
+    terms.focus();
+    terms.style.outline = '2px solid #EF4444';
+    setTimeout(() => terms.style.outline = '', 2000);
+    return;
+  }
+
+  if (!email.value) {
+    email.focus();
+    email.style.borderColor = '#EF4444';
+    setTimeout(() => email.style.borderColor = '', 2000);
+    return;
+  }
+
+  showState('processing');
+
+  // Simulate payment flow — in production, redirect to provider
+  setTimeout(() => {
+    // Simulate success (90% chance) or failure (demo purposes)
+    const success = Math.random() > 0.15;
+    showState(success ? 'success' : 'failed');
+    if (success) {
+      document.getElementById('step-2').className = 'step done';
+      document.getElementById('step-3').className = 'step active';
+    }
+  }, 2800);
+}
+
+function showState(state) {
+  const processing = document.getElementById('state-processing');
+  const success = document.getElementById('state-success');
+  const failed = document.getElementById('state-failed');
+  const stickyPay = document.getElementById('sticky-pay');
+
+  processing.style.display = 'none';
+  success.style.display = 'none';
+  failed.style.display = 'none';
+
+  if (state === 'processing') {
+    processing.style.display = 'block';
+    stickyPay.style.display = 'none';
+  } else if (state === 'success') {
+    success.style.display = 'block';
+    stickyPay.style.display = 'none';
+  } else if (state === 'failed') {
+    failed.style.display = 'block';
+    stickyPay.style.display = 'none';
+  }
+}
+
+function resetPayment() {
+  document.getElementById('state-failed').style.display = 'none';
+  document.getElementById('sticky-pay').style.display = 'block';
+}
+
+function changePayment() {
+  document.getElementById('state-failed').style.display = 'none';
+  document.getElementById('sticky-pay').style.display = 'block';
+  document.querySelector('.card:has(#payment-provider)').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── START ───────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

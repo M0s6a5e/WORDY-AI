@@ -1,0 +1,82 @@
+/* =========================================================
+   WORDY AI — Responsive Rules
+   ========================================================= */
+
+/* ---------- ≤1180px : condense desktop nav & grids ---------- */
+@media (max-width: 1180px) {
+  .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  .usecase-grid { grid-template-columns: repeat(3, 1fr); }
+  .template-grid { grid-template-columns: repeat(3, 1fr); }
+  .nav-links { gap: 0; }
+}
+
+/* ---------- ≤1024px : tablet ---------- */
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-copy { max-width: 640px; }
+  .hero-visual { min-height: 380px; margin-top: 12px; }
+
+  .showcase-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .step { border-radius: var(--radius-md) !important; border-left: 1px solid var(--border) !important; }
+  .step-connector { display: none; }
+
+  .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .footer-top { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ---------- ≤860px : small tablet / large phone ---------- */
+@media (max-width: 860px) {
+  .feature-grid { grid-template-columns: 1fr 1fr; }
+  .usecase-grid { grid-template-columns: repeat(2, 1fr); }
+  .template-grid { grid-template-columns: repeat(2, 1fr); }
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+  .trust-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* ---------- ≤680px : mobile ---------- */
+@media (max-width: 680px) {
+  :root { --nav-height: 68px; }
+
+  .section { padding-block: 56px; }
+
+  .hero { padding-top: calc(var(--nav-height) + 32px); }
+  .hero-heading-img { width: 100%; }
+  .hero-ctas .btn { flex: 1 1 auto; }
+  .hero-visual { min-height: 340px; }
+  .mock-main { width: 92%; left: 0; top: 0; }
+  .mock-word { width: 78%; left: 8%; top: 44%; }
+  .mock-excel { width: 70%; right: 0; bottom: 0; }
+  .mock-status { top: -3%; right: 2%; padding: 8px 12px; font-size: 11px; }
+
+  .feature-grid { grid-template-columns: 1fr; }
+  .usecase-grid { grid-template-columns: 1fr 1fr; }
+  .template-grid { grid-template-columns: 1fr; }
+
+  .steps { grid-template-columns: 1fr; }
+  .step { border-left: 1px solid var(--border) !important; border-radius: var(--radius-md) !important; }
+
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 14px; }
+
+  .cta-actions .btn, .hero-ctas .btn { width: 100%; }
+  .cta-actions { flex-direction: column; }
+
+  .btn { padding: 14px 22px; font-size: 15.5px; }
+}
+
+/* ---------- ≤460px : small phones ---------- */
+@media (max-width: 460px) {
+  .usecase-grid { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; }
+  .nav-actions .btn-secondary { display: none; }
+  .trust-tags { gap: 8px; }
+  .trust-tag { font-size: 12.5px; padding: 7px 12px; }
+}
+
+/* Prevent any horizontal scroll from wide fixed-size children */
+html, body { max-width: 100%; overflow-x: hidden; }

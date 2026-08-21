@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 190" width="620" height="190" role="img" >
+<style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Space+Mono:wght@400;700&display=swap');
+text { font-family: 'Plus Jakarta Sans', Arial, sans-serif; }
+.mono { font-family: 'Space Mono', 'Courier New', monospace; }
+</style>
+<text x="2" y="48" font-size="48" font-weight="800" letter-spacing="-1.2"><tspan fill="#12141C">Create Professional </tspan></text>
+<text x="2" y="99.84" font-size="48" font-weight="800" letter-spacing="-1.2"><tspan fill="#3F4CE0">Word</tspan><tspan fill="#12141C"> & </tspan><tspan fill="#1E9E6C">Excel</tspan><tspan fill="#12141C"> Files</tspan></text>
+<text x="2" y="151.68" font-size="48" font-weight="800" letter-spacing="-1.2"><tspan fill="#12141C">With AI</tspan></text>
+</svg>

@@ -1,0 +1,588 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WORDY AI — Create Professional Word &amp; Excel Files With AI</title>
+<meta name="description" content="WORDY AI transforms your ideas, data, and business requirements into professionally structured Word and Excel documents in seconds." />
+<link rel="icon" href="assets/images/wordy-ai-logo.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+<header class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo-link" aria-label="WORDY AI — Home">
+      <img class="nav-logo" src="assets/images/wordy-ai-logo.gif" alt="WORDY AI" width="168" height="42" />
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#home">Home</a>
+      <a href="/word-creator" data-route="/word-creator">Word Creator</a>
+      <a href="/excel-creator" data-route="/excel-creator">Excel Creator</a>
+      <a href="/library" data-route="/library">File Library</a>
+      <a href="/pricing" data-route="/pricing">Pricing</a>
+      <a href="/about" data-route="/about">About</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a href="/login" data-route="/login" class="btn btn-ghost btn-sm">Login</a>
+      <a href="/signup" data-route="/signup" class="btn btn-primary btn-sm">
+        Get Started
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="/word-creator" data-route="/word-creator">Word Creator</a></li>
+      <li><a href="/excel-creator" data-route="/excel-creator">Excel Creator</a></li>
+      <li><a href="/library" data-route="/library">File Library</a></li>
+      <li><a href="/pricing" data-route="/pricing">Pricing</a></li>
+      <li><a href="/about" data-route="/about">About</a></li>
+    </ul>
+    <div class="mobile-actions">
+      <a href="/login" data-route="/login" class="btn btn-secondary btn-block">Login</a>
+      <a href="/signup" data-route="/signup" class="btn btn-primary btn-block">Get Started</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- =========================================================
+       HERO
+  ========================================================= -->
+  <section class="hero" id="home">
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">AI-powered document engine</span>
+        <img
+          class="hero-heading-img"
+          src="assets/images/heading-hero.gif"
+          alt="Create Professional Word & Excel Files With AI"
+          width="620" height="190"
+        />
+        <p class="hero-sub">
+          WORDY AI transforms your ideas, data, and business requirements into
+          professionally structured Word and Excel documents in seconds.
+          Create reports, invoices, proposals, financial tables, and templates
+          with AI-powered precision.
+        </p>
+        <div class="hero-ctas">
+          <a href="/word-creator" data-route="/word-creator" class="btn btn-primary">
+            Create Your File
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="/library" data-route="/library" class="btn btn-secondary">Explore Templates</a>
+        </div>
+        <p class="hero-meta">
+          <span>No design skills needed</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>Export to .docx &amp; .xlsx</span>
+        </p>
+      </div>
+
+      <div class="hero-visual" role="img" aria-label="Preview of the WORDY AI dashboard generating a Word document and an Excel spreadsheet from a single prompt">
+        <div class="mock-stage">
+
+          <div class="mock-card mock-main">
+            <div class="mock-toolbar">
+              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+              <span class="mock-label">AI Document Generator</span>
+            </div>
+            <div class="mock-ai-row">
+              <span class="mock-ai-avatar">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+              </span>
+              <span class="mock-ai-text">Generating quarterly business proposal…</span>
+            </div>
+            <div class="mock-typing-line w-90"></div>
+            <div class="mock-typing-line w-70"></div>
+            <div class="mock-typing-line w-50"></div>
+          </div>
+
+          <div class="mock-card mock-word">
+            <p class="mock-word-title">Business_Proposal.docx</p>
+            <div class="mock-word-line"></div>
+            <div class="mock-word-line short"></div>
+            <div class="mock-word-line"></div>
+            <div class="mock-word-table" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+
+          <div class="mock-card mock-excel">
+            <p class="mock-excel-title">Revenue_Model.xlsx</p>
+            <div class="mock-grid" aria-hidden="true">
+              <span class="mock-cell filled"></span><span class="mock-cell filled hl"></span><span class="mock-cell"></span><span class="mock-cell"></span>
+              <span class="mock-cell"></span><span class="mock-cell filled"></span><span class="mock-cell filled"></span><span class="mock-cell"></span>
+              <span class="mock-cell total"></span><span class="mock-cell total"></span><span class="mock-cell total"></span><span class="mock-cell total"></span>
+            </div>
+          </div>
+
+          <div class="mock-card mock-status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            Document completed
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TRUST STRIP
+  ========================================================= -->
+  <section class="trust" aria-label="Who WORDY AI is built for">
+    <div class="container trust-inner">
+      <span class="trust-label">BUILT FOR —</span>
+      <div class="trust-tags">
+        <span class="trust-tag"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 21V8l6-4 6 4v13M10 21v-6h4v6"/></svg> Businesses</span>
+        <span class="trust-tag"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v13H3zM3 7l3-4h12l3 4M9 11a3 3 0 0 0 6 0"/></svg> Offices</span>
+        <span class="trust-tag"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg> Freelancers</span>
+        <span class="trust-tag"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg> Students</span>
+        <span class="trust-tag"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg> Personal Users</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FEATURES
+  ========================================================= -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Core capabilities</span>
+        <img class="section-title-image" src="assets/images/Core capabilities.gif" alt="Everything you need to write, calculate and ship" width="560" height="120" />
+        <p class="section-sub">One platform that understands both prose and spreadsheets — so your documents and your numbers are always in sync.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card reveal">
+          <span class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <h3>AI Word Creator</h3>
+          <p>Generate polished reports, proposals, letters, invoices, contracts, and business documents — fully formatted, every time.</p>
+          <a class="feature-link" href="/word-creator" data-route="/word-creator">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="feature-card is-green reveal">
+          <span class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+          </span>
+          <h3>AI Excel Creator</h3>
+          <p>Build structured workbooks with tables, formulas, totals, financial sheets, and business reports ready for real work.</p>
+          <a class="feature-link" href="/excel-creator" data-route="/excel-creator">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="feature-card reveal">
+          <span class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v16"/></svg>
+          </span>
+          <h3>Smart Templates</h3>
+          <p>Start from professionally designed templates and let AI customize the structure, tone, and layout to fit your need.</p>
+          <a class="feature-link" href="/library" data-route="/library">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="feature-card reveal">
+          <span class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          </span>
+          <h3>File Library</h3>
+          <p>Browse every document you've generated alongside ready-made templates, organized and searchable in one place.</p>
+          <a class="feature-link" href="/library" data-route="/library">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="feature-card reveal">
+          <span class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h16"/></svg>
+          </span>
+          <h3>AI Formatting</h3>
+          <p>Headings, tables, spacing, and page structure are organized intelligently — no manual formatting required.</p>
+          <a class="feature-link" href="/word-creator" data-route="/word-creator">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </article>
+
+        <article class="feature-card reveal">
+          <span class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          </span>
+          <h3>Business Productivity</h3>
+          <p>Cut hours of repetitive drafting. Turn recurring paperwork into a two-minute AI-assisted workflow.</p>
+          <a class="feature-link" href="/about" data-route="/about">Learn more <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       WORD / EXCEL SHOWCASE
+  ========================================================= -->
+  <section class="section section-paper-alt" id="showcase">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow is-green">See it in action</span>
+        <img class="section-title-image" src="assets/images/See it in action.gif" alt="One prompt, two perfect files" width="460" height="120" />
+      </div>
+
+      <div class="showcase-grid">
+        <article class="showcase-card reveal">
+          <div class="showcase-head">
+            <span class="showcase-tag word">DOCX</span>
+            <span class="showcase-status">AI generation complete</span>
+          </div>
+          <h3>Word Creator</h3>
+          <p>Professional typography, structured headings, tables, and page layout — generated and formatted automatically.</p>
+          <div class="doc-preview" aria-hidden="true">
+            <div class="dp-title"></div>
+            <div class="dp-line w-95"></div>
+            <div class="dp-line w-80"></div>
+            <div class="dp-line w-60"></div>
+            <div class="dp-table"><span></span><span></span><span></span></div>
+          </div>
+          <a href="/word-creator" data-route="/word-creator" class="btn btn-primary">Create Word File</a>
+        </article>
+
+        <article class="showcase-card reveal">
+          <div class="showcase-head">
+            <span class="showcase-tag excel">XLSX</span>
+            <span class="showcase-status">AI generation complete</span>
+          </div>
+          <h3>Excel Creator</h3>
+          <p>Rows, columns, formulas, and totals built into a clean, professional spreadsheet — ready for real analysis.</p>
+          <div class="sheet-preview" aria-hidden="true">
+            <div class="sheet-grid">
+              <span class="sc num"></span><span class="sc head">A</span><span class="sc head">B</span><span class="sc head">C</span><span class="sc head">D</span>
+              <span class="sc num">1</span><span class="sc"></span><span class="sc filled"></span><span class="sc"></span><span class="sc"></span>
+              <span class="sc num">2</span><span class="sc filled"></span><span class="sc"></span><span class="sc filled"></span><span class="sc"></span>
+              <span class="sc num">3</span><span class="sc"></span><span class="sc"></span><span class="sc filled"></span><span class="sc"></span>
+              <span class="sc num">Σ</span><span class="sc total"></span><span class="sc total"></span><span class="sc total"></span><span class="sc total"></span>
+            </div>
+          </div>
+          <a href="/excel-creator" data-route="/excel-creator" class="btn btn-primary">Create Excel File</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       HOW IT WORKS
+  ========================================================= -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Workflow</span>
+        <img class="section-title-image" src="assets/images/Workflow.gif" alt="From idea to document in four simple steps" width="500" height="118" />
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <span class="step-index">01</span>
+          <h3>Describe</h3>
+          <p>Tell WORDY AI what you need — a report, invoice, proposal, or spreadsheet — in plain language.</p>
+          <span class="step-connector" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+        <div class="step reveal">
+          <span class="step-index">02</span>
+          <h3>Generate</h3>
+          <p>WORDY AI analyzes the request and builds a fully structured Word or Excel file in seconds.</p>
+          <span class="step-connector" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+        <div class="step reveal">
+          <span class="step-index">03</span>
+          <h3>Customize</h3>
+          <p>Review the draft and adjust wording, formatting, tables, or formulas until it's exactly right.</p>
+          <span class="step-connector" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </div>
+        <div class="step reveal">
+          <span class="step-index">04</span>
+          <h3>Export</h3>
+          <p>Download your finished document as a native .docx or .xlsx file, ready to share.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       TEMPLATE LIBRARY PREVIEW
+  ========================================================= -->
+  <section class="section section-paper-alt" id="templates">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow is-green">Template library</span>
+        <img class="section-title-image" src="assets/images/heading-templates.gif" alt="A template for every desk" width="420" height="110" />
+        <p class="section-sub">Ready-to-use starting points across every category — customize any of them with AI in a click.</p>
+      </div>
+
+      <div class="template-grid">
+        <article class="template-card reveal">
+          <div class="template-thumb tint-primary" aria-hidden="true">
+            <span class="template-cat">Finance</span>
+            <div class="tl w-70"></div><div class="tl w-90"></div><div class="tl w-40"></div>
+          </div>
+          <div class="template-body">
+            <h4>Quarterly Budget Report</h4>
+            <p>Structured financial summary with tables and totals.</p>
+            <a href="/library" data-route="/library" class="btn btn-secondary btn-sm">Use Template</a>
+          </div>
+        </article>
+
+        <article class="template-card reveal">
+          <div class="template-thumb tint-green" aria-hidden="true">
+            <span class="template-cat">HR</span>
+            <div class="tl w-70"></div><div class="tl w-90"></div><div class="tl w-40"></div>
+          </div>
+          <div class="template-body">
+            <h4>Employee Onboarding Pack</h4>
+            <p>Offer letters, checklists, and policy documents.</p>
+            <a href="/library" data-route="/library" class="btn btn-secondary btn-sm">Use Template</a>
+          </div>
+        </article>
+
+        <article class="template-card reveal">
+          <div class="template-thumb tint-amber" aria-hidden="true">
+            <span class="template-cat">Marketing</span>
+            <div class="tl w-70"></div><div class="tl w-90"></div><div class="tl w-40"></div>
+          </div>
+          <div class="template-body">
+            <h4>Campaign Proposal</h4>
+            <p>Client-ready proposal with goals and budget tables.</p>
+            <a href="/library" data-route="/library" class="btn btn-secondary btn-sm">Use Template</a>
+          </div>
+        </article>
+
+        <article class="template-card reveal">
+          <div class="template-thumb tint-rose" aria-hidden="true">
+            <span class="template-cat">Education</span>
+            <div class="tl w-70"></div><div class="tl w-90"></div><div class="tl w-40"></div>
+          </div>
+          <div class="template-body">
+            <h4>Research Project Outline</h4>
+            <p>Structured report format for coursework and theses.</p>
+            <a href="/library" data-route="/library" class="btn btn-secondary btn-sm">Use Template</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="template-library-cta reveal">
+        <a href="/library" data-route="/library" class="btn btn-primary">Explore Full Library</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       BUSINESS USE CASES
+  ========================================================= -->
+  <section class="section" id="use-cases">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Who it's for</span>
+        <img class="section-title-image" src="assets/images/Who it's for.gif" alt="Built for the way real work gets done" width="500" height="110" />
+      </div>
+
+      <div class="usecase-grid">
+        <article class="usecase-card reveal">
+          <span class="usecase-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M6 21V8l6-4 6 4v13M10 21v-6h4v6"/></svg></span>
+          <h3>Companies</h3>
+          <p>Generate business reports, proposals, financial documents, and operational files.</p>
+        </article>
+        <article class="usecase-card reveal">
+          <span class="usecase-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h18v13H3zM3 7l3-4h12l3 4M9 11a3 3 0 0 0 6 0"/></svg></span>
+          <h3>Offices</h3>
+          <p>Create administrative documents and repeatable office workflows.</p>
+        </article>
+        <article class="usecase-card reveal">
+          <span class="usecase-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+          <h3>Freelancers</h3>
+          <p>Create invoices, proposals, spreadsheets, and professional deliverables.</p>
+        </article>
+        <article class="usecase-card reveal">
+          <span class="usecase-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+          <h3>Students</h3>
+          <p>Create structured documents, reports, project files, and tables.</p>
+        </article>
+        <article class="usecase-card reveal">
+          <span class="usecase-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></span>
+          <h3>Personal Users</h3>
+          <p>Create organized personal documents and spreadsheets.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       PRICING PREVIEW
+  ========================================================= -->
+  <section class="section section-paper-alt" id="pricing">
+    <div class="container">
+      <div class="section-head center reveal">
+        <span class="eyebrow">Pricing</span>
+        <img class="section-title-image" src="assets/images/Pricing.gif" alt="Simple plans, serious documents" width="460" height="110" />
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <p class="price-name">Free</p>
+          <p class="price-amount">$0 <span>/ month</span></p>
+          <p class="price-desc">Try WORDY AI with a handful of documents each month.</p>
+          <ul class="price-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> 5 AI documents / month</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Word &amp; Excel export</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Basic template access</li>
+          </ul>
+          <a href="/signup" data-route="/signup" class="btn btn-secondary btn-block">Get Started</a>
+        </div>
+
+        <div class="price-card is-featured reveal">
+          <span class="price-badge">Most Popular</span>
+          <p class="price-name">Professional</p>
+          <p class="price-amount">$19 <span>/ month</span></p>
+          <p class="price-desc">For freelancers and individuals who write regularly.</p>
+          <ul class="price-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Unlimited AI documents</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Full template library</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Advanced formatting &amp; formulas</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Priority generation</li>
+          </ul>
+          <a href="/signup" data-route="/signup" class="btn btn-primary btn-block">Get Started</a>
+        </div>
+
+        <div class="price-card reveal">
+          <p class="price-name">Business</p>
+          <p class="price-amount">$49 <span>/ month</span></p>
+          <p class="price-desc">For teams and offices producing documents at scale.</p>
+          <ul class="price-features">
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Everything in Professional</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Shared team library</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Brand-styled templates</li>
+            <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg> Dedicated support</li>
+          </ul>
+          <a href="/signup" data-route="/signup" class="btn btn-secondary btn-block">Get Started</a>
+        </div>
+      </div>
+
+      <p class="pricing-footnote">Prices shown as an example — see <a href="/pricing" data-route="/pricing" style="color:var(--primary); font-weight:700;">full plan details</a> for current rates.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FILE LIBRARY CTA
+  ========================================================= -->
+  <section class="section section-library-cta">
+    <div class="container">
+      <div class="cta-dark reveal">
+        <div class="cta-dark-inner">
+          <span class="eyebrow on-dark">File library</span>
+          <img class="section-title-image" src="assets/images/heading-library-cta.gif" alt="Start with a professional template. Finish with a professional document." width="560" height="120" />
+          <p class="cta-sub">Hundreds of ready-made templates across business, finance, HR, and education — or start completely from scratch.</p>
+          <div class="cta-actions">
+            <a href="/library" data-route="/library" class="btn btn-on-dark">Explore Templates</a>
+            <a href="/word-creator" data-route="/word-creator" class="btn btn-outline-on-dark">Create From Scratch</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FINAL CTA
+  ========================================================= -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="cta-dark reveal">
+        <div class="cta-dark-inner">
+          <img class="section-title-image" src="assets/images/heading-final-cta.gif" alt="Turn your ideas into professional documents" width="600" height="118" />
+          <p class="cta-sub">Create polished Word and Excel files faster with AI-powered automation and professional templates.</p>
+          <div class="cta-actions">
+            <a href="/signup" data-route="/signup" class="btn btn-on-dark">Start Creating</a>
+            <a href="/library" data-route="/library" class="btn btn-outline-on-dark">Explore Library</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="nav-logo" src="assets/images/wordy-ai-logo-light.gif" alt="WORDY AI" width="168" height="42" />
+        <p>AI-powered Word and Excel document generation for businesses, offices, freelancers, students, and personal use.</p>
+        <div class="footer-social" aria-label="Social links">
+          <a href="#" aria-label="WORDY AI on X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-7.5 8.6L23 22h-6.9l-5.4-6.6L4.5 22H1.4l8-9.2L1 2h7l4.9 6L18.9 2z"/></svg></a>
+          <a href="#" aria-label="WORDY AI on LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="/word-creator" data-route="/word-creator">Word Creator</a></li>
+          <li><a href="/excel-creator" data-route="/excel-creator">Excel Creator</a></li>
+          <li><a href="/library" data-route="/library">Templates</a></li>
+          <li><a href="/library" data-route="/library">File Library</a></li>
+          <li><a href="/pricing" data-route="/pricing">Pricing</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about" data-route="/about">About</a></li>
+          <li><a href="/contact" data-route="/contact">Contact</a></li>
+          <li><a href="/careers" data-route="/careers">Careers</a></li>
+          <li><a href="/blog" data-route="/blog">Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/help" data-route="/help">Help Center</a></li>
+          <li><a href="/faq" data-route="/faq">FAQ</a></li>
+          <li><a href="/contact" data-route="/contact">Contact Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacy" data-route="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms" data-route="/terms">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="current-year">2026</span> WORDY AI. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="/privacy" data-route="/privacy">Privacy</a>
+        <a href="/terms" data-route="/terms">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

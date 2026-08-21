@@ -92,35 +92,16 @@
   }
 
   .logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
     text-decoration: none;
+    flex-shrink: 0;
   }
 
-  .logo-icon {
-    width: 32px;
-    height: 32px;
-    background: var(--cobalt);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 700;
-    color: white;
-    letter-spacing: -0.5px;
-  }
-
-  .logo-text {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--charcoal);
-    letter-spacing: -0.3px;
-  }
-
-  .logo-text span {
-    color: var(--cobalt);
+  .logo-img {
+    height: 30px;
+    width: auto;
+    display: block;
   }
 
   .header-right {
@@ -237,14 +218,11 @@
     margin-bottom: 10px;
   }
 
-  .heading-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(24px, 4vw, 36px);
-    font-weight: 400;
-    font-style: italic;
-    color: var(--charcoal);
-    letter-spacing: -0.5px;
-    margin-bottom: 10px;
+  .heading-title-img {
+    width: min(100%, 560px);
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
   }
 
   .heading-sub {
@@ -1099,9 +1077,8 @@
 <!-- ── HEADER ── -->
 <header class="header" role="banner">
   <div class="header-inner">
-    <a href="#" class="logo" aria-label="WORDY AI Home">
-      <div class="logo-icon" aria-hidden="true">W</div>
-      <span class="logo-text">WORDY <span>AI</span></span>
+    <a href="index.html" class="logo" aria-label="WORDY AI Home">
+      <img class="logo-img" src="assets/images/wordy-ai-logo.gif" alt="WORDY AI" width="168" height="42" />
     </a>
     <div class="header-right">
       <div class="secure-badge" aria-label="Secure checkout">
@@ -1112,7 +1089,7 @@
         </svg>
         Secure Checkout
       </div>
-      <a href="#" class="back-link" aria-label="Go back to plans">
+      <a href="index.html#pricing" class="back-link" aria-label="Go back to plans">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
           <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -1151,7 +1128,7 @@
 <!-- ── PAGE HEADING ── -->
 <div class="page-heading">
   <p class="heading-eyebrow">Subscription Checkout</p>
-  <h1 class="heading-title">Complete your WORDY AI plan</h1>
+  <img class="heading-title-img" src="assets/images/heading-complete-plan.gif" alt="Complete your WORDY AI plan" width="460" height="147" />
   <p class="heading-sub">Choose your plan, confirm your details, and continue to secure payment.</p>
 </div>
 
@@ -1554,9 +1531,16 @@ let isDropdownOpen = false;
 // ─── INIT ────────────────────────────────────────────────
 
 function init() {
+  const params = new URLSearchParams(window.location.search);
+  const planParam = params.get('plan');
+  if (planParam && PLANS[planParam]) currentPlan = planParam;
+
   renderCountryList(COUNTRIES);
   detectCountry();
   updatePlanUI(currentPlan);
+  document.querySelectorAll('.plan-option').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.plan === currentPlan);
+  });
 
   // Country selector click
   const countrySelected = document.getElementById('country-selected');

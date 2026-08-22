@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — WORDY AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F8F5EE;
+    --cream-alt:#F1ECE0;
+    --surface:#FFFFFF;
+    --ink:#232722;
+    --ink-soft:#63665f;
+    --ink-faint:#93968d;
+    --cobalt:#3F4EE0;
+    --cobalt-dark:#2E3AB8;
+    --cobalt-tint:#EEF0FD;
+    --green:#1E9E6B;
+    --green-tint:#E9F7F0;
+    --border:#E7E0CF;
+    --border-soft:#EFEAE0;
+    --shadow-sm:0 1px 2px rgba(35,39,34,.06);
+    --shadow-md:0 8px 24px rgba(35,39,34,.07);
+    --shadow-lg:0 20px 48px rgba(35,39,34,.10);
+    --radius:20px;
+    --radius-sm:14px;
+    --maxw:1180px;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;font-family:var(--font-body);background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+  ::selection{background:var(--cobalt-tint);color:var(--cobalt-dark);}
+  section{position:relative;z-index:1;}
+
+  .grid-bg{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:linear-gradient(rgba(63,78,224,.035) 1px, transparent 1px),linear-gradient(90deg, rgba(63,78,224,.035) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 90%);
+  }
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1;transform:none;transition:none;} }
+
+  /* ---------- HEADER ---------- */
+  header{position:sticky;top:0;z-index:50;background:rgba(248,245,238,.7);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:background .25s, border-color .25s, box-shadow .25s;}
+  header.scrolled{background:rgba(248,245,238,.92);border-bottom:1px solid var(--border-soft);box-shadow:var(--shadow-sm);}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:-.01em;}
+  .logo-mark{width:34px;height:34px;border-radius:10px;background:var(--cobalt);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--font-display);font-size:18px;box-shadow:var(--shadow-sm);}
+  .nav-links{display:flex;align-items:center;gap:34px;}
+  .nav-links a{font-size:15px;font-weight:600;color:var(--ink-soft);transition:color .15s;position:relative;}
+  .nav-links a.active{color:var(--ink);}
+  .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:-22px;height:2px;background:var(--cobalt);}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .btn{font-family:var(--font-body);font-weight:700;font-size:14.5px;cursor:pointer;border:none;border-radius:999px;padding:11px 20px;transition:transform .15s, box-shadow .15s, background .15s;}
+  .btn-ghost{background:transparent;color:var(--ink);}
+  .btn-ghost:hover{color:var(--cobalt);}
+  .btn-outline{background:var(--surface);color:var(--ink);border:1.5px solid var(--border);}
+  .btn-outline:hover{border-color:var(--cobalt);color:var(--cobalt-dark);}
+  .btn-primary{background:var(--cobalt);color:#fff;display:inline-flex;align-items:center;gap:6px;box-shadow:0 6px 16px rgba(63,78,224,.28);}
+  .btn-primary:hover{background:var(--cobalt-dark);transform:translateY(-1px);}
+  .btn-lg{padding:15px 28px;font-size:15.5px;}
+  .hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--ink);margin:5px 0;border-radius:2px;transition:transform .25s, opacity .25s;}
+  .mobile-menu{display:none;flex-direction:column;gap:4px;padding:10px 0 20px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:12px 4px;font-weight:600;font-size:15.5px;color:var(--ink-soft);border-bottom:1px solid var(--border-soft);}
+  .mobile-menu a.active{color:var(--cobalt-dark);}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:70px 0 30px;overflow:hidden;}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--cobalt-tint);color:var(--cobalt-dark);font-weight:700;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:22px;}
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--cobalt);}
+  h1.hero-title{font-family:var(--font-display);font-weight:600;font-size:clamp(36px,4.6vw,54px);line-height:1.08;letter-spacing:-.01em;margin:0 0 20px;}
+  .hero-title .accent{color:var(--cobalt);}
+  .hero-sub{font-size:clamp(16px,1.5vw,18px);color:var(--ink-soft);max-width:520px;margin:0 0 30px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+
+  .hero-visual{position:relative;}
+  .flow-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);box-shadow:var(--shadow-lg);padding:30px;}
+  .flow-step{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--radius-sm);background:var(--cream-alt);border:1px solid var(--border-soft);}
+  .flow-step .flow-icon{width:38px;height:38px;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:var(--shadow-sm);}
+  .flow-step b{display:block;font-size:14.5px;}
+  .flow-step span{font-size:12.5px;color:var(--ink-faint);}
+  .flow-arrow{display:flex;justify-content:center;padding:8px 0;color:var(--cobalt);}
+  .flow-outputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+  .flow-output{border-radius:var(--radius-sm);padding:16px;text-align:center;}
+  .flow-output.word{background:var(--cobalt-tint);border:1px solid #D9DEFA;}
+  .flow-output.excel{background:var(--green-tint);border:1px solid #CDEEDE;}
+  .flow-output b{font-size:13px;display:block;}
+  .flow-output.word b{color:var(--cobalt-dark);}
+  .flow-output.excel b{color:var(--green);}
+  .mascot-float{position:absolute;bottom:-22px;right:-14px;width:78px;filter:drop-shadow(0 10px 18px rgba(35,39,34,.14));}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .sec-pad{padding:78px 0;}
+  .sec-pad.tight{padding:56px 0;}
+  .sec-kicker{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--cobalt-dark);margin-bottom:12px;}
+  .sec-kicker.green{color:var(--green);}
+  h2.sec-h{font-family:var(--font-display);font-weight:600;font-size:clamp(28px,3.4vw,40px);letter-spacing:-.01em;margin:0 0 18px;}
+  .sec-lead{color:var(--ink-soft);font-size:16.5px;max-width:640px;margin:0 0 8px;}
+  .center-head{text-align:center;margin:0 auto 48px;}
+  .center-head .sec-lead{margin-left:auto;margin-right:auto;}
+
+  /* ---------- OUR STORY (timeline) ---------- */
+  .story-copy{max-width:660px;margin-bottom:44px;}
+  .timeline{display:grid;grid-template-columns:1fr auto 1fr;gap:0 28px;align-items:center;}
+  .timeline-col{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:26px 26px;box-shadow:var(--shadow-sm);}
+  .timeline-col h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin:0 0 14px;font-weight:700;}
+  .timeline-col ul{margin:0;padding:0;list-style:none;}
+  .timeline-col li{padding:9px 0;border-top:1px solid var(--border-soft);font-size:14.5px;color:var(--ink-soft);}
+  .timeline-col li:first-child{border-top:none;}
+  .timeline-arrow{width:46px;height:46px;border-radius:50%;background:var(--cobalt);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(63,78,224,.3);}
+
+  /* ---------- PROBLEM (before/after) ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+  .split-card{border-radius:var(--radius);padding:32px;border:1px solid var(--border-soft);}
+  .split-card.before{background:var(--surface);}
+  .split-card.after{background:linear-gradient(160deg, var(--cobalt-tint), var(--green-tint));border-color:#DEE3F8;}
+  .split-card h4{font-family:var(--font-display);font-size:20px;font-weight:600;margin:0 0 16px;}
+  .split-card ul{margin:0;padding:0;list-style:none;}
+  .split-card li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;font-size:14.5px;color:var(--ink-soft);}
+  .split-card.before li::before{content:"×";color:#C05C4A;font-weight:800;flex:none;width:18px;}
+  .split-card.after li::before{content:"✓";color:var(--green);font-weight:800;flex:none;width:18px;}
+
+  /* ---------- MISSION ---------- */
+  .mission-block{text-align:center;max-width:760px;margin:0 auto;}
+  .mission-statement{font-family:var(--font-display);font-style:italic;font-weight:500;font-size:clamp(22px,2.8vw,30px);line-height:1.4;color:var(--ink);margin:20px 0 30px;}
+  .audience-inline{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+  .pill{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:700;color:var(--ink-soft);}
+
+  /* ---------- FEATURE GRID ---------- */
+  .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .feat-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:26px;box-shadow:var(--shadow-sm);transition:transform .18s, box-shadow .18s;}
+  .feat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+  .feat-icon{width:42px;height:42px;border-radius:11px;background:var(--cobalt-tint);color:var(--cobalt-dark);display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+  .feat-icon.green{background:var(--green-tint);color:var(--green);}
+  .feat-card h4{font-size:16px;font-weight:700;margin:0 0 8px;}
+  .feat-card p{font-size:14.5px;color:var(--ink-soft);margin:0;}
+
+  /* ---------- WORD+EXCEL ---------- */
+  .we-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;}
+  .we-col{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:34px;box-shadow:var(--shadow-sm);}
+  .we-col h3{font-family:var(--font-display);font-size:24px;font-weight:600;margin:0 0 10px;}
+  .we-col.word h3{color:var(--cobalt-dark);}
+  .we-col.excel h3{color:var(--green);}
+  .we-col p{color:var(--ink-soft);font-size:14.5px;margin:0;}
+  .we-connect{display:flex;align-items:center;justify-content:center;padding:0 22px;}
+  .we-connect .badge-mark{width:56px;height:56px;border-radius:16px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:18px;box-shadow:var(--shadow-md);}
+
+  /* ---------- AI PHILOSOPHY ---------- */
+  .ai-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:44px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;box-shadow:var(--shadow-sm);}
+  .ai-list .check{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;}
+  .ai-list .dot{width:20px;height:20px;border-radius:50%;background:var(--cobalt-tint);color:var(--cobalt-dark);flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:2px;}
+  .ai-list p{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .ai-note{background:var(--cream-alt);border-left:3px solid var(--cobalt);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:20px 22px;}
+  .ai-note p{margin:0;font-size:15px;color:var(--ink);}
+
+  /* ---------- PRINCIPLES ---------- */
+  .prin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .prin-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:26px;}
+  .prin-icon{width:40px;height:40px;border-radius:10px;background:var(--green-tint);color:var(--green);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-weight:800;}
+  .prin-card:nth-child(3n+1) .prin-icon{background:var(--cobalt-tint);color:var(--cobalt-dark);}
+  .prin-card h4{font-size:16px;font-weight:700;margin:0 0 6px;}
+  .prin-card p{font-size:14px;color:var(--ink-soft);margin:0;}
+
+  /* ---------- AUDIENCE ---------- */
+  .aud-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;}
+  .aud-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:22px 18px;text-align:center;}
+  .aud-icon{width:44px;height:44px;margin:0 auto 14px;border-radius:12px;background:var(--cobalt-tint);color:var(--cobalt-dark);display:flex;align-items:center;justify-content:center;}
+  .aud-card:nth-child(even) .aud-icon{background:var(--green-tint);color:var(--green);}
+  .aud-card h4{font-size:14.5px;font-weight:700;margin:0 0 6px;}
+  .aud-card p{font-size:12.5px;color:var(--ink-soft);margin:0;line-height:1.5;}
+
+  /* ---------- TEMPLATES ---------- */
+  .tpl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .tpl-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm);}
+  .tpl-preview{height:100px;background:linear-gradient(150deg, var(--cobalt-tint), var(--cream-alt));position:relative;}
+  .tpl-preview::before{content:"";position:absolute;left:16px;right:16px;top:18px;height:8px;border-radius:4px;background:rgba(63,78,224,.25);}
+  .tpl-preview::after{content:"";position:absolute;left:16px;right:40px;top:34px;height:6px;border-radius:4px;background:rgba(35,39,34,.1);}
+  .tpl-body{padding:16px 16px 18px;}
+  .tpl-tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green);margin-bottom:6px;}
+  .tpl-body h5{font-size:14px;font-weight:700;margin:0;}
+
+  /* ---------- WORKFLOW ---------- */
+  .wf-row{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;}
+  .wf-row::before{content:"";position:absolute;top:24px;left:8%;right:8%;height:2px;background:var(--border);z-index:0;}
+  .wf-step{position:relative;z-index:1;text-align:center;}
+  .wf-num{width:48px;height:48px;border-radius:50%;background:var(--surface);border:2px solid var(--cobalt);color:var(--cobalt-dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:var(--font-display);font-size:17px;margin:0 auto 16px;}
+  .wf-step h4{font-size:15px;font-weight:700;margin:0 0 6px;}
+  .wf-step p{font-size:13.5px;color:var(--ink-soft);margin:0;}
+
+  /* ---------- QUALITY ---------- */
+  .quality-visual{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+  .qv-card{border-radius:var(--radius-sm);padding:22px;border:1px solid var(--border-soft);}
+  .qv-card.before{background:var(--surface);}
+  .qv-card.after{background:var(--surface);border-color:var(--cobalt);}
+  .qv-label{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin-bottom:12px;}
+  .qv-lines span{display:block;height:8px;border-radius:4px;background:var(--border-soft);margin-bottom:8px;}
+  .qv-card.before .qv-lines span:nth-child(1){width:80%;}
+  .qv-card.before .qv-lines span:nth-child(2){width:95%;}
+  .qv-card.before .qv-lines span:nth-child(3){width:60%;margin-left:20px;}
+  .qv-card.before .qv-lines span:nth-child(4){width:88%;}
+  .qv-card.after .qv-lines span{background:var(--cobalt-tint);}
+  .qv-card.after .qv-lines span:nth-child(1){width:55%;height:12px;}
+  .qv-card.after .qv-lines span:nth-child(2){width:100%;}
+  .qv-card.after .qv-lines span:nth-child(3){width:92%;}
+  .qv-card.after .qv-lines span:nth-child(4){width:70%;}
+
+  /* ---------- TRANSPARENCY CTA STRIP ---------- */
+  .trust-strip{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:38px 44px;display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap;box-shadow:var(--shadow-sm);}
+  .trust-strip-text h4{font-size:19px;font-family:var(--font-display);font-weight:600;margin:0 0 6px;}
+  .trust-strip-text p{margin:0;color:var(--ink-soft);font-size:14.5px;max-width:520px;}
+  .trust-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .trust-badges span{font-size:12px;font-weight:700;background:var(--cream-alt);border:1px solid var(--border);border-radius:999px;padding:6px 12px;}
+
+  /* ---------- FUTURE VISION ---------- */
+  .vision-card{background:linear-gradient(155deg, var(--ink) 0%, #2b3140 100%);border-radius:var(--radius);padding:48px 44px;color:#fff;position:relative;overflow:hidden;}
+  .vision-card::before{content:"";position:absolute;top:-100px;right:-80px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle, rgba(63,78,224,.35), transparent 70%);}
+  .vision-card .sec-kicker{color:#A9B4FF;}
+  .vision-card h2{color:#fff;}
+  .vision-card p{color:#C7C9D4;max-width:600px;}
+  .vision-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:26px;position:relative;z-index:1;}
+  .vision-list div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px;font-size:14px;font-weight:600;}
+
+  /* ---------- PEOPLE ---------- */
+  .people-card{background:var(--surface);border:1px solid var(--border-soft);border-radius:var(--radius);padding:44px;text-align:center;max-width:720px;margin:0 auto;box-shadow:var(--shadow-sm);}
+  .people-card p{color:var(--ink-soft);font-size:15.5px;}
+
+  /* ---------- FINAL CTA ---------- */
+  .final-cta{background:linear-gradient(135deg, var(--cobalt-tint), var(--green-tint));border:1px solid #DEE3F8;border-radius:var(--radius);padding:56px 44px;text-align:center;position:relative;}
+  .final-cta h2{margin-bottom:14px;}
+  .final-cta p{color:var(--ink-soft);max-width:520px;margin:0 auto 30px;font-size:16px;}
+  .final-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--cream-alt);border-top:1px solid var(--border-soft);padding:64px 0 32px;}
+  .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:32px;padding-bottom:40px;}
+  .footer-brand p{max-width:260px;color:var(--ink-soft);font-size:14px;margin-top:14px;}
+  .footer-col h5{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin:0 0 14px;font-weight:700;}
+  .footer-col a{display:block;color:var(--ink-soft);font-size:14.5px;margin-bottom:11px;font-weight:500;}
+  .footer-col a:hover{color:var(--cobalt-dark);}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+  .copyright{font-size:13px;color:var(--ink-faint);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:980px){
+    .nav-links{display:none;}
+    .hamburger{display:block;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{order:-1;max-width:440px;margin:0 auto;}
+    .feat-grid{grid-template-columns:repeat(2,1fr);}
+    .aud-grid{grid-template-columns:repeat(3,1fr);}
+    .tpl-grid{grid-template-columns:repeat(2,1fr);}
+    .wf-row{grid-template-columns:repeat(2,1fr);row-gap:32px;}
+    .wf-row::before{display:none;}
+    .prin-grid{grid-template-columns:repeat(2,1fr);}
+    .split{grid-template-columns:1fr;}
+    .we-wrap{grid-template-columns:1fr;}
+    .we-connect{padding:14px 0;}
+    .ai-card{grid-template-columns:1fr;}
+    .timeline{grid-template-columns:1fr;}
+    .timeline-arrow{transform:rotate(90deg);margin:8px auto;}
+    .footer-grid{grid-template-columns:1fr 1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 18px;}
+    .sec-pad{padding:52px 0;}
+    .feat-grid,.aud-grid,.tpl-grid,.prin-grid{grid-template-columns:1fr;}
+    .wf-row{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .trust-strip{flex-direction:column;align-items:flex-start;}
+    .final-cta{padding:40px 24px;}
+    .vision-card{padding:34px 24px;}
+    .vision-list{grid-template-columns:1fr;}
+    .mascot-float{display:none;}
+  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+  :focus-visible{outline:2.5px solid var(--cobalt);outline-offset:2px;}
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header id="siteHeader">
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="WORDY AI home">
+      <span class="logo-mark" role="img" aria-label="WORDY AI logo">W</span> WORDY AI
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/">Home</a>
+      <a href="/word-creator">Word Creator</a>
+      <a href="/excel-creator">Excel Creator</a>
+      <a href="/file-library">File Library</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/about" class="active" aria-current="page">About</a>
+    </nav>
+    <div class="nav-right">
+      <a href="/login" class="btn btn-ghost">Login</a>
+      <a href="/get-started" class="btn btn-primary">Get Started →</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="wrap">
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+      <a href="/">Home</a>
+      <a href="/word-creator">Word Creator</a>
+      <a href="/excel-creator">Excel Creator</a>
+      <a href="/file-library">File Library</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/about" class="active">About</a>
+      <a href="/login">Login</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="eyebrow-dot"></span>About WORDY AI</span>
+      <h1 class="hero-title">We Make Professional Work <span class="accent">Simpler.</span></h1>
+      <p class="hero-sub">WORDY AI was created to make professional document creation faster, easier, and more accessible — giving individuals and organizations a smarter way to turn ideas, information, and data into polished Word and Excel files.</p>
+      <div class="hero-actions">
+        <a href="/get-started" class="btn btn-primary btn-lg">Start Creating →</a>
+        <a href="#story" class="btn btn-outline btn-lg">Our Story</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="flow-card">
+        <div class="flow-step">
+          <div class="flow-icon">💡</div>
+          <div><b>Your Idea</b><span>What you need, in plain words</span></div>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        </div>
+        <div class="flow-step" style="background:var(--cobalt);border-color:var(--cobalt);">
+          <div class="flow-icon"><span style="color:var(--cobalt);font-weight:800;">W</span></div>
+          <div><b style="color:#fff;">WORDY AI</b><span style="color:#DDE1FB;">Structures &amp; generates</span></div>
+        </div>
+        <div class="flow-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+        </div>
+        <div class="flow-outputs">
+          <div class="flow-output word"><b>Word Document</b></div>
+          <div class="flow-output excel"><b>Excel Workbook</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR STORY -->
+<section class="sec-pad" id="story">
+  <div class="wrap">
+    <div class="sec-kicker">Our Story</div>
+    <h2 class="sec-h reveal">Where WORDY AI Came From</h2>
+    <p class="sec-lead story-copy reveal">Professional documents are essential to modern work, but creating them often means spending hours formatting, organizing, calculating, rewriting, and repeating the same tasks. WORDY AI was created to reduce that unnecessary effort.</p>
+
+    <div class="timeline reveal">
+      <div class="timeline-col">
+        <h4>From</h4>
+        <ul>
+          <li>Manual formatting</li>
+          <li>Repetitive office work</li>
+          <li>Spreadsheet preparation</li>
+          <li>Document structuring</li>
+        </ul>
+      </div>
+      <div class="timeline-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+      <div class="timeline-col" style="background:var(--cobalt-tint);border-color:#D9DEFA;">
+        <h4 style="color:var(--cobalt-dark);">To</h4>
+        <ul>
+          <li>AI-assisted generation</li>
+          <li>Smart formatting</li>
+          <li>Structured output</li>
+          <li>Faster workflows</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE PROBLEM -->
+<section class="sec-pad" id="problem" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="sec-kicker">The Problem</div>
+    <h2 class="sec-h reveal">Too Much Time Spent on Work That Isn't the Work</h2>
+    <p class="sec-lead reveal">Many people spend unnecessary time creating repetitive documents, formatting reports, building spreadsheets, organizing tables, and reworking templates for clients or teams.</p>
+
+    <div class="split reveal" style="margin-top:32px;">
+      <div class="split-card before">
+        <h4>Before WORDY AI</h4>
+        <ul>
+          <li>Starting every document from a blank page</li>
+          <li>Manually formatting headings and tables</li>
+          <li>Rebuilding the same spreadsheet structures</li>
+          <li>Copying and adjusting old templates by hand</li>
+          <li>Losing time on layout instead of content</li>
+        </ul>
+      </div>
+      <div class="split-card after">
+        <h4>With WORDY AI</h4>
+        <ul>
+          <li>Describing what's needed in plain language</li>
+          <li>Getting a structured first draft in moments</li>
+          <li>Generating spreadsheets with working formulas</li>
+          <li>Starting from smart, reusable templates</li>
+          <li>Spending more time reviewing, less time building</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="sec-pad">
+  <div class="wrap mission-block">
+    <div class="sec-kicker green">Our Mission</div>
+    <p class="mission-statement reveal">"Make high-quality professional document creation accessible to everyone."</p>
+    <p class="sec-lead reveal" style="margin:0 auto 24px;">WORDY AI helps businesses, offices, freelancers, students, and personal users turn their requirements into organized, useful, professional documents — without requiring advanced design or spreadsheet skills.</p>
+    <div class="audience-inline reveal">
+      <span class="pill">Businesses</span>
+      <span class="pill">Offices</span>
+      <span class="pill">Freelancers</span>
+      <span class="pill">Students</span>
+      <span class="pill">Personal Users</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WORDY AI DOES -->
+<section class="sec-pad" id="product" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="center-head">
+      <div class="sec-kicker" style="justify-content:center;">What WORDY AI Does</div>
+      <h2 class="sec-h reveal">A Complete Toolkit for Professional Documents</h2>
+      <p class="sec-lead reveal">Built around AI-powered Word and Excel generation, smart templates, formatting, and file organization.</p>
+    </div>
+    <div class="feat-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">📄</div>
+        <h4>AI Word Creation</h4>
+        <p>Generate professional reports, proposals, letters, invoices, contracts, and business documents.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">📊</div>
+        <h4>AI Excel Creation</h4>
+        <p>Create structured spreadsheets with rows, columns, formulas, totals, and financial reports.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🗂️</div>
+        <h4>Smart Templates</h4>
+        <p>Start from professionally designed templates and customize them using AI.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">🧩</div>
+        <h4>Intelligent Formatting</h4>
+        <p>Automatically structure headings, tables, spacing, and document layout.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📚</div>
+        <h4>File Library</h4>
+        <p>Keep generated files and reusable templates organized in one place.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon green">⚡</div>
+        <h4>Productivity</h4>
+        <p>Reduce repetitive drafting and administrative work across your workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORD + EXCEL -->
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="center-head">
+      <div class="sec-kicker" style="justify-content:center;">Why Word + Excel Together</div>
+      <h2 class="sec-h reveal">Words and Numbers, Together.</h2>
+      <p class="sec-lead reveal">Modern work rarely lives in one format. A business report may need written analysis and financial tables. A proposal may require structured content and budget calculations. WORDY AI brings both sides of professional work into one intelligent workspace.</p>
+    </div>
+    <div class="we-wrap reveal">
+      <div class="we-col word">
+        <h3>Word</h3>
+        <p>Content, reports, proposals, structure. Everything that needs to be written, explained, and presented clearly.</p>
+      </div>
+      <div class="we-connect" aria-hidden="true"><div class="badge-mark">W</div></div>
+      <div class="we-col excel">
+        <h3>Excel</h3>
+        <p>Tables, formulas, analysis, calculations. Everything that needs to be measured, tracked, and totaled.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI PHILOSOPHY -->
+<section class="sec-pad" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="sec-kicker">How We Think About AI</div>
+    <h2 class="sec-h reveal">AI Should Assist You — Not Replace Your Judgment</h2>
+    <div class="ai-card reveal">
+      <div class="ai-list">
+        <div class="check"><div class="dot">✓</div><p>Drafting</p></div>
+        <div class="check"><div class="dot">✓</div><p>Structuring</p></div>
+        <div class="check"><div class="dot">✓</div><p>Formatting</p></div>
+        <div class="check"><div class="dot">✓</div><p>Calculations</p></div>
+        <div class="check"><div class="dot">✓</div><p>Organization</p></div>
+        <div class="check"><div class="dot">✓</div><p>Repetitive work</p></div>
+      </div>
+      <div class="ai-note">
+        <p>WORDY AI is designed as a productivity assistant — it helps with the heavy lifting, but you remain responsible for reviewing and approving your final documents. That's how we keep the product trustworthy and transparent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRINCIPLES -->
+<section class="sec-pad" id="principles">
+  <div class="wrap">
+    <div class="center-head">
+      <div class="sec-kicker" style="justify-content:center;">Our Principles</div>
+      <h2 class="sec-h reveal">What Guides the Product</h2>
+    </div>
+    <div class="prin-grid reveal">
+      <div class="prin-card"><div class="prin-icon">S</div><h4>Simplicity</h4><p>Professional work should not require unnecessary complexity.</p></div>
+      <div class="prin-card"><div class="prin-icon">P</div><h4>Precision</h4><p>Documents should be structured, organized, and easy to follow.</p></div>
+      <div class="prin-card"><div class="prin-icon">P</div><h4>Productivity</h4><p>AI should reduce repetitive work and save you time.</p></div>
+      <div class="prin-card"><div class="prin-icon">A</div><h4>Accessibility</h4><p>Professional document creation should be easier for more people.</p></div>
+      <div class="prin-card"><div class="prin-icon">T</div><h4>Transparency</h4><p>You should understand how the product works and how your data is handled.</p></div>
+      <div class="prin-card"><div class="prin-icon">U</div><h4>User Control</h4><p>You remain in control of the final result, always.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="sec-pad" id="audience" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="center-head">
+      <div class="sec-kicker" style="justify-content:center;">Who We Build For</div>
+      <h2 class="sec-h reveal">Built for the Way Real Work Gets Done</h2>
+    </div>
+    <div class="aud-grid reveal">
+      <div class="aud-card"><div class="aud-icon">🏢</div><h4>Companies</h4><p>Business reports, proposals, financial documents, operational files.</p></div>
+      <div class="aud-card"><div class="aud-icon">🗃️</div><h4>Offices</h4><p>Administrative workflows and recurring paperwork.</p></div>
+      <div class="aud-card"><div class="aud-icon">🧑‍💻</div><h4>Freelancers</h4><p>Invoices, proposals, client deliverables, spreadsheets.</p></div>
+      <div class="aud-card"><div class="aud-icon">🎓</div><h4>Students</h4><p>Reports, project files, research documents, structured tables.</p></div>
+      <div class="aud-card"><div class="aud-icon">👤</div><h4>Personal Users</h4><p>Organized personal documents and spreadsheets.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMPLATES -->
+<section class="sec-pad" id="templates">
+  <div class="wrap">
+    <div class="sec-kicker">Our Approach to Templates</div>
+    <h2 class="sec-h reveal">Start With a Strong Foundation.</h2>
+    <p class="sec-lead reveal" style="margin-bottom:34px;">Templates aren't just empty documents — they provide structure, consistency, professional formatting, and a faster, reusable starting point.</p>
+    <div class="tpl-grid reveal">
+      <div class="tpl-card">
+        <div class="tpl-preview"></div>
+        <div class="tpl-body"><div class="tpl-tag">Finance</div><h5>Quarterly Budget Report</h5></div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview"></div>
+        <div class="tpl-body"><div class="tpl-tag">HR</div><h5>Employee Onboarding Pack</h5></div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview"></div>
+        <div class="tpl-body"><div class="tpl-tag">Marketing</div><h5>Campaign Proposal</h5></div>
+      </div>
+      <div class="tpl-card">
+        <div class="tpl-preview"></div>
+        <div class="tpl-body"><div class="tpl-tag">Education</div><h5>Research Project Outline</h5></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="sec-pad" id="workflow" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="center-head">
+      <div class="sec-kicker" style="justify-content:center;">How WORDY AI Works</div>
+      <h2 class="sec-h reveal">From Idea to Finished File</h2>
+    </div>
+    <div class="wf-row reveal">
+      <div class="wf-step"><div class="wf-num">01</div><h4>Describe</h4><p>Tell WORDY AI what you need.</p></div>
+      <div class="wf-step"><div class="wf-num">02</div><h4>Generate</h4><p>AI creates the structured document.</p></div>
+      <div class="wf-step"><div class="wf-num">03</div><h4>Customize</h4><p>Review and adjust the result.</p></div>
+      <div class="wf-step"><div class="wf-num">04</div><h4>Export</h4><p>Download the finished Word or Excel file.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITY -->
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="sec-kicker">Professional by Default</div>
+    <h2 class="sec-h reveal">Closer to a Professional Starting Point</h2>
+    <p class="sec-lead reveal">WORDY AI is designed to prioritize clear structure, readable formatting, consistency, organized layouts, useful formulas, and professional presentation. AI helps you get closer to a professional starting point — you retain final control.</p>
+    <div class="quality-visual reveal">
+      <div class="qv-card before">
+        <div class="qv-label">Before</div>
+        <div class="qv-lines"><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="qv-card after">
+        <div class="qv-label" style="color:var(--cobalt-dark);">After WORDY AI</div>
+        <div class="qv-lines"><span></span><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPARENCY -->
+<section class="sec-pad" id="transparency" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="trust-strip reveal">
+      <div class="trust-strip-text">
+        <h4>Built With Transparency in Mind.</h4>
+        <p>WORDY AI provides dedicated information about privacy, payments, subscriptions, refunds, data handling, AI usage, and account responsibilities.</p>
+        <div class="trust-badges">
+          <span>Privacy</span><span>Payments</span><span>Subscriptions</span><span>Refunds</span><span>Data Handling</span><span>AI Usage</span>
+        </div>
+      </div>
+      <a href="/policies" class="btn btn-primary btn-lg">Read Our Policies →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FUTURE VISION -->
+<section class="sec-pad" id="vision">
+  <div class="wrap">
+    <div class="vision-card reveal">
+      <div class="sec-kicker">Our Vision</div>
+      <h2 class="sec-h">Where We're Going</h2>
+      <p>WORDY AI aims to evolve beyond simple document generation, toward a broader, more intelligent workspace for professional document workflows.</p>
+      <div class="vision-list">
+        <div>Smarter document workflows</div>
+        <div>More powerful spreadsheet automation</div>
+        <div>Better template personalization</div>
+        <div>Team collaboration</div>
+        <div>Expanded file formats</div>
+        <div>Intelligent document organization</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PEOPLE -->
+<section class="sec-pad" id="people" style="background:var(--cream-alt);">
+  <div class="wrap">
+    <div class="people-card reveal">
+      <div class="sec-kicker" style="justify-content:center;">A Product Built Around Real Work</div>
+      <h2 class="sec-h" style="font-size:26px;">The People Behind WORDY AI</h2>
+      <p>WORDY AI is built by a team focused on one idea: professional work should be easier to create. As the team and story grow, this space will introduce the people building the product.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="final-cta reveal">
+      <h2 class="sec-h">Ready to Make Professional Work Simpler?</h2>
+      <p>Turn your ideas, data, and recurring work into polished Word and Excel files with WORDY AI.</p>
+      <div class="final-actions">
+        <a href="/get-started" class="btn btn-primary btn-lg">Start Creating →</a>
+        <a href="/file-library" class="btn btn-outline btn-lg">Explore the Library</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo" aria-label="WORDY AI home"><span class="logo-mark" role="img" aria-label="WORDY AI logo">W</span> WORDY AI</a>
+        <p>AI-powered Word and Excel document creation, built for teams that move fast.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Product</h5>
+        <a href="/word-creator">Word Creator</a>
+        <a href="/excel-creator">Excel Creator</a>
+        <a href="/templates">Templates</a>
+        <a href="/file-library">File Library</a>
+        <a href="/pricing">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="/about">About</a>
+        <a href="/support">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="/help">Help Center</a>
+        <a href="/faq">FAQ</a>
+        <a href="/support">Contact Support</a>
+      </div>
+      <div class="footer-col">
+        <h5>Legal</h5>
+        <a href="/policies#privacy">Privacy Policy</a>
+        <a href="/policies#terms">Terms of Service</a>
+        <a href="/policies#refunds">Refund Policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="copyright">© 2026 WORDY AI. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 12);
+  }, { passive:true });
+
+  // Hamburger / mobile menu
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburgerBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>

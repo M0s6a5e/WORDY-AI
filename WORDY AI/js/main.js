@@ -140,21 +140,6 @@
   }
 
   /* -----------------------------------------------------------
-     Placeholder navigation handling
-     (routes referenced in the spec don't exist yet on this
-     static build, so we prevent dead navigation and let the
-     user know where the click would take them)
-  ----------------------------------------------------------- */
-  document.querySelectorAll("[data-route]").forEach(function (el) {
-    el.addEventListener("click", function (e) {
-      var route = el.getAttribute("data-route");
-      if (!route || route.charAt(0) === "#") return;
-      // Real app: window.location.href = route;
-      // Left as a no-op placeholder in this static homepage build.
-    });
-  });
-
-  /* -----------------------------------------------------------
      Current year in footer
   ----------------------------------------------------------- */
   var yearEl = document.getElementById("current-year");

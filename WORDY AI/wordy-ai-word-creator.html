@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WORDY AI — Document Creator Studio</title>
+<meta name="description" content="Word document creator studio. Edit, refine with AI, and export professional reports." />
+<link rel="icon" href="assets/images/wordy-ai-logo.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="css/word-creator.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-name">WORDY AI</span>
+    <span class="fmt-tag">▤ .DOCX Studio</span>
+    <nav class="topnav"><a href="wordy-ai-dashboard.html">Projects</a><a href="wordy-ai-dashboard.html#templates">Templates</a><a href="wordy-ai-dashboard.html#files">Archive</a></nav>
+  </div>
+  <div class="doc-context">
+    <span class="doc-title" id="doc-editable-title" contenteditable="true" spellcheck="false" title="Click to rename">Quarterly Business Performance Report - Q1 2026</span>
+    <span class="saved-badge"><span class="dot"></span>Saved to My Files</span>
+  </div>
+  <div class="top-actions">
+    <div class="mode-switch"><button id="btn-mode-edit" class="on">Edit Mode</button><button id="btn-mode-preview">Preview Mode</button></div>
+    <button class="icon-btn" onclick="setDocZoom(1.1)" title="Zoom">⤢</button>
+    <button class="icon-btn" id="star-btn" onclick="toggleStar(this)" title="Star">☆</button>
+    <button class="ai-toggle" id="ai-panel-toggle">✦ AI Studio</button>
+    <button class="btn">Save to My Files</button>
+    <button class="btn btn-primary" onclick="window.print()">⤓ Export</button>
+    <div class="avatar" title="Enterprise Analyst Tier">EA</div>
+  </div>
+</header>
+<div class="workspace">
+  <aside class="sidebar" id="left-sidebar">
+    <div class="side-head">
+      <div class="studio-row">
+        <div class="studio-id"><div class="w-mark">W</div><div><b>WORDY Studio</b><span>Enterprise Analyst Tier</span></div></div>
+        <button class="icon-btn" id="toggle-drawer-btn" title="Collapse">«</button>
+      </div>
+      <button class="new-doc" onclick="location.reload()">＋ New Document</button>
+    </div>
+    <div class="side-tabs">
+      <button id="tab-outline" class="on" onclick="switchLeftTab('outline')">☰ Document Outline</button>
+      <button id="tab-pages" onclick="switchLeftTab('pages')">◇ Pages (3)</button>
+    </div>
+    <div class="side-body">
+      <div id="view-outline">
+        <div class="sec-label">Document Sections</div>
+        <a class="outline-link on" href="#sec-executive-summary"><span class="mini-dot"></span>Executive Summary</a>
+        <a class="outline-link" href="#sec-business-overview"><span class="mini-dot"></span>Business Overview</a>
+        <a class="outline-link" href="#sec-financial-performance"><span class="mini-dot"></span>Financial Performance (Table)</a>
+        <a class="outline-link" href="#sec-key-findings"><span class="mini-dot"></span>Key Findings</a>
+        <a class="outline-link" href="#sec-strategic-recommendations"><span class="mini-dot"></span>Strategic Recommendations</a>
+        <a class="outline-link" href="#sec-conclusion"><span class="mini-dot"></span>Conclusion &amp; Next Steps</a>
+        <div class="sec-label" style="margin-top:16px">Linked Modules</div>
+        <a class="link-row" href="wordy-ai-excel-creator.html">▦ Spreadsheet Sheets <span class="live-pill">1 Live</span></a>
+        <a class="link-row" href="wordy-ai-dashboard.html">◷ Back to Dashboard <span class="ver">v3.2</span></a>
+      </div>
+      <div id="view-pages" style="display:none">
+        <div class="sec-label">Thumbnails</div>
+        <a class="link-row" href="#">📄 Page 1 (Active) — Cover &amp; Summary</a>
+        <a class="link-row" href="#">📄 Page 2 — Metrics &amp; Analysis</a>
+        <a class="link-row" href="#">📄 Page 3 — Sign-off &amp; Annex</a>
+      </div>
+    </div>
+    <div class="side-foot">
+      <a class="link-row" href="#">📖 Knowledge Base</a>
+      <a class="link-row" href="#">⚙ Settings</a>
+    </div>
+  </aside>
+  <main class="center">
+    <div class="ribbon">
+      <div class="ribbon-group">
+        <button class="fmt-btn" title="Undo">↩</button><button class="fmt-btn" title="Redo">↪</button>
+        <select><option>Heading 1</option><option>Heading 2</option><option selected>Normal Text</option><option>Executive Callout</option></select>
+        <select><option selected>Plus Jakarta Sans</option><option>Inter</option><option>Georgia</option><option>JetBrains Mono</option></select>
+        <select><option>10 pt</option><option>11 pt</option><option selected>12 pt</option><option>14 pt</option><option>18 pt</option></select>
+        <button class="fmt-btn on"><b>B</b></button><button class="fmt-btn"><i>I</i></button><button class="fmt-btn"><u>U</u></button>
+        <button class="fmt-btn">☰ Table</button>
+      </div>
+      <div class="ribbon-meta"><span>Words: <b>1,482</b></span>•<span>Reading: <b>6 min</b></span>
+        <span class="zoom-btns"><button onclick="setDocZoom(0.8)">80%</button><button class="on" onclick="setDocZoom(1)">100%</button><button onclick="setDocZoom(1.2)">120%</button></span>
+      </div>
+    </div>
+    <div class="canvas-scroll" id="canvas-scroll-container">
+      <div style="width:100%;max-width:920px">
+      <article class="paper" id="paper">
+        <div class="doc-top">
+          <span class="k"><span class="blue-dot"></span>WORDY ENTERPRISE / Q1 PERFORMANCE REPORT</span>
+          <span style="display:flex;gap:8px;align-items:center"><span class="mono" style="font-size:11px;color:var(--muted)">DOC-ID: WRD-2026-Q1-094</span><span class="conf">CONFIDENTIAL</span></span>
+        </div>
+        <h1>Quarterly Business Performance Report</h1>
+        <p class="sub">Fiscal Period: Q1 2026 • Prepared by Strategic Operations &amp; Analysis</p>
+        <div class="meta"><span>Published: March 31, 2026</span>•<span>Author: Senior Advisory Board</span>•<span>Distribution: Executive Committee</span></div>
+        <hr style="border:0;border-top:1px solid var(--border);margin:20px 0" />
+        <section id="sec-executive-summary">
+          <h2><span class="n">01.</span> Executive Summary</h2>
+          <p>During the first quarter of fiscal year 2026, Wordy Studio demonstrated consistent acceleration across all primary product matrices. Consolidated operational revenue surpassed adjusted estimates by <strong class="hl">14.8%</strong>, propelled by accelerated enterprise adoption of automated analytical report generation and integrated spreadsheet synthesis pipelines.</p>
+          <p>Core operational efficiencies resulted in a 310 basis point margin expansion compared to the prior fiscal year. Capital deployment remained disciplined, prioritizing the expansion of self-hosted enterprise model orchestration and strict zero-retention privacy protocols.</p>
+          <div class="quote">"The unification of physical-grade Word layout semantics with verified Excel computational grids represents the highest leverage capability unlocked this quarter."</div>
+        </section>
+        <section id="sec-business-overview">
+          <h2><span class="n">02.</span> Business Overview &amp; Market Alignment</h2>
+          <p>Market demand for tactile, calm desktop intelligence suites has shifted from experimental chat bubbles toward deterministic document outputs. Customer retention across Fortune 500 audit and finance organizations held steady at 98.4%, validating our architectural decision to anchor interfaces in authentic stationery design tokens.</p>
+        </section>
+        <section id="sec-financial-performance">
+          <h2><span class="n">03.</span> Financial Performance Matrix <span class="sync-pill" style="margin-left:auto">Live Sync: Q1-Actuals.xlsx</span></h2>
+          <div class="fintable"><table>
+            <thead><tr><th>Department / Unit</th><th style="text-align:right">Q1 Actual Revenue</th><th style="text-align:right">Budget Target</th><th style="text-align:right">YoY Growth</th><th style="text-align:center">Audit Status</th></tr></thead>
+            <tbody>
+              <tr><td>● Enterprise Core Intelligence</td><td class="num">$14,820,000</td><td class="num" style="color:var(--muted)">$12,500,000</td><td class="num" style="color:var(--green)">+22.4%</td><td style="text-align:center"><span class="ok-pill">Verified</span></td></tr>
+              <tr><td>● Financial Synthesizer (Excel AI)</td><td class="num">$8,450,000</td><td class="num" style="color:var(--muted)">$7,900,000</td><td class="num" style="color:var(--green)">+18.1%</td><td style="text-align:center"><span class="ok-pill">Verified</span></td></tr>
+              <tr><td>● Executive Report Automation</td><td class="num">$5,130,000</td><td class="num" style="color:var(--muted)">$4,800,000</td><td class="num" style="color:var(--green)">+9.2%</td><td style="text-align:center"><span class="ok-pill">Verified</span></td></tr>
+              <tr><td>Consolidated Total</td><td class="num" style="color:var(--blue)">$28,400,000</td><td class="num">$25,200,000</td><td class="num" style="color:var(--green)">+17.8%</td><td style="text-align:center;color:var(--muted)">Consolidated</td></tr>
+            </tbody>
+          </table></div>
+        </section>
+        <section id="sec-key-findings">
+          <h2><span class="n">04.</span> Key Analytical Findings</h2>
+          <ul class="findings">
+            <li><span class="tick">✓</span><span><b>Report Throughput Velocity:</b> Executive document compile cycles declined from 4.2 hours to 11 minutes per briefing.</span></li>
+            <li><span class="tick">✓</span><span><b>Zero Hallucination Compliance:</b> Formula verification layers prevented 100% of mathematical inconsistencies before export.</span></li>
+            <li><span class="tick">✓</span><span><b>Cross-Format Parity:</b> Bidirectional compilation between `.docx` narratives and `.xlsx` workbooks maintained data uniformity.</span></li>
+          </ul>
+        </section>
+        <section id="sec-strategic-recommendations">
+          <h2><span class="n">05.</span> Strategic Recommendations <span class="ai-flag">✦ AI Suggested Revision Available</span></h2>
+          <p>Based upon the quarterly review, Strategic Operations recommends allocating 25% incremental engineering compute to local-first document caching. Furthermore, the committee advises formalizing automated quarterly roll-ups across all subsidiary holdings by Q2 end.</p>
+        </section>
+        <section id="sec-conclusion">
+          <h2><span class="n">06.</span> Conclusion &amp; Next Steps</h2>
+          <p>Q1 validates the document-first architecture. Next: expand sovereign local-sync, ship template library v4, and link every narrative claim to a live workbook cell.</p>
+        </section>
+        <div class="doc-foot"><span>WORDY Studio • Confidential &amp; Proprietary</span><span class="mono">Page 1 of 3 • <a href="#" style="color:var(--blue)">Go to Next Page →</a></span></div>
+      </article>
+      <div class="quickbar"><span class="q">✦ Quick Prompt</span><button class="chip" onclick="insertAiCommand('Summarize current page')">Summarize Page</button><button class="chip" onclick="insertAiCommand('Verify table math')">Verify Math</button><button class="chip" onclick="insertAiCommand('Expand executive summary')">Expand Section</button><button class="go" onclick="setPromptText('Compose new section: ')">Compose New →</button></div>
+      </div>
+    </div>
+  </main>
+  <aside class="ai" id="ai-panel">
+    <div class="ai-head"><div><h3>✦ WORDY AI Assistant</h3><span class="ctx"><span class="dot" style="color:var(--green)"></span>Context: Full Document Active</span></div><div style="display:flex;gap:6px;align-items:center"><span class="mono" style="font-size:11px;color:var(--muted);background:var(--panel);padding:2px 8px;border-radius:6px">v3</span><button class="icon-btn" id="close-ai-panel">✕</button></div></div>
+    <div class="ai-body">
+      <div class="engine"><span style="color:var(--muted)">Active Engine:</span><b>⚡ Editorial Prose 4.5</b></div>
+      <div><div class="sec-label">Quick Refinements</div><div class="chips">
+        <button onclick="setPromptText('Make the tone more professional and executive-ready.')">Make More Professional</button>
+        <button onclick="setPromptText('Summarize key findings into 3 bullets.')">Summarize</button>
+        <button onclick="setPromptText('Expand YoY growth metrics.')">Expand Narrative</button>
+        <button onclick="setPromptText('Fix grammar & tone.')">Fix Grammar &amp; Tone</button>
+        <button onclick="setPromptText('Synthesize financial comparison table.')">Add Financial Section</button>
+      </div></div>
+      <div class="diff" id="diff-card">
+        <div class="diff-head"><span>◉ Suggested Revision</span><span class="diff-ver">Diff v3.2</span></div>
+        <div style="font-size:12px;color:var(--muted)">Target: Strategic Recommendations</div>
+        <div class="orig"><b style="font-size:10px;color:#B3261E">ORIGINAL</b><p style="margin:4px 0"><s>Based upon the quarterly review, Strategic Operations recommends allocating 25% incremental engineering compute to local-first caching…</s></p></div>
+        <div class="sugg"><b style="font-size:10px;color:var(--green)">SUGGESTED ENHANCEMENT</b><p style="margin:4px 0">Pursuant to Q1 actuals, we recommend a formal reallocation of <b>25% engineering capital</b> toward local-first sovereign caching, guaranteeing sub-second latency for executive roll-ups.</p></div>
+        <div class="diff-actions"><button class="apply" onclick="applyDiffChanges()">Apply Changes</button><button class="reject" onclick="rejectDiffChanges()">Reject</button></div>
+      </div>
+      <div class="ai-box"><label for="ai-instruction">AI Command / Instruction — Markdown supported</label>
+        <div class="ai-input"><textarea id="ai-instruction" rows="4" placeholder="Tell WORDY AI what to refine, rewrite, or calculate..."></textarea>
+        <div class="ai-input-foot"><span style="color:var(--faint);font-size:13px">📎 ⊞</span><button class="refine" onclick="executeAiRefinement()">‹ Refine Document</button></div></div>
+      </div>
+    </div>
+    <div class="statusbar"><span><span class="dot" style="color:var(--green)"></span> Sovereign Local-Sync</span><span class="mono">Tokens: 1,420</span></div>
+  </aside>
+</div>
+<div class="toast" id="toast"><span class="check">✓</span><span id="toast-msg">Done</span></div>
+<script src="js/word-creator.js"></script>
+</body>
+</html>

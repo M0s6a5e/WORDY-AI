@@ -625,6 +625,11 @@
     .sidebar.open { left: 0; }
     .hamburger-btn { display: flex; }
     .settings-grid { grid-template-columns: 1fr; }
+    .view-header { flex-direction: column; align-items: flex-start; }
+    .quick-start-actions { width: 100%; }
+    .quick-start-actions .btn { flex: 1; justify-content: center; }
+    .topbar-right .btn span { display: none; }
+    .topbar-right .btn { padding: 8px 10px; }
   }
 </style>
 </head>
@@ -1237,12 +1242,12 @@
       </article>
     `).join('');
 
-    // Click card opens simulation
+    // Click card opens the matching creator studio
     grid.querySelectorAll('.project-card').forEach(card => {
       card.addEventListener('click', () => {
         const id = parseInt(card.dataset.id);
         const p = projects.find(x => x.id === id);
-        toast(`Opening “${p.title}”...`);
+        window.location.href = p.type === 'word' ? 'wordy-ai-word-creator.html' : 'wordy-ai-excel-creator.html';
       });
     });
 
@@ -1322,7 +1327,7 @@
   }
 
   window.useTemplate = function(title, type) {
-    createAIProject(title, type);
+    window.location.href = type === 'word' ? 'wordy-ai-word-creator.html' : 'wordy-ai-excel-creator.html';
   };
 
   /* ---------------- CREATE NEW DOCUMENT MODAL ---------------- */
@@ -1363,7 +1368,10 @@
     setTimeout(() => {
       newProject.status = 'ready';
       renderProjects();
-      toast(`“${newProject.title}” is ready ✓`);
+      toast(`“${newProject.title}” is ready ✓ — opening studio…`);
+      setTimeout(() => {
+        window.location.href = type === 'word' ? 'wordy-ai-word-creator.html' : 'wordy-ai-excel-creator.html';
+      }, 900);
     }, 2400);
   }
 

@@ -1147,8 +1147,8 @@
         <div class="plan-badge" id="plan-badge">Most Popular</div>
         <div class="plan-name-row">
           <span class="plan-name" id="plan-name">Professional</span>
-          <span class="plan-price-inline" id="plan-price">$19</span>
-          <span class="plan-price-period">/month</span>
+          <span class="plan-price-inline" id="plan-price">$1</span>
+          <span class="plan-price-period">/week</span>
         </div>
         <p class="plan-desc" id="plan-desc">For freelancers and individuals who create documents regularly.</p>
         <ul class="plan-features" id="plan-features">
@@ -1187,17 +1187,17 @@
           <button class="plan-option" data-plan="free" aria-label="Select Free plan">
             <div class="plan-option-name">Free</div>
             <div class="plan-option-price">$0</div>
-            <div class="plan-option-per">/ month</div>
+            <div class="plan-option-per">/ forever</div>
           </button>
           <button class="plan-option selected" data-plan="professional" aria-label="Select Professional plan, currently selected">
             <div class="plan-option-name">Professional</div>
-            <div class="plan-option-price">$19</div>
-            <div class="plan-option-per">/ month</div>
+            <div class="plan-option-price">$1</div>
+            <div class="plan-option-per">/ week</div>
           </button>
           <button class="plan-option" data-plan="business" aria-label="Select Business plan">
             <div class="plan-option-name">Business</div>
-            <div class="plan-option-price">$49</div>
-            <div class="plan-option-per">/ month</div>
+            <div class="plan-option-price">$3</div>
+            <div class="plan-option-per">/ week</div>
           </button>
         </div>
       </div>
@@ -1339,11 +1339,11 @@
         </div>
         <div class="order-row">
           <span class="order-label">Billing</span>
-          <span class="order-value">Monthly</span>
+          <span class="order-value">Weekly</span>
         </div>
         <div class="order-row">
           <span class="order-label">Subtotal</span>
-          <span class="order-value" id="summary-subtotal">$19.00</span>
+          <span class="order-value" id="summary-subtotal">$1.00</span>
         </div>
         <div class="order-row" id="discount-row" style="display:none">
           <span class="order-label" style="color:var(--green)">Discount</span>
@@ -1352,7 +1352,7 @@
 
         <div class="order-total-row">
           <span class="order-total-label">Total due</span>
-          <span class="order-total-amount" id="summary-total">$19.00</span>
+          <span class="order-total-amount" id="summary-total">$1.00</span>
         </div>
 
         <div class="order-secure" role="note">
@@ -1388,7 +1388,7 @@
         </div>
         <div class="state-title">Payment successful</div>
         <p class="state-sub">Your WORDY AI subscription is now active. A receipt has been sent to your email.</p>
-        <a href="index.html" class="btn-primary-sm" aria-label="Go to your dashboard">
+        <a href="wordy-ai-dashboard.html#billing" class="btn-primary-sm" aria-label="Go to your dashboard">
           Go to Dashboard
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1420,7 +1420,7 @@
     <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" width="18" height="18">
       <path d="M17 10H3M11 4l6 6-6 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <span id="sticky-pay-text">Pay $19.00</span>
+    <span id="sticky-pay-text">Pay $1.00</span>
   </button>
 </div>
 
@@ -1433,13 +1433,13 @@ const PLANS = {
     price: 0,
     currency: '$',
     badge: null,
-    desc: 'Try WORDY AI with a handful of documents each month.',
+    desc: 'Start creating documents today — no credit card required.',
     features: ['5 AI documents / month', 'Word & Excel export', 'Basic template access'],
     summaryBadge: '✦ Free Plan',
   },
   professional: {
     name: 'Professional',
-    price: 19,
+    price: 1,
     currency: '$',
     badge: 'Most Popular',
     desc: 'For freelancers and individuals who create documents regularly.',
@@ -1448,7 +1448,7 @@ const PLANS = {
   },
   business: {
     name: 'Business',
-    price: 49,
+    price: 3,
     currency: '$',
     badge: 'For Teams',
     desc: 'For teams and offices producing documents at scale.',
@@ -1695,6 +1695,9 @@ function updatePlanUI(planKey) {
 
   document.getElementById('plan-name').textContent = plan.name;
   document.getElementById('plan-price').textContent = plan.currency + plan.price;
+  // Update the period label dynamically
+  const periodEl = document.querySelector('.plan-price-period');
+  if (periodEl) periodEl.textContent = plan.price === 0 ? '/ forever' : '/ week';
   document.getElementById('plan-desc').textContent = plan.desc;
 
   const featuresEl = document.getElementById('plan-features');

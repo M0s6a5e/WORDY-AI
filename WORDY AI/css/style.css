@@ -171,6 +171,32 @@ svg { display: block; }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(63,76,224,0.3); background: var(--primary-dark); }
 .btn-primary:hover svg { transform: translateX(3px); }
 
+.btn-nav-cta {
+  background: linear-gradient(135deg, var(--primary) 0%, #2e39b0 50%, var(--green-dark) 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(63,76,224,0.28);
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background-position .4s var(--ease);
+}
+.btn-nav-cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform .5s var(--ease);
+}
+.btn-nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(63,76,224,0.38);
+  background-position: 100% 50%;
+}
+.btn-nav-cta:hover::after { transform: translateX(100%); }
+.btn-nav-cta:hover svg { transform: translateX(3px); }
+
 .btn-secondary {
   background: transparent;
   color: var(--ink);

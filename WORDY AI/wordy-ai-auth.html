@@ -542,7 +542,7 @@
 
               <div class="row-between">
                 <span></span>
-                <a class="forgot-link" href="#">Forgot password?</a>
+                <a class="forgot-link" href="auth-recovery.html">Forgot password?</a>
               </div>
 
               <button type="submit" class="btn-primary">
@@ -788,8 +788,30 @@
     }
   });
 
-  // Prevent actual submission (demo)
-  document.querySelectorAll('form').forEach(f => f.addEventListener('submit', e => e.preventDefault()));
+  // Form submission redirect to workspace
+  document.querySelectorAll('form').forEach(f => {
+    f.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = f.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.textContent = 'Signing in...';
+        btn.disabled = true;
+      }
+      setTimeout(() => {
+        window.location.href = 'wordy-ai-dashboard.html';
+      }, 400);
+    });
+  });
+
+  // Google sign in buttons
+  document.querySelectorAll('.btn-google').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.innerHTML = 'Connecting to Google...';
+      setTimeout(() => {
+        window.location.href = 'wordy-ai-dashboard.html';
+      }, 400);
+    });
+  });
 </script>
 
 </body>

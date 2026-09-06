@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WORDY AI — Account Recovery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* =============================================
+       CSS VARIABLES — WORDY AI DESIGN SYSTEM
+    ============================================= */
+    :root {
+      --cream:          #F7F4EE;
+      --cream-dark:     #EDE8DF;
+      --cobalt:         #2255CC;
+      --cobalt-dark:    #1A44AA;
+      --cobalt-light:   #EEF3FC;
+      --cobalt-glow:    rgba(34, 85, 204, 0.08);
+      --green:          #27A96A;
+      --green-light:    #EBF8F2;
+      --green-dark:     #1E8A55;
+      --amber:          #D97B2A;
+      --amber-light:    #FEF3E8;
+      --red:            #D63B3B;
+      --red-light:      #FEECEC;
+      --charcoal:       #1A1D27;
+      --charcoal-mid:   #3A3F50;
+      --muted:          #7A8198;
+      --border:         #DDD9D0;
+      --border-light:   #EAE7E0;
+      --surface:        #FFFFFF;
+      --shadow-sm:      0 1px 3px rgba(26,29,39,0.07), 0 1px 2px rgba(26,29,39,0.04);
+      --shadow-md:      0 4px 16px rgba(26,29,39,0.09), 0 1px 4px rgba(26,29,39,0.05);
+      --shadow-lg:      0 12px 40px rgba(26,29,39,0.12), 0 2px 8px rgba(26,29,39,0.06);
+      --radius-sm:      8px;
+      --radius-md:      14px;
+      --radius-lg:      20px;
+      --font:           'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --transition:     0.18s ease;
+    }
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--font);
+      background-color: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* =============================================
+       BACKGROUND GRID & GLOW
+    ============================================= */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(var(--border-light) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.5;
+    }
+
+    .bg-glow {
+      position: fixed;
+      top: -180px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, var(--cobalt-glow) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-glow-bottom {
+      position: fixed;
+      bottom: -200px;
+      right: -100px;
+      width: 600px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(39, 169, 106, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =============================================
+       PAGE WRAPPER
+    ============================================= */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px 48px;
+    }
+
+    /* =============================================
+       SCREEN MANAGEMENT
+    ============================================= */
+    .screen { display: none; width: 100%; max-width: 480px; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; }
+
+    /* Demo Nav */
+    .demo-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: var(--charcoal);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      z-index: 999;
+      padding: 0;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+    }
+    .demo-nav::-webkit-scrollbar { display: none; }
+    .demo-nav-inner {
+      display: inline-flex;
+      padding: 0 8px;
+    }
+    .demo-btn {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.55);
+      padding: 10px 12px;
+      font: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color var(--transition);
+      border-bottom: 2px solid transparent;
+    }
+    .demo-btn:hover { color: #fff; }
+    .demo-btn.active { color: #fff; border-bottom-color: var(--cobalt); }
+
+    body:has(.demo-nav) .page-wrapper { padding-top: 56px; }
+
+    /* =============================================
+       LOGO
+    ============================================= */
+    .auth-logo-wrap {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .auth-logo {
+      height: 36px;
+      width: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Logo SVG inline fallback (since assets/images/wordy-ai-logo.svg may not exist in demo) */
+    .logo-svg-inline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--cobalt);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg { display: block; }
+    .logo-wordmark {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: -0.02em;
+    }
+    .logo-wordmark span { color: var(--cobalt); }
+
+    /* =============================================
+       AUTH CARD
+    ============================================= */
+    .auth-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      padding: 40px 40px 36px;
+      width: 100%;
+    }
+
+    /* =============================================
+       MASCOT / ILLUSTRATION
+    ============================================= */
+    .mascot-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .mascot-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .mascot-circle.blue { background: var(--cobalt-light); }
+    .mascot-circle.green { background: var(--green-light); }
+    .mascot-circle.amber { background: var(--amber-light); }
+    .mascot-circle.red   { background: var(--red-light); }
+
+    /* =============================================
+       HEADINGS & TEXT
+    ============================================= */
+    .auth-heading {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtext {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .masked-email {
+      font-weight: 600;
+      color: var(--charcoal-mid);
+    }
+
+    /* =============================================
+       FORM ELEMENTS
+    ============================================= */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal-mid);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .form-input-wrap {
+      position: relative;
+    }
+
+    .form-input {
+      display: block;
+      width: 100%;
+      padding: 11px 14px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--charcoal);
+      background: var(--cream);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      -webkit-appearance: none;
+    }
+
+    .form-input::placeholder { color: var(--muted); }
+
+    .form-input:focus {
+      border-color: var(--cobalt);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(34, 85, 204, 0.12);
+    }
+
+    .form-input.has-toggle { padding-right: 46px; }
+
+    .form-input.error {
+      border-color: var(--red);
+      background: #fff;
+    }
+    .form-input.error:focus {
+      box-shadow: 0 0 0 3px rgba(214, 59, 59, 0.12);
+    }
+
+    .form-input.success {
+      border-color: var(--green);
+    }
+
+    /* Password toggle */
+    .pw-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      transition: color var(--transition);
+    }
+    .pw-toggle:hover { color: var(--charcoal-mid); }
+    .pw-toggle:focus-visible {
+      outline: 2px solid var(--cobalt);
+      outline-offset: 1px;
+    }
+
+    /* Field messages */
+    .field-msg {
+      font-size: 12px;
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 500;
+    }
+    .field-msg.error { color: var(--red); }
+    .field-msg.success { color: var(--green); }
+    .field-msg.info { color: var(--muted); }
+
+    /* =============================================
+       PASSWORD REQUIREMENTS
+    ============================================= */
+    .pw-requirements {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+
+    .pw-req-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .pw-req-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .pw-req-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+    .pw-req-item.met { color: var(--green); }
+
+    .req-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all var(--transition);
+      font-size: 9px;
+    }
+    .pw-req-item.met .req-icon {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    /* =============================================
+       STRENGTH INDICATOR
+    ============================================= */
+    .strength-wrap {
+      margin-bottom: 18px;
+    }
+
+    .strength-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+    .strength-label-title { font-weight: 600; color: var(--charcoal-mid); }
+    .strength-label-value { font-weight: 700; }
+    .strength-label-value.weak   { color: var(--red); }
+    .strength-label-value.medium { color: var(--amber); }
+    .strength-label-value.strong { color: var(--green); }
+
+    .strength-bar-track {
+      display: flex;
+      gap: 4px;
+      height: 5px;
+    }
+    .strength-seg {
+      flex: 1;
+      height: 100%;
+      border-radius: 99px;
+      background: var(--border);
+      transition: background 0.3s ease;
+    }
+    .strength-seg.active.weak   { background: var(--red); }
+    .strength-seg.active.medium { background: var(--amber); }
+    .strength-seg.active.strong { background: var(--green); }
+
+    /* =============================================
+       BUTTONS
+    ============================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: all var(--transition);
+      letter-spacing: -0.01em;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .btn:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+
+    .btn-primary {
+      background: var(--cobalt);
+      color: #fff;
+      width: 100%;
+      box-shadow: 0 1px 3px rgba(34,85,204,0.2);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background: var(--cobalt-dark);
+      box-shadow: 0 4px 12px rgba(34,85,204,0.28);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .btn-secondary {
+      background: var(--cream);
+      color: var(--charcoal-mid);
+      width: 100%;
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--cream-dark);
+      border-color: var(--border);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--cobalt);
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .btn-ghost:hover { background: var(--cobalt-light); }
+
+    .btn-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    .spinner.dark {
+      border-color: rgba(34,85,204,0.25);
+      border-top-color: var(--cobalt);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* =============================================
+       STATUS MESSAGES (aria-live)
+    ============================================= */
+    .status-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+      font-weight: 500;
+    }
+    .status-banner.success { background: var(--green-light); color: var(--green-dark); border: 1px solid rgba(39,169,106,0.2); }
+    .status-banner.error   { background: var(--red-light);   color: var(--red);        border: 1px solid rgba(214,59,59,0.2); }
+    .status-banner.info    { background: var(--cobalt-light); color: var(--cobalt-dark); border: 1px solid rgba(34,85,204,0.15); }
+    .status-banner.warning { background: var(--amber-light); color: var(--amber);       border: 1px solid rgba(217,123,42,0.2); }
+    .status-banner-icon { flex-shrink: 0; margin-top: 1px; }
+
+    /* =============================================
+       SUCCESS STATE
+    ============================================= */
+    .success-icon-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .success-icon-circle {
+      width: 72px;
+      height: 72px;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes pop {
+      from { transform: scale(0.6); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    /* =============================================
+       DIVIDER
+    ============================================= */
+    .divider {
+      height: 1px;
+      background: var(--border-light);
+      margin: 20px 0;
+    }
+
+    /* =============================================
+       BOTTOM LINKS
+    ============================================= */
+    .bottom-links {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .bottom-links a, .bottom-links .link-btn {
+      color: var(--cobalt);
+      font-weight: 600;
+      text-decoration: none;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-size: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+    .bottom-links a:hover, .bottom-links .link-btn:hover { text-decoration: underline; }
+
+    .back-to-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 20px;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: all var(--transition);
+      background: none;
+      border: none;
+      font-family: var(--font);
+      cursor: pointer;
+    }
+    .back-to-login:hover { color: var(--cobalt); background: var(--cobalt-light); }
+
+    /* =============================================
+       COUNTDOWN / RESEND TIMER
+    ============================================= */
+    .resend-area { margin-top: 14px; text-align: center; }
+
+    .countdown-text {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .countdown-num { font-weight: 700; color: var(--charcoal-mid); }
+
+    .resend-btn {
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cobalt);
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition);
+    }
+    .resend-btn:hover { background: var(--cobalt-light); }
+    .resend-btn:disabled { color: var(--muted); cursor: not-allowed; pointer-events: none; }
+
+    /* =============================================
+       STEPS LIST (Verification instructions)
+    ============================================= */
+    .steps-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--charcoal-mid);
+      line-height: 1.5;
+    }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--cobalt);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* =============================================
+       SPAM NOTE
+    ============================================= */
+    .spam-note {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* =============================================
+       CHANGE EMAIL FORM
+    ============================================= */
+    .section-note {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+      margin-top: 16px;
+      line-height: 1.6;
+      border-top: 1px solid var(--border-light);
+      padding-top: 14px;
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 540px) {
+      .auth-card { padding: 28px 20px 24px; }
+      .auth-heading { font-size: 20px; }
+      .page-wrapper { padding: 24px 12px 40px; }
+    }
+
+    @media (max-width: 360px) {
+      .auth-card { padding: 22px 16px 20px; }
+    }
+
+    /* =============================================
+       FOCUS VISIBLE — GLOBAL
+    ============================================= */
+    :focus-visible {
+      outline: 2px solid var(--cobalt);
+      outline-offset: 2px;
+    }
+
+    /* =============================================
+       REDUCED MOTION
+    ============================================= */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    }
+
+    /* =============================================
+       ARIA LIVE (visually hidden until content)
+    ============================================= */
+    [aria-live] { min-height: 0; }
+
+  </style>
+</head>
+<body>
+
+<!-- Background layers -->
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+<div class="bg-glow-bottom" aria-hidden="true"></div>
+
+<!-- Demo Navigation Bar -->
+<nav class="demo-nav" aria-label="Demo screen selector">
+  <div class="demo-nav-inner">
+    <button class="demo-btn active" data-screen="forgot-password">Forgot Password</button>
+    <button class="demo-btn" data-screen="forgot-sent">Reset Email Sent</button>
+    <button class="demo-btn" data-screen="reset-password">Reset Password</button>
+    <button class="demo-btn" data-screen="reset-success">Reset Success</button>
+    <button class="demo-btn" data-screen="reset-expired">Link Expired</button>
+    <button class="demo-btn" data-screen="reset-invalid">Link Invalid</button>
+    <button class="demo-btn" data-screen="reset-used">Link Used</button>
+    <button class="demo-btn" data-screen="email-verify">Verify Email</button>
+    <button class="demo-btn" data-screen="email-verified">Email Verified</button>
+    <button class="demo-btn" data-screen="already-verified">Already Verified</button>
+    <button class="demo-btn" data-screen="verify-expired">Verify Expired</button>
+    <button class="demo-btn" data-screen="verify-invalid">Verify Invalid</button>
+    <button class="demo-btn" data-screen="verify-pending">Pending Verify</button>
+    <button class="demo-btn" data-screen="change-email">Change Email</button>
+    <button class="demo-btn" data-screen="rate-limited">Rate Limited</button>
+    <button class="demo-btn" data-screen="generic-error">Generic Error</button>
+    <button class="demo-btn" data-screen="network-error">Network Error</button>
+  </div>
+</nav>
+
+<!-- ========== PAGE WRAPPER ========== -->
+<main class="page-wrapper">
+
+  <!-- =============================================
+       SCREEN 1: FORGOT PASSWORD
+  ============================================= -->
+  <section class="screen active" id="screen-forgot-password" aria-labelledby="fp-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle blue" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="22" fill="var(--cobalt-light)"/>
+            <rect x="10" y="14" width="24" height="18" rx="3" fill="white" stroke="var(--cobalt)" stroke-width="1.5"/>
+            <path d="M14 20h16M14 24h10" stroke="var(--cobalt)" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M25 31l3-3H22l3 3z" fill="var(--cobalt)" opacity="0.5"/>
+            <circle cx="30" cy="14" r="5" fill="var(--cobalt)"/>
+            <path d="M28 14h4M30 12v4" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="fp-heading">Forgot your password?</h1>
+      <p class="auth-subtext">Enter the email address for your WORDY AI account and we'll send you a link to reset your password.</p>
+
+      <div aria-live="polite" aria-atomic="true" id="fp-status"></div>
+
+      <form id="forgot-password-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="fp-email">Email Address</label>
+          <div class="form-input-wrap">
+            <input
+              class="form-input"
+              type="email"
+              id="fp-email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              aria-required="true"
+              aria-describedby="fp-email-msg"
+            />
+          </div>
+          <div id="fp-email-msg" class="field-msg error" role="alert" style="display:none;"></div>
+        </div>
+
+        <div class="btn-stack">
+          <button type="submit" class="btn btn-primary" id="fp-submit-btn">
+            <span class="btn-label">Send Reset Link</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="divider"></div>
+      <div class="bottom-links">
+        Don't have an account? <a href="wordy-ai-auth.html?view=signup">Create one</a>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')" aria-label="Back to Login">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 2: RESET EMAIL SENT
+  ============================================= -->
+  <section class="screen" id="screen-forgot-sent" aria-labelledby="fs-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="success-icon-wrap">
+        <div class="success-icon-circle" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="8" width="28" height="20" rx="3" fill="var(--green-light)" stroke="var(--green)" stroke-width="1.8"/><path d="M4 11l14 10L32 11" stroke="var(--green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="fs-heading">Check your email</h1>
+      <p class="auth-subtext">
+        If an account exists for <span class="masked-email" id="fs-masked-email">m***@example.com</span>, you'll receive a password reset link shortly.
+      </p>
+
+      <div class="status-banner info" role="status">
+        <span class="status-banner-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--cobalt)" stroke-width="1.4"/><path d="M8 7v5M8 5v.5" stroke="var(--cobalt)" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        Check your Spam or Junk folder if you don't see the email within a few minutes.
+      </div>
+
+      <div class="resend-area">
+        <div id="fs-countdown" class="countdown-text" aria-live="polite">
+          Resend available in <span class="countdown-num" id="fs-countdown-num">30</span>s
+        </div>
+        <button class="resend-btn" id="fs-resend-btn" disabled aria-disabled="true">
+          Resend Email
+        </button>
+      </div>
+
+      <div class="btn-stack" style="margin-top:20px;">
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 3: RESET PASSWORD
+  ============================================= -->
+  <section class="screen" id="screen-reset-password" aria-labelledby="rp-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle blue" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="16" cy="18" r="8" stroke="var(--cobalt)" stroke-width="1.6" fill="var(--cobalt-light)"/>
+            <circle cx="16" cy="18" r="2.5" fill="var(--cobalt)"/>
+            <path d="M22 18h12" stroke="var(--cobalt)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M30 14v8M34 16v4" stroke="var(--cobalt)" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="rp-heading">Create a new password</h1>
+      <p class="auth-subtext">Choose a strong password for your WORDY AI account.</p>
+
+      <div aria-live="polite" aria-atomic="true" id="rp-status"></div>
+
+      <form id="reset-password-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="rp-new-pw">New Password</label>
+          <div class="form-input-wrap">
+            <input
+              class="form-input has-toggle"
+              type="password"
+              id="rp-new-pw"
+              name="new_password"
+              placeholder="Create a new password"
+              autocomplete="new-password"
+              aria-required="true"
+              aria-describedby="rp-new-pw-msg"
+            />
+            <button type="button" class="pw-toggle" id="rp-toggle-new" aria-label="Show password" aria-controls="rp-new-pw">
+              <svg class="eye-show" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><ellipse cx="8" cy="8" rx="7" ry="5" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/></svg>
+              <svg class="eye-hide" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><path d="M2 2l12 12M6.5 5.5A3.5 3.5 0 019.5 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M4 4S2 5.5 2 8c0 .5.1 1 .3 1.4M12 12s2-1.5 2-4a6.9 6.9 0 00-1-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div id="rp-new-pw-msg" class="field-msg" style="display:none;"></div>
+        </div>
+
+        <div class="pw-requirements" id="rp-requirements" aria-label="Password requirements">
+          <div class="pw-req-label">Password must include</div>
+          <ul class="pw-req-list">
+            <li class="pw-req-item" id="req-length">
+              <span class="req-icon" aria-hidden="true">○</span> At least 8 characters
+            </li>
+            <li class="pw-req-item" id="req-upper">
+              <span class="req-icon" aria-hidden="true">○</span> One uppercase letter
+            </li>
+            <li class="pw-req-item" id="req-lower">
+              <span class="req-icon" aria-hidden="true">○</span> One lowercase letter
+            </li>
+            <li class="pw-req-item" id="req-number">
+              <span class="req-icon" aria-hidden="true">○</span> One number
+            </li>
+          </ul>
+        </div>
+
+        <div class="strength-wrap" id="rp-strength-wrap" style="display:none;">
+          <div class="strength-label-row">
+            <span class="strength-label-title">Password Strength</span>
+            <span class="strength-label-value" id="rp-strength-label">—</span>
+          </div>
+          <div class="strength-bar-track" aria-hidden="true">
+            <div class="strength-seg" id="seg-1"></div>
+            <div class="strength-seg" id="seg-2"></div>
+            <div class="strength-seg" id="seg-3"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="rp-confirm-pw">Confirm Password</label>
+          <div class="form-input-wrap">
+            <input
+              class="form-input has-toggle"
+              type="password"
+              id="rp-confirm-pw"
+              name="confirm_password"
+              placeholder="Confirm your new password"
+              autocomplete="new-password"
+              aria-required="true"
+              aria-describedby="rp-confirm-pw-msg"
+            />
+            <button type="button" class="pw-toggle" id="rp-toggle-confirm" aria-label="Show password" aria-controls="rp-confirm-pw">
+              <svg class="eye-show" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><ellipse cx="8" cy="8" rx="7" ry="5" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/></svg>
+              <svg class="eye-hide" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><path d="M2 2l12 12M6.5 5.5A3.5 3.5 0 019.5 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M4 4S2 5.5 2 8c0 .5.1 1 .3 1.4M12 12s2-1.5 2-4a6.9 6.9 0 00-1-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div id="rp-confirm-pw-msg" class="field-msg" style="display:none;"></div>
+        </div>
+
+        <div class="btn-stack">
+          <button type="submit" class="btn btn-primary" id="rp-submit-btn">
+            <span class="btn-label">Reset Password</span>
+          </button>
+        </div>
+      </form>
+
+      <p class="section-note">For your security, this reset link can only be used once and within the validity period set by WORDY AI.</p>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 4: RESET SUCCESS
+  ============================================= -->
+  <section class="screen" id="screen-reset-success" aria-labelledby="rs-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="success-icon-wrap">
+        <div class="success-icon-circle" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="14" stroke="var(--green)" stroke-width="1.8" fill="var(--green-light)"/><path d="M11 18l5 5 9-9" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="rs-heading">Password updated</h1>
+      <p class="auth-subtext">Your WORDY AI password has been changed. You can now sign in with your new password.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('login')">
+          Continue to Login
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="index.html" class="btn btn-secondary">Go to Home</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SCREEN 5: RESET LINK EXPIRED
+  ============================================= -->
+  <section class="screen" id="screen-reset-expired" aria-labelledby="re-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle amber" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--amber)" stroke-width="1.6" fill="var(--amber-light)"/>
+            <path d="M22 16v7" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="22" cy="27" r="1.5" fill="var(--amber)"/>
+            <path d="M18 10l4-3 4 3" stroke="var(--amber)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="re-heading">This reset link has expired</h1>
+      <p class="auth-subtext">For your security, password reset links are only valid for a limited time. Request a new one below.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('forgot-password')">Request a New Reset Link</button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 6: RESET LINK INVALID
+  ============================================= -->
+  <section class="screen" id="screen-reset-invalid" aria-labelledby="ri-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle red" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--red)" stroke-width="1.6" fill="var(--red-light)"/>
+            <path d="M16 16l12 12M28 16L16 28" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="ri-heading">This reset link is not valid</h1>
+      <p class="auth-subtext">The link may be incorrect, expired, or already been used. Please request a new one.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('forgot-password')">Request a New Reset Link</button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 7: RESET LINK ALREADY USED
+  ============================================= -->
+  <section class="screen" id="screen-reset-used" aria-labelledby="ru-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle blue" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--cobalt)" stroke-width="1.6" fill="var(--cobalt-light)"/>
+            <path d="M15 22l5 5 9-9" stroke="var(--cobalt)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 10v3M22 31v3M10 22h3M31 22h3" stroke="var(--cobalt)" stroke-width="1.4" stroke-linecap="round" opacity="0.35"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="ru-heading">Link already used</h1>
+      <p class="auth-subtext">For your security, password reset links can only be used once. If you need to reset your password again, request a new link.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('forgot-password')">Request Another Link</button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 8: EMAIL VERIFICATION
+  ============================================= -->
+  <section class="screen" id="screen-email-verify" aria-labelledby="ev-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle blue" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="12" width="36" height="26" rx="4" fill="var(--cobalt-light)" stroke="var(--cobalt)" stroke-width="1.6"/>
+            <path d="M6 16l18 12L42 16" stroke="var(--cobalt)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="36" cy="12" r="6" fill="var(--green)" stroke="white" stroke-width="1.5"/>
+            <path d="M33 12l2 2 3-3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="ev-heading">Verify your email</h1>
+      <p class="auth-subtext">
+        We sent a verification link to <span class="masked-email" id="ev-masked-email">m***@example.com</span>. Click the link in that email to activate your account.
+      </p>
+
+      <div aria-live="polite" aria-atomic="true" id="ev-status"></div>
+
+      <ul class="steps-list">
+        <li class="step-item"><span class="step-num" aria-hidden="true">1</span> Open your email inbox.</li>
+        <li class="step-item"><span class="step-num" aria-hidden="true">2</span> Find the email from WORDY AI.</li>
+        <li class="step-item"><span class="step-num" aria-hidden="true">3</span> Click the "Verify Email" button.</li>
+        <li class="step-item"><span class="step-num" aria-hidden="true">4</span> Return to WORDY AI — you're all set.</li>
+      </ul>
+
+      <div class="resend-area">
+        <div id="ev-countdown" class="countdown-text" aria-live="polite">
+          Resend available in <span class="countdown-num" id="ev-countdown-num">30</span>s
+        </div>
+        <button class="resend-btn" id="ev-resend-btn" disabled aria-disabled="true">
+          Resend Verification Email
+        </button>
+      </div>
+
+      <p class="spam-note">Can't find it? Check your Spam or Junk folder.</p>
+
+      <div class="divider"></div>
+      <div class="btn-stack">
+        <button class="btn btn-secondary" onclick="navigateTo('change-email')">Change Email Address</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 9: EMAIL VERIFIED SUCCESS
+  ============================================= -->
+  <section class="screen" id="screen-email-verified" aria-labelledby="evs-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="success-icon-wrap">
+        <div class="success-icon-circle" aria-hidden="true">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="14" stroke="var(--green)" stroke-width="1.8" fill="var(--green-light)"/><path d="M11 18l5 5 9-9" stroke="var(--green)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="evs-heading">Email verified!</h1>
+      <p class="auth-subtext">Your email address has been verified. Your WORDY AI account is ready to use.</p>
+
+      <div class="btn-stack">
+        <a href="wordy-ai-dashboard.html" class="btn btn-primary">
+          Go to Dashboard
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M6 3l5 5-5 5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="index.html" class="btn btn-secondary">Go to Home</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SCREEN 10: ALREADY VERIFIED
+  ============================================= -->
+  <section class="screen" id="screen-already-verified" aria-labelledby="av-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle green" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--green)" stroke-width="1.6" fill="var(--green-light)"/>
+            <path d="M15 22l5 5 9-9" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="av-heading">Already verified</h1>
+      <p class="auth-subtext">Your email is already verified. You're all set — go ahead and sign in.</p>
+
+      <div class="btn-stack">
+        <a href="wordy-ai-dashboard.html" class="btn btn-primary">Go to Dashboard</a>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SCREEN 11: VERIFY LINK EXPIRED
+  ============================================= -->
+  <section class="screen" id="screen-verify-expired" aria-labelledby="ve-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle amber" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--amber)" stroke-width="1.6" fill="var(--amber-light)"/>
+            <path d="M22 16v7" stroke="var(--amber)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="22" cy="27" r="1.5" fill="var(--amber)"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="ve-heading">Verification link expired</h1>
+      <p class="auth-subtext">This verification link is no longer valid. Request a new one and we'll send it right away.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('email-verify')">Send New Verification Email</button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 12: VERIFY LINK INVALID
+  ============================================= -->
+  <section class="screen" id="screen-verify-invalid" aria-labelledby="vi-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle red" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--red)" stroke-width="1.6" fill="var(--red-light)"/>
+            <path d="M16 16l12 12M28 16L16 28" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="vi-heading">Invalid verification link</h1>
+      <p class="auth-subtext">We couldn't verify this link. Please request a new verification email.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('email-verify')">Send New Verification Email</button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 13: VERIFICATION PENDING
+  ============================================= -->
+  <section class="screen" id="screen-verify-pending" aria-labelledby="vp-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle blue" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--cobalt)" stroke-width="1.6" fill="var(--cobalt-light)" stroke-dasharray="5 3"/>
+            <rect x="14" y="17" width="16" height="11" rx="2" fill="white" stroke="var(--cobalt)" stroke-width="1.4"/>
+            <path d="M14 20l8 5 8-5" stroke="var(--cobalt)" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="vp-heading">Email not verified yet</h1>
+      <p class="auth-subtext">Some features require a verified email. Check your inbox or request a new link.</p>
+
+      <div class="status-banner warning" role="status">
+        <span class="status-banner-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L1 14h14L8 2z" stroke="var(--amber)" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 7v4M8 12v.5" stroke="var(--amber)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </span>
+        Your account is active but some features may be limited until you verify.
+      </div>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('email-verify')">Resend Verification</button>
+        <button class="btn btn-secondary" onclick="navigateTo('change-email')">Change Email</button>
+        <a href="wordy-ai-dashboard.html" class="btn btn-ghost" style="text-align:center;">Back to Account</a>
+      </div>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 14: CHANGE EMAIL
+  ============================================= -->
+  <section class="screen" id="screen-change-email" aria-labelledby="ce-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <h1 class="auth-heading" id="ce-heading">Change your email</h1>
+      <p class="auth-subtext">Enter a new email address. We'll send a verification link before making any changes.</p>
+
+      <div aria-live="polite" aria-atomic="true" id="ce-status"></div>
+
+      <form id="change-email-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="ce-new-email">New Email Address</label>
+          <div class="form-input-wrap">
+            <input
+              class="form-input"
+              type="email"
+              id="ce-new-email"
+              name="new_email"
+              placeholder="new@example.com"
+              autocomplete="email"
+              aria-required="true"
+              aria-describedby="ce-email-msg"
+            />
+          </div>
+          <div id="ce-email-msg" class="field-msg error" role="alert" style="display:none;"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ce-current-pw">Current Password</label>
+          <div class="form-input-wrap">
+            <input
+              class="form-input has-toggle"
+              type="password"
+              id="ce-current-pw"
+              name="current_password"
+              placeholder="Enter your current password"
+              autocomplete="current-password"
+              aria-required="true"
+            />
+            <button type="button" class="pw-toggle" id="ce-toggle-pw" aria-label="Show password" aria-controls="ce-current-pw">
+              <svg class="eye-show" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><ellipse cx="8" cy="8" rx="7" ry="5" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="1.4"/></svg>
+              <svg class="eye-hide" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:none"><path d="M2 2l12 12M6.5 5.5A3.5 3.5 0 019.5 8.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M4 4S2 5.5 2 8c0 .5.1 1 .3 1.4M12 12s2-1.5 2-4a6.9 6.9 0 00-1-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="btn-stack">
+          <button type="submit" class="btn btn-primary" id="ce-submit-btn">
+            <span class="btn-label">Change Email</span>
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="navigateTo('email-verify')">Cancel</button>
+        </div>
+      </form>
+
+      <p class="section-note">Your current email stays active until the new address is verified.</p>
+    </div>
+
+    <button class="back-to-login" onclick="navigateTo('login')">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Login
+    </button>
+  </section>
+
+  <!-- =============================================
+       SCREEN 15: RATE LIMITED
+  ============================================= -->
+  <section class="screen" id="screen-rate-limited" aria-labelledby="rl-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle amber" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--amber)" stroke-width="1.6" fill="var(--amber-light)"/>
+            <path d="M17 14v8l5 3 5-3V14" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M19 14h6" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="rl-heading">Too many requests</h1>
+      <p class="auth-subtext">Please wait before requesting another email. This helps us keep your account secure.</p>
+
+      <div class="status-banner warning" role="status">
+        <span class="status-banner-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--amber)" stroke-width="1.4"/><path d="M8 5v4M8 11v.5" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <div>
+          You can try again in <span id="rl-countdown-num" class="countdown-num">60</span>s
+        </div>
+      </div>
+
+      <div class="btn-stack">
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SCREEN 16: GENERIC ERROR
+  ============================================= -->
+  <section class="screen" id="screen-generic-error" aria-labelledby="ge-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle red" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="14" stroke="var(--red)" stroke-width="1.6" fill="var(--red-light)"/>
+            <path d="M22 16v7" stroke="var(--red)" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="22" cy="27" r="1.5" fill="var(--red)"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="ge-heading">Something went wrong</h1>
+      <p class="auth-subtext">We couldn't complete this request. This is usually temporary — please try again.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" onclick="navigateTo('forgot-password')">Try Again</button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       SCREEN 17: NETWORK ERROR
+  ============================================= -->
+  <section class="screen" id="screen-network-error" aria-labelledby="ne-heading">
+    <div class="auth-logo-wrap">
+      <a href="index.html" class="logo-svg-inline" aria-label="WORDY AI — go to home">
+        <div class="logo-mark" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="11" rx="2.5" fill="rgba(255,255,255,0.25)"/><rect x="2" y="3" width="16" height="11" rx="2.5" stroke="white" stroke-width="1.5"/><path d="M5.5 7h9M5.5 10h5.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/><path d="M10 16l-2-2h4l-2 2z" fill="white" opacity="0.7"/></svg>
+        </div>
+        <span class="logo-wordmark">WORDY <span>AI</span></span>
+      </a>
+    </div>
+
+    <div class="auth-card">
+      <div class="mascot-wrap">
+        <div class="mascot-circle amber" aria-hidden="true">
+          <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+            <path d="M12 28a10 10 0 0118.5-5" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M15 24a6 6 0 0111.5-2" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M18 28a2 2 0 014 0" stroke="var(--amber)" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="20" cy="30" r="2" fill="var(--amber)"/>
+            <path d="M32 10l6 6M38 10l-6 6" stroke="var(--red)" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="auth-heading" id="ne-heading">Connection problem</h1>
+      <p class="auth-subtext">Please check your internet connection and try again.</p>
+
+      <div class="btn-stack">
+        <button class="btn btn-primary" id="ne-retry-btn">
+          <span class="btn-label">Retry</span>
+        </button>
+        <button class="btn btn-secondary" onclick="navigateTo('login')">Back to Login</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =============================================
+     JAVASCRIPT
+============================================= -->
+<script>
+'use strict';
+
+/* =========================================
+   CONFIG
+========================================= */
+const CONFIG = {
+  RESEND_COOLDOWN: 30,       // seconds
+  RATE_LIMIT_COOLDOWN: 60,   // seconds
+  DEBOUNCE_DELAY: 350,       // ms
+};
+
+/* =========================================
+   SCREEN NAVIGATION
+========================================= */
+const screenMap = {
+  'forgot-password': 'screen-forgot-password',
+  'forgot-sent':     'screen-forgot-sent',
+  'reset-password':  'screen-reset-password',
+  'reset-success':   'screen-reset-success',
+  'reset-expired':   'screen-reset-expired',
+  'reset-invalid':   'screen-reset-invalid',
+  'reset-used':      'screen-reset-used',
+  'email-verify':    'screen-email-verify',
+  'email-verified':  'screen-email-verified',
+  'already-verified':'screen-already-verified',
+  'verify-expired':  'screen-verify-expired',
+  'verify-invalid':  'screen-verify-invalid',
+  'verify-pending':  'screen-verify-pending',
+  'change-email':    'screen-change-email',
+  'rate-limited':    'screen-rate-limited',
+  'generic-error':   'screen-generic-error',
+  'network-error':   'screen-network-error',
+  'login':           null, // external
+};
+
+let activeTimers = {};
+
+function navigateTo(screenKey) {
+  if (screenKey === 'login') {
+    window.location.href = 'wordy-ai-auth.html';
+    return;
+  }
+
+  // Stop all running timers
+  Object.values(activeTimers).forEach(clearInterval);
+  activeTimers = {};
+
+  const allScreens = document.querySelectorAll('.screen');
+  allScreens.forEach(s => s.classList.remove('active'));
+
+  const target = document.getElementById(screenMap[screenKey]);
+  if (target) {
+    target.classList.add('active');
+    // Update demo nav
+    document.querySelectorAll('.demo-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.screen === screenKey);
+    });
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Screen-specific init
+    onScreenInit(screenKey);
+  }
+}
+
+function showDemoLoginMsg() {
+  window.location.href = 'wordy-ai-auth.html';
+}
+
+/* =========================================
+   SCREEN INIT HOOKS
+========================================= */
+function onScreenInit(screenKey) {
+  if (screenKey === 'forgot-sent') {
+    startCountdown('fs-countdown', 'fs-countdown-num', 'fs-resend-btn', CONFIG.RESEND_COOLDOWN, () => {
+      simulateResend('fs-resend-btn', 'fs-countdown', 'fs-countdown-num', CONFIG.RESEND_COOLDOWN);
+    });
+  }
+  if (screenKey === 'email-verify') {
+    setMaskedEmail('ev-masked-email', 'mo***@example.com');
+    startCountdown('ev-countdown', 'ev-countdown-num', 'ev-resend-btn', CONFIG.RESEND_COOLDOWN, () => {
+      simulateResend('ev-resend-btn', 'ev-countdown', 'ev-countdown-num', CONFIG.RESEND_COOLDOWN);
+    });
+  }
+  if (screenKey === 'rate-limited') {
+    startRawCountdown('rl-countdown-num', CONFIG.RATE_LIMIT_COOLDOWN);
+  }
+}
+
+/* =========================================
+   UTILITIES
+========================================= */
+function maskEmail(email) {
+  const [local, domain] = email.split('@');
+  if (!domain) return email;
+  const visible = local.charAt(0);
+  return `${visible}***@${domain}`;
+}
+
+function setMaskedEmail(elementId, masked) {
+  const el = document.getElementById(elementId);
+  if (el) el.textContent = masked;
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
+}
+
+function setButtonLoading(btn, loadingText) {
+  const label = btn.querySelector('.btn-label') || btn;
+  const existingSpinner = btn.querySelector('.spinner');
+  if (existingSpinner) existingSpinner.remove();
+  const spinner = document.createElement('span');
+  spinner.className = 'spinner';
+  spinner.setAttribute('aria-hidden', 'true');
+  btn.prepend(spinner);
+  if (btn.querySelector('.btn-label')) btn.querySelector('.btn-label').textContent = loadingText;
+  btn.disabled = true;
+  btn.setAttribute('aria-disabled', 'true');
+}
+
+function resetButton(btn, originalText) {
+  const spinner = btn.querySelector('.spinner');
+  if (spinner) spinner.remove();
+  if (btn.querySelector('.btn-label')) btn.querySelector('.btn-label').textContent = originalText;
+  btn.disabled = false;
+  btn.removeAttribute('aria-disabled');
+}
+
+function showFieldError(msgEl, text) {
+  if (!msgEl) return;
+  msgEl.textContent = text;
+  msgEl.className = 'field-msg error';
+  msgEl.style.display = 'flex';
+  msgEl.setAttribute('role', 'alert');
+}
+
+function showFieldSuccess(msgEl, text) {
+  if (!msgEl) return;
+  msgEl.textContent = text;
+  msgEl.className = 'field-msg success';
+  msgEl.style.display = 'flex';
+}
+
+function clearFieldMsg(msgEl) {
+  if (!msgEl) return;
+  msgEl.style.display = 'none';
+  msgEl.textContent = '';
+}
+
+function showStatusBanner(containerId, type, text) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = `
+    <div class="status-banner ${type}" role="${type === 'error' ? 'alert' : 'status'}">
+      <span class="status-banner-icon" aria-hidden="true">${getStatusIcon(type)}</span>
+      <span>${text}</span>
+    </div>
+  `;
+}
+
+function clearStatusBanner(containerId) {
+  const container = document.getElementById(containerId);
+  if (container) container.innerHTML = '';
+}
+
+function getStatusIcon(type) {
+  if (type === 'success') return `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--green)" stroke-width="1.4"/><path d="M5 8l2 2 4-4" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  if (type === 'error')   return `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--red)" stroke-width="1.4"/><path d="M8 5v4M8 11v.5" stroke="var(--red)" stroke-width="1.5" stroke-linecap="round"/></svg>`;
+  return `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="var(--cobalt)" stroke-width="1.4"/><path d="M8 7v5M8 5v.5" stroke="var(--cobalt)" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+}
+
+/* =========================================
+   COUNTDOWN TIMER
+========================================= */
+function startCountdown(countdownId, numId, btnId, seconds, onExpire) {
+  const countdownEl = document.getElementById(countdownId);
+  const numEl = document.getElementById(numId);
+  const btn = document.getElementById(btnId);
+
+  if (!numEl || !btn) return;
+
+  let remaining = seconds;
+  if (countdownEl) countdownEl.style.display = 'block';
+  if (btn) { btn.style.display = 'none'; }
+
+  const timerId = setInterval(() => {
+    remaining--;
+    if (numEl) numEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(timerId);
+      if (countdownEl) countdownEl.style.display = 'none';
+      if (btn) {
+        btn.style.display = 'inline-flex';
+        btn.disabled = false;
+        btn.removeAttribute('aria-disabled');
+        btn.onclick = onExpire;
+      }
+    }
+  }, 1000);
+
+  activeTimers[countdownId] = timerId;
+}
+
+function startRawCountdown(numId, seconds) {
+  const numEl = document.getElementById(numId);
+  if (!numEl) return;
+  let remaining = seconds;
+  const timerId = setInterval(() => {
+    remaining--;
+    numEl.textContent = remaining;
+    if (remaining <= 0) clearInterval(timerId);
+  }, 1000);
+  activeTimers[numId] = timerId;
+}
+
+function simulateResend(btnId, countdownId, numId, cooldown) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.style.display = 'none';
+  startCountdown(countdownId, numId, btnId, cooldown, () => {
+    simulateResend(btnId, countdownId, numId, cooldown);
+  });
+}
+
+/* =========================================
+   PASSWORD TOGGLE
+========================================= */
+function initPasswordToggle(toggleBtnId, inputId) {
+  const btn = document.getElementById(toggleBtnId);
+  const input = document.getElementById(inputId);
+  if (!btn || !input) return;
+
+  btn.addEventListener('click', () => {
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    btn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+    const eyeShow = btn.querySelector('.eye-show');
+    const eyeHide = btn.querySelector('.eye-hide');
+    if (eyeShow) eyeShow.style.display = isPassword ? 'none' : '';
+    if (eyeHide) eyeHide.style.display = isPassword ? '' : 'none';
+  });
+}
+
+/* =========================================
+   PASSWORD REQUIREMENTS CHECK
+========================================= */
+const PASSWORD_RULES = [
+  { id: 'req-length', test: pw => pw.length >= 8 },
+  { id: 'req-upper',  test: pw => /[A-Z]/.test(pw) },
+  { id: 'req-lower',  test: pw => /[a-z]/.test(pw) },
+  { id: 'req-number', test: pw => /[0-9]/.test(pw) },
+];
+
+function checkPasswordRequirements(password) {
+  let met = 0;
+  PASSWORD_RULES.forEach(rule => {
+    const el = document.getElementById(rule.id);
+    if (!el) return;
+    const passes = rule.test(password);
+    if (passes) met++;
+    el.classList.toggle('met', passes);
+    const icon = el.querySelector('.req-icon');
+    if (icon) icon.textContent = passes ? '✓' : '○';
+  });
+  return met;
+}
+
+function updateStrengthIndicator(password) {
+  const strengthWrap = document.getElementById('rp-strength-wrap');
+  const label = document.getElementById('rp-strength-label');
+  const segs = [
+    document.getElementById('seg-1'),
+    document.getElementById('seg-2'),
+    document.getElementById('seg-3'),
+  ];
+
+  if (!strengthWrap || !label || !segs[0]) return;
+
+  if (!password) {
+    strengthWrap.style.display = 'none';
+    return;
+  }
+  strengthWrap.style.display = 'block';
+
+  const met = checkPasswordRequirements(password);
+  const hasSpecial = /[^A-Za-z0-9]/.test(password);
+  const lengthBonus = password.length >= 12 ? 1 : 0;
+  const score = met + (hasSpecial ? 1 : 0) + lengthBonus;
+
+  let level, text;
+  if (score <= 2)      { level = 'weak';   text = 'Weak'; }
+  else if (score <= 4) { level = 'medium'; text = 'Medium'; }
+  else                 { level = 'strong'; text = 'Strong'; }
+
+  label.textContent = text;
+  label.className = `strength-label-value ${level}`;
+
+  segs.forEach((seg, i) => {
+    seg.className = 'strength-seg';
+    if (level === 'weak'   && i < 1) seg.classList.add('active', 'weak');
+    if (level === 'medium' && i < 2) seg.classList.add('active', 'medium');
+    if (level === 'strong')          seg.classList.add('active', 'strong');
+  });
+}
+
+/* =========================================
+   FORGOT PASSWORD FORM
+========================================= */
+(function initForgotPassword() {
+  const form     = document.getElementById('forgot-password-form');
+  const emailEl  = document.getElementById('fp-email');
+  const emailMsg = document.getElementById('fp-email-msg');
+  const submitBtn = document.getElementById('fp-submit-btn');
+  if (!form) return;
+
+  // Live validation on blur
+  emailEl.addEventListener('blur', () => {
+    if (emailEl.value && !isValidEmail(emailEl.value)) {
+      showFieldError(emailMsg, 'Please enter a valid email address.');
+      emailEl.classList.add('error');
+    } else {
+      clearFieldMsg(emailMsg);
+      emailEl.classList.remove('error');
+    }
+  });
+
+  emailEl.addEventListener('input', () => {
+    if (emailEl.classList.contains('error') && isValidEmail(emailEl.value)) {
+      clearFieldMsg(emailMsg);
+      emailEl.classList.remove('error');
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearStatusBanner('fp-status');
+
+    const email = emailEl.value.trim();
+    if (!email) {
+      showFieldError(emailMsg, 'Email address is required.');
+      emailEl.classList.add('error');
+      emailEl.focus();
+      return;
+    }
+    if (!isValidEmail(email)) {
+      showFieldError(emailMsg, 'Please enter a valid email address.');
+      emailEl.classList.add('error');
+      emailEl.focus();
+      return;
+    }
+
+    clearFieldMsg(emailMsg);
+    emailEl.classList.remove('error');
+    setButtonLoading(submitBtn, 'Sending...');
+
+    try {
+      // ── BACKEND CALL POINT ──
+      // await api.requestPasswordReset({ email });
+      await simulateApiCall(1400);
+
+      // Show masked email and go to sent screen
+      const masked = maskEmail(email);
+      const maskedEl = document.getElementById('fs-masked-email');
+      if (maskedEl) maskedEl.textContent = masked;
+
+      navigateTo('forgot-sent');
+    } catch (err) {
+      resetButton(submitBtn, 'Send Reset Link');
+      if (err.type === 'network') {
+        showStatusBanner('fp-status', 'error', 'Connection problem. Check your internet and try again.');
+      } else {
+        showStatusBanner('fp-status', 'error', 'Something went wrong. Please try again.');
+      }
+    }
+  });
+})();
+
+/* =========================================
+   RESET PASSWORD FORM
+========================================= */
+(function initResetPassword() {
+  const form       = document.getElementById('reset-password-form');
+  const newPwEl    = document.getElementById('rp-new-pw');
+  const confirmEl  = document.getElementById('rp-confirm-pw');
+  const newPwMsg   = document.getElementById('rp-new-pw-msg');
+  const confirmMsg = document.getElementById('rp-confirm-pw-msg');
+  const submitBtn  = document.getElementById('rp-submit-btn');
+  if (!form) return;
+
+  initPasswordToggle('rp-toggle-new',     'rp-new-pw');
+  initPasswordToggle('rp-toggle-confirm', 'rp-confirm-pw');
+
+  newPwEl.addEventListener('input', () => {
+    const pw = newPwEl.value;
+    updateStrengthIndicator(pw);
+    // Live confirm match
+    if (confirmEl.value) checkPasswordMatch();
+  });
+
+  newPwEl.addEventListener('blur', () => {
+    if (newPwEl.value && checkPasswordRequirements(newPwEl.value) < PASSWORD_RULES.length) {
+      // Don't error-state here; requirements checklist handles feedback visually
+    }
+  });
+
+  confirmEl.addEventListener('input', () => {
+    if (confirmEl.value) checkPasswordMatch();
+    else clearFieldMsg(confirmMsg);
+  });
+
+  function checkPasswordMatch() {
+    const match = newPwEl.value === confirmEl.value;
+    if (match) {
+      showFieldSuccess(confirmMsg, '✓ Passwords match');
+      confirmEl.classList.remove('error');
+      confirmEl.classList.add('success');
+    } else {
+      showFieldError(confirmMsg, 'Passwords do not match.');
+      confirmEl.classList.add('error');
+      confirmEl.classList.remove('success');
+    }
+    return match;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearStatusBanner('rp-status');
+
+    const newPw    = newPwEl.value;
+    const confirm  = confirmEl.value;
+    let valid = true;
+
+    if (!newPw) {
+      showFieldError(newPwMsg, 'New password is required.');
+      newPwEl.classList.add('error');
+      valid = false;
+    } else if (checkPasswordRequirements(newPw) < PASSWORD_RULES.length) {
+      showFieldError(newPwMsg, 'Password does not meet all requirements.');
+      newPwEl.classList.add('error');
+      valid = false;
+    }
+
+    if (!confirm) {
+      showFieldError(confirmMsg, 'Please confirm your password.');
+      confirmEl.classList.add('error');
+      valid = false;
+    } else if (newPw !== confirm) {
+      showFieldError(confirmMsg, 'Passwords do not match.');
+      confirmEl.classList.add('error');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    setButtonLoading(submitBtn, 'Updating Password...');
+
+    try {
+      // ── BACKEND CALL POINT ──
+      // const token = new URLSearchParams(location.search).get('token');
+      // await api.resetPassword({ token, password: newPw });
+      await simulateApiCall(1600);
+
+      navigateTo('reset-success');
+    } catch (err) {
+      resetButton(submitBtn, 'Reset Password');
+      showStatusBanner('rp-status', 'error', 'Something went wrong. Please try again or request a new reset link.');
+    }
+  });
+})();
+
+/* =========================================
+   CHANGE EMAIL FORM
+========================================= */
+(function initChangeEmail() {
+  const form    = document.getElementById('change-email-form');
+  const emailEl = document.getElementById('ce-new-email');
+  const emailMsg = document.getElementById('ce-email-msg');
+  const submitBtn = document.getElementById('ce-submit-btn');
+  if (!form) return;
+
+  initPasswordToggle('ce-toggle-pw', 'ce-current-pw');
+
+  emailEl.addEventListener('blur', () => {
+    if (emailEl.value && !isValidEmail(emailEl.value)) {
+      showFieldError(emailMsg, 'Please enter a valid email address.');
+      emailEl.classList.add('error');
+    } else {
+      clearFieldMsg(emailMsg);
+      emailEl.classList.remove('error');
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearStatusBanner('ce-status');
+
+    const email = emailEl.value.trim();
+    if (!isValidEmail(email)) {
+      showFieldError(emailMsg, 'Please enter a valid email address.');
+      emailEl.classList.add('error');
+      return;
+    }
+
+    setButtonLoading(submitBtn, 'Sending...');
+
+    try {
+      // ── BACKEND CALL POINT ──
+      // await api.changeEmail({ newEmail: email, password: ... });
+      await simulateApiCall(1400);
+
+      showStatusBanner('ce-status', 'success', `A verification link has been sent to ${maskEmail(email)}. Check your inbox.`);
+      resetButton(submitBtn, 'Change Email');
+    } catch (err) {
+      resetButton(submitBtn, 'Change Email');
+      showStatusBanner('ce-status', 'error', 'Something went wrong. Please try again.');
+    }
+  });
+})();
+
+/* =========================================
+   NETWORK ERROR — RETRY
+========================================= */
+const neRetryBtn = document.getElementById('ne-retry-btn');
+if (neRetryBtn) {
+  neRetryBtn.addEventListener('click', async () => {
+    setButtonLoading(neRetryBtn, 'Retrying...');
+    await simulateApiCall(1200);
+    // In production: re-attempt the failed action
+    resetButton(neRetryBtn, 'Retry');
+  });
+}
+
+/* =========================================
+   DEMO SIMULATION UTILITY
+   Replace with real fetch() calls to backend
+========================================= */
+function simulateApiCall(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/* =========================================
+   DEMO NAV
+========================================= */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    navigateTo(btn.dataset.screen);
+  });
+});
+
+/* =========================================
+   INIT: Read URL params (production use)
+   e.g. /auth-recovery.html?screen=reset-password&token=...
+========================================= */
+(function initFromURL() {
+  const params = new URLSearchParams(location.search);
+  const screen = params.get('screen');
+  if (screen && screenMap[screen] !== undefined) {
+    navigateTo(screen);
+  }
+})();
+
+</script>
+</body>
+</html>

@@ -13,7 +13,7 @@
   <div class="brand">
     <button class="back" onclick="location.href='wordy-ai-dashboard.html'">← Projects</button>
     <span class="brand-name">WORDY AI</span><span class="xlsx-tag">▦ .xlsx</span>
-    <input class="doc-input" value="Quarterly Sales & Financial Analysis - Q1 2026" />
+    <input class="doc-input" value="Untitled Workbook" />
     <span class="saved"><span class="dot"></span>Saved to Cloud</span>
   </div>
   <div class="view-switch"><button class="on">▦</button><button>☰</button><button>⧩</button><button style="font-size:11px;font-weight:700">100% ▾</button></div>
@@ -26,22 +26,22 @@
 </header>
 <section class="formula-bar">
   <span class="cell-box" id="cell-box">B14</span><span class="fx">fx</span>
-  <div class="formula-input"><span style="color:var(--green);font-weight:700">=SUM(</span><span style="color:var(--blue)">B3:B12</span><span style="color:var(--green);font-weight:700">)</span> <span id="formula-text" style="display:none">=SUM(B3:B12)</span></div>
+  <div class="formula-input"><span style="color:var(--muted)">—</span> <span id="formula-text" style="display:none"></span></div>
   <div class="fmt-mini"><button><b>B</b></button><button><i>I</i></button><button>$</button><button>%</button><button>🎨</button><button>▦</button></div>
 </section>
 <div class="workspace">
   <aside class="sheets">
     <div class="sheets-head"><h4>Workbook Sheets ＋</h4>
       <div class="sheet-item on" data-sheet="Summary">◉ Summary <span class="active-pill">Active</span></div>
-      <div class="sheet-item" data-sheet="Sales Data">▤ Sales Data <small>142 rows</small></div>
-      <div class="sheet-item" data-sheet="Analysis">◈ Analysis &amp; Trends <small>8 calc</small></div>
-      <div class="sheet-item" data-sheet="Charts">▆ Charts &amp; Visuals <small>3 graphs</small></div>
+      <div class="sheet-item" data-sheet="Sales Data">▤ Sales Data</div>
+      <div class="sheet-item" data-sheet="Analysis">◈ Analysis &amp; Trends</div>
+      <div class="sheet-item" data-sheet="Charts">▆ Charts &amp; Visuals</div>
     </div>
     <div class="health">
       <div class="health-card">
         <div class="row"><span>Model Health</span><span style="color:var(--green);font-weight:700">● Valid</span></div>
-        <div><div style="font-size:11px;color:var(--muted)">Total Calculated Revenue</div><div class="big">$1,142,500</div></div>
-        <div class="grid2"><div><span style="color:var(--faint)">Gross Margin</span><br /><b style="font-family:var(--font-m);color:var(--green)">42.6%</b></div><div><span style="color:var(--faint)">Formula Check</span><br /><b>100% Passing</b></div></div>
+        <div><div style="font-size:11px;color:var(--muted)">Total Calculated Revenue</div><div class="big">$0</div></div>
+        <div class="grid2"><div><span style="color:var(--faint)">Gross Margin</span><br /><b style="font-family:var(--font-m);color:var(--green)">—</b></div><div><span style="color:var(--faint)">Formula Check</span><br /><b>—</b></div></div>
       </div>
       <div class="row" style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)"><span>◉ Enterprise Tier</span><span><a href="wordy-ai-word-creator.html" style="color:var(--blue);font-weight:700">Word Studio →</a> · <a href="wordy-ai-dashboard.html">Dashboard</a></span></div>
     </div>
@@ -53,7 +53,7 @@
     </table></div>
     <footer class="status-tabs">
       <div class="tabs"><button class="tab on">Summary ▾</button><button class="tab">Sales Data</button><button class="tab">Analysis</button><button class="tab">Charts</button></div>
-      <div class="calc"><span>Average: <b>$114,250</b></span><span>Count: <b>10</b></span><span>Sum: <b style="color:var(--green)">$1,142,500</b></span><span style="color:var(--green)">✓ Ready</span></div>
+      <div class="calc"><span>Average: <b>$0</b></span><span>Count: <b>0</b></span><span>Sum: <b style="color:var(--green)">$0</b></span><span style="color:var(--green)">✓ Ready</span></div>
     </footer>
   </section>
   <aside class="ai" id="ai-drawer">
@@ -65,13 +65,8 @@
         <button>∑ Create Formula</button><button>? Explain Formula</button><button>▦ Summarize Data</button><button>✦ Clean Data</button><button>▆ Create Chart</button>
       </div></div>
       <div class="card">
-        <h5>◉ AI Formula Proposal <span class="auto">Auto-Detected</span></h5>
-        <p style="margin:0;font-size:13px;color:var(--ink-2)">Detected standard sum on Column B. Would you like to implement the weighted FY26 quarterly quota growth factor?</p>
-        <div class="formula-diff"><div class="cur"><span>Current:</span><span>=SUM(B3:B12)</span></div><div class="prop"><span>Proposed:</span><span>=SUM(B3:B12)*1.08</span></div></div>
-        <div class="card-actions"><button class="apply" onclick="applyFormula()">Apply Formula</button><button class="dismiss" onclick="this.closest('.card').style.display='none'">Dismiss</button></div>
-      </div>
-      <div class="card"><h5 style="color:var(--ink)">◈ Key Outliers Identified</h5>
-        <p style="margin:0;font-size:13px;color:var(--ink-2)"><b>LATAM Regional</b> is underperforming YoY benchmark by <b style="color:var(--red)">-2.1%</b> despite 42.6% aggregate baseline. Recommend variance review.</p>
+        <h5 style="color:var(--ink)">◉ No suggestions yet</h5>
+        <p style="margin:0;font-size:13px;color:var(--ink-2)">Enter data in the grid or select a cell, then ask WORDY AI to build formulas, clean data, or create charts.</p>
       </div>
     </div>
     <div class="ai-foot"><div class="prompt">

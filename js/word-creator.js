@@ -12,14 +12,6 @@ function setDocZoom(z){var paper=$("#paper");if(paper)paper.style.transform="sca
 function toggleStar(btn){btn.classList.toggle("on");toast(btn.classList.contains("on")?"Added to favorites":"Removed from favorites")}
 function setPromptText(t){var ta=$("#ai-instruction");if(ta){ta.value=t;ta.focus()}toast("Prompt inserted")}
 function insertAiCommand(cmd){setPromptText(cmd+" — ")}
-function applyDiffChanges(){
-  var card=$("#diff-card");if(!card)return;
-  card.classList.add("done");
-  card.innerHTML='<div class="diff-head"><span>✓ Revision applied</span><span class="diff-ver">v3.3</span></div><p style="font-size:12.5px;margin:0">Pursuant to Q1 actuals, we recommend a formal reallocation of <b>25% engineering capital</b> toward local-first sovereign caching, guaranteeing sub-second latency for executive roll-ups.</p>';
-  var target=$("#sec-strategic-recommendations p");if(target)target.innerHTML='Pursuant to Q1 actuals, we recommend a formal reallocation of <b>25% engineering capital</b> toward local-first sovereign caching, guaranteeing sub-second latency for executive roll-ups.';
-  toast("AI revision applied to Strategic Recommendations");
-}
-function rejectDiffChanges(){var card=$("#diff-card");if(card)card.style.display="none";toast("Suggestion dismissed")}
 function executeAiRefinement(){var ta=$("#ai-instruction");if(!ta||!ta.value.trim()){toast("Type an instruction first");return}toast("Refining document…");setTimeout(function(){toast("Document refined ✓");ta.value=""},1200)}
 document.addEventListener("DOMContentLoaded",function(){
   var l=$("#left-sidebar"),ai=$("#ai-panel");
@@ -32,5 +24,5 @@ document.addEventListener("DOMContentLoaded",function(){
   $all(".outline-link").forEach(function(a){a.addEventListener("click",function(){$all(".outline-link").forEach(function(x){x.classList.remove("on")});a.classList.add("on")})});
   document.addEventListener("keydown",function(e){if(e.key==="Escape"){ai.classList.add("hidden")}});
 });
-window.switchLeftTab=switchLeftTab;window.setDocZoom=setDocZoom;window.toggleStar=toggleStar;window.setPromptText=setPromptText;window.insertAiCommand=insertAiCommand;window.applyDiffChanges=applyDiffChanges;window.rejectDiffChanges=rejectDiffChanges;window.executeAiRefinement=executeAiRefinement;window.openPromptModal=function(){setPromptText("Compose new section: ")};
+window.switchLeftTab=switchLeftTab;window.setDocZoom=setDocZoom;window.toggleStar=toggleStar;window.setPromptText=setPromptText;window.insertAiCommand=insertAiCommand;window.executeAiRefinement=executeAiRefinement;
 })();

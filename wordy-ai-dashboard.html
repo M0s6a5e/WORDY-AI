@@ -657,12 +657,12 @@
         <li><button class="nav-item active" data-view="dashboard">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
           Dashboard &amp; Projects
-          <span class="nav-count" id="countProjects">4</span>
+          <span class="nav-count" id="countProjects">0</span>
         </button></li>
         <li><button class="nav-item" data-view="files">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>
           My Files &amp; Library
-          <span class="nav-count" id="countFiles">8</span>
+          <span class="nav-count" id="countFiles">0</span>
         </button></li>
       </ul>
 
@@ -701,10 +701,10 @@
 
     <div class="sidebar-bottom">
       <div class="user-card" id="userCardBtn" title="Account settings">
-        <div class="user-avatar">JD</div>
+        <div class="user-avatar">MA</div>
         <div class="user-info">
-          <div class="user-name">Jordan Davis</div>
-          <div class="user-role">Professional Plan</div>
+          <div class="user-name">My Account</div>
+          <div class="user-role">Free Plan</div>
         </div>
       </div>
     </div>
@@ -719,7 +719,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
         </button>
         <span class="topbar-title" id="pageTitle">Workspace Overview</span>
-        <span class="topbar-badge" id="planBadge">Pro Plan</span>
+        <span class="topbar-badge" id="planBadge">Free Plan</span>
       </div>
 
       <div class="topbar-right">
@@ -742,7 +742,7 @@
     <main class="workspace-view active" id="view-dashboard">
       <div class="view-header">
         <div class="view-heading">
-          <h1>Welcome back, Jordan 👋</h1>
+          <h1>Welcome to WORDY AI 👋</h1>
           <p>Here is an overview of your AI generated documents, spreadsheets, and active projects.</p>
         </div>
         <div class="quick-start-actions">
@@ -761,15 +761,15 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-top"><span class="stat-label">Total Projects</span><div class="stat-icon blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg></div></div>
-          <span class="stat-value" id="statTotalProjects">4</span>
+          <span class="stat-value" id="statTotalProjects">0</span>
         </div>
         <div class="stat-card">
           <div class="stat-top"><span class="stat-label">Word Documents</span><div class="stat-icon blue"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg></div></div>
-          <span class="stat-value" id="statWordProjects">2</span>
+          <span class="stat-value" id="statWordProjects">0</span>
         </div>
         <div class="stat-card">
           <div class="stat-top"><span class="stat-label">Excel Spreadsheets</span><div class="stat-icon green"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div></div>
-          <span class="stat-value" id="statExcelProjects">2</span>
+          <span class="stat-value" id="statExcelProjects">0</span>
         </div>
         <div class="stat-card">
           <div class="stat-top"><span class="stat-label">Cloud Storage Used</span><div class="stat-icon amber"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg></div></div>
@@ -885,11 +885,11 @@
             </div>
             <div class="form-group" style="margin-top:16px;">
               <label class="form-label">Full Name</label>
-              <input type="text" class="form-input" id="settingName" value="Jordan Davis" />
+              <input type="text" class="form-input" id="settingName" value="" placeholder="Your name" />
             </div>
             <div class="form-group">
               <label class="form-label">Email Address</label>
-              <input type="email" class="form-input" id="settingEmail" value="jordan.davis@example.com" />
+              <input type="email" class="form-input" id="settingEmail" value="" placeholder="you@example.com" />
             </div>
             <div class="form-group">
               <label class="form-label">Default Export Format</label>
@@ -1066,29 +1066,11 @@
   "use strict";
 
   /* ---------------- APPLICATION DATA ---------------- */
-  let projects = [
-    { id: 1, title: "Q3 Business Strategy Proposal", type: "word", status: "ready", date: "Today", size: "1.4 MB" },
-    { id: 2, title: "2026 Annual Budget & Forecast", type: "excel", status: "ready", date: "Yesterday", size: "2.8 MB" },
-    { id: 3, title: "Client Onboarding Agreement", type: "word", status: "ready", date: "Aug 28", size: "840 KB" },
-    { id: 4, title: "Quarterly Marketing Analytics", type: "excel", status: "ready", date: "Aug 24", size: "1.9 MB" }
-  ];
+  let projects = [];
 
-  let files = [
-    { name: "Q3 Business Strategy Proposal.docx", type: "word", size: "1.4 MB", date: "Just now" },
-    { name: "2026 Annual Budget & Forecast.xlsx", type: "excel", size: "2.8 MB", date: "Yesterday" },
-    { name: "Client Onboarding Agreement.docx", type: "word", size: "840 KB", date: "Aug 28, 2026" },
-    { name: "Quarterly Marketing Analytics.xlsx", type: "excel", size: "1.9 MB", date: "Aug 24, 2026" },
-    { name: "Brand Guidelines & Typography.pdf", type: "pdf", size: "4.2 MB", date: "Aug 15, 2026" },
-    { name: "Vendor NDA Template.docx", type: "word", size: "320 KB", date: "Aug 10, 2026" },
-    { name: "Product Roadmap Q4.xlsx", type: "excel", size: "950 KB", date: "Aug 02, 2026" }
-  ];
+  let files = [];
 
-  let templates = [
-    { title: "Quarterly Budget Planner", type: "excel", category: "Finance", desc: "Structured financial overview with pre-built formulas." },
-    { title: "Executive Business Proposal", type: "word", category: "Strategy", desc: "Clean typography, executive summary, and project milestones." },
-    { title: "Employee Onboarding Pack", type: "word", category: "HR", desc: "Checklist, offer templates, and welcome policies." },
-    { title: "Marketing Campaign ROI Tracker", type: "excel", category: "Marketing", desc: "Channel performance, CAC calculations, and visual tables." }
-  ];
+  let templates = [];
 
   /* ---------------- TOAST NOTIFICATION ---------------- */
   window.toast = function(msg) {
@@ -1242,6 +1224,10 @@
       </article>
     `).join('');
 
+    if (!list.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--charcoal-soft)"><div style="font-size:40px;margin-bottom:12px">📄</div><div style="font-weight:700;color:var(--charcoal);font-size:16px;margin-bottom:6px">No projects yet</div><div style="font-size:13px">Create your first Word or Excel file with AI to get started.</div></div>';
+    }
+
     // Click card opens the matching creator studio
     grid.querySelectorAll('.project-card').forEach(card => {
       card.addEventListener('click', () => {
@@ -1298,6 +1284,9 @@
         </td>
       </tr>
     `).join('');
+    if (!files.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:40px 20px;color:var(--charcoal-soft)"><div style="font-size:36px;margin-bottom:10px">🗂️</div><div style="font-weight:700;color:var(--charcoal);margin-bottom:4px">No files yet</div><div style="font-size:13px">Uploaded and generated files will appear here.</div></td></tr>';
+    }
     document.getElementById('countFiles').textContent = files.length;
   }
 
@@ -1324,6 +1313,9 @@
         </div>
       </article>
     `).join('');
+    if (!templates.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--charcoal-soft)"><div style="font-size:40px;margin-bottom:12px">▦</div><div style="font-weight:700;color:var(--charcoal);font-size:16px;margin-bottom:6px">No templates available</div><div style="font-size:13px">New templates will be added here soon.</div></div>';
+    }
   }
 
   window.useTemplate = function(title, type) {

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact Support — WORDY AI</title>
+<meta name="description" content="Contact WORDY AI support for help with accounts, billing, or documents." />
+<link rel="icon" href="assets/images/wordy-ai-logo.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--paper:#FBF9F4;--panel:#F8F5EC;--surface:#fff;--ink:#12141C;--ink2:#2B2924;--muted:#68645A;--faint:#A8A396;--blue:#3F4CE0;--blue-h:#2E4FD9;--blue-w:#EFF1FD;--green:#1E9E6C;--green-w:#ECF8F3;--red:#B3261E;--border:#E8E3D7;--border-s:#D4CEBF;--pill:999px;--font-d:'Plus Jakarta Sans',sans-serif;--font-b:'Inter',sans-serif}
+  *{box-sizing:border-box}body{margin:0;font-family:var(--font-b);background:var(--paper);color:var(--ink);line-height:1.6}
+  .top{border-bottom:1px solid var(--border);background:#fff}
+  .top-in{max-width:1120px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{font-family:var(--font-d);font-weight:800;color:var(--blue);font-size:17px;text-decoration:none;letter-spacing:-.02em}
+  .top nav{display:flex;gap:4px;flex-wrap:wrap}
+  .top nav a{font-size:13px;font-weight:500;color:var(--muted);text-decoration:none;padding:7px 11px;border-radius:8px}
+  .top nav a:hover{background:var(--panel);color:var(--ink)}
+  .wrap{max-width:1120px;margin:0 auto;padding:48px 20px 70px;display:grid;grid-template-columns:1fr 1.2fr;gap:28px;align-items:start}
+  @media(max-width:860px){.wrap{grid-template-columns:1fr}}
+  .eyebrow{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);background:var(--blue-w);border:1px solid #D3D8FA;border-radius:var(--pill);padding:4px 13px;margin-bottom:14px}
+  h1{font-family:var(--font-d);font-size:clamp(30px,5vw,44px);letter-spacing:-.03em;margin:0 0 10px}
+  .sub{color:var(--muted);font-size:15px;max-width:420px}
+  .info{margin-top:26px;display:grid;gap:12px}
+  .info-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px 18px;text-decoration:none;display:block;color:inherit}
+  .info-card b{font-family:var(--font-d);display:block;margin-bottom:4px}
+  .info-card span{font-size:13px;color:var(--muted)}
+  form{background:#fff;border:1px solid var(--border);border-radius:18px;padding:26px;box-shadow:0 8px 24px -4px rgba(43,41,36,.06)}
+  label{display:block;font-size:12.5px;font-weight:600;margin:14px 0 6px}
+  label:first-of-type{margin-top:0}
+  input,select,textarea{width:100%;border:1px solid var(--border);border-radius:9px;padding:11px 13px;font-family:inherit;font-size:14px;color:var(--ink);background:#fff}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-w)}
+  input.err,textarea.err{border-color:var(--red)}
+  .ferr{display:none;font-size:12px;color:var(--red);margin-top:5px}
+  textarea{min-height:130px;resize:vertical}
+  .send{margin-top:18px;width:100%;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+  .send:hover{background:var(--blue-h)}
+  .send:disabled{opacity:.6;cursor:default}
+  .done{display:none;text-align:center;padding:30px 10px}
+  .done .big{width:60px;height:60px;border-radius:50%;background:var(--green-w);color:var(--green);font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+  .done h2{font-family:var(--font-d);margin:0 0 8px}
+  .done p{color:var(--muted);font-size:14px}
+  .done a{display:inline-block;margin-top:16px;color:var(--blue);font-weight:700;text-decoration:none}
+  footer{border-top:1px solid var(--border);background:#fff;padding:22px 0;font-size:13px;color:var(--muted)}
+  footer .in{max-width:1120px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  footer a{color:var(--blue);font-weight:600;text-decoration:none;margin-left:14px}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="index.html">WORDY AI</a>
+  <nav><a href="wordy-ai-word-creator.html">Word Creator</a><a href="wordy-ai-excel-creator.html">Excel Creator</a><a href="help.html">Help Center</a><a href="wordy-ai-dashboard.html">Dashboard</a></nav>
+</div></header>
+<main class="wrap">
+  <div>
+    <span class="eyebrow">Support</span>
+    <h1>Talk to a human</h1>
+    <p class="sub">Questions about accounts, billing, or documents? Send a message — we reply within 24 hours on business days.</p>
+    <div class="info">
+      <a class="info-card" href="help.html"><b>🔍 Help Center & FAQ</b><span>Instant answers to the most common questions.</span></a>
+      <a class="info-card" href="policies.html#refunds"><b>💸 Refund requests</b><span>Check eligibility, then mention your order email in the form.</span></a>
+      <a class="info-card" href="policies.html#privacy"><b>🔒 Privacy & data</b><span>How we handle your documents and account data.</span></a>
+    </div>
+  </div>
+  <form id="contact-form" novalidate>
+    <div id="form-fields">
+      <label for="c-name">Full name</label>
+      <input id="c-name" type="text" placeholder="Your name" autocomplete="name" />
+      <div class="ferr" id="e-name">Please enter your name.</div>
+      <label for="c-email">Email address</label>
+      <input id="c-email" type="email" placeholder="you@example.com" autocomplete="email" />
+      <div class="ferr" id="e-email">Please enter a valid email address.</div>
+      <label for="c-topic">Topic</label>
+      <select id="c-topic">
+        <option>General question</option>
+        <option>Account & sign-in</option>
+        <option>Billing & refunds</option>
+        <option>Word Creator help</option>
+        <option>Excel Creator help</option>
+        <option>Privacy & data</option>
+      </select>
+      <label for="c-msg">Message</label>
+      <textarea id="c-msg" placeholder="How can we help? Include details like your account email or order reference."></textarea>
+      <div class="ferr" id="e-msg">Please write at least 10 characters.</div>
+      <button class="send" type="submit" id="c-send">Send Message →</button>
+    </div>
+    <div class="done" id="form-done">
+      <div class="big">✓</div>
+      <h2>Message received</h2>
+      <p>Thanks for reaching out — our support team will reply within 24 hours on business days.</p>
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </form>
+</main>
+<footer><div class="in"><span>© 2026 WORDY AI. All rights reserved.</span><span><a href="index.html">Home</a><a href="help.html">Help</a><a href="policies.html#privacy">Privacy</a></span></div></footer>
+<script>
+(function(){
+  var f=document.getElementById('contact-form');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=document.getElementById('c-name'),email=document.getElementById('c-email'),msg=document.getElementById('c-msg'),ok=true;
+    function check(el,err,valid){document.getElementById(err).style.display=valid?'none':'block';el.classList.toggle('err',!valid);if(!valid)ok=false}
+    check(name,'e-name',name.value.trim().length>1);
+    check(email,'e-email',/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()));
+    check(msg,'e-msg',msg.value.trim().length>=10);
+    if(!ok)return;
+    var btn=document.getElementById('c-send');btn.disabled=true;btn.textContent='Sending…';
+    var outbox=[];try{outbox=JSON.parse(localStorage.getItem('wordy-outbox')||'[]')}catch(e){}
+    outbox.push({name:name.value.trim(),email:email.value.trim(),topic:document.getElementById('c-topic').value,msg:msg.value.trim(),at:new Date().toISOString()});
+    try{localStorage.setItem('wordy-outbox',JSON.stringify(outbox))}catch(e){}
+    setTimeout(function(){
+      document.getElementById('form-fields').style.display='none';
+      document.getElementById('form-done').style.display='block';
+    },700);
+  });
+})();
+</script>
+<script src="js/cookie-consent.js"></script>
+</body>
+</html>

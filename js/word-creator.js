@@ -12,7 +12,24 @@ function setDocZoom(z){var paper=$("#paper");if(paper)paper.style.transform="sca
 function toggleStar(btn){btn.classList.toggle("on");toast(btn.classList.contains("on")?"Added to favorites":"Removed from favorites")}
 function setPromptText(t){var ta=$("#ai-instruction");if(ta){ta.value=t;ta.focus()}toast("Prompt inserted")}
 function insertAiCommand(cmd){setPromptText(cmd+" — ")}
-function executeAiRefinement(){var ta=$("#ai-instruction");if(!ta||!ta.value.trim()){toast("Type an instruction first");return}toast("Refining document…");setTimeout(function(){toast("Document refined ✓");ta.value=""},1200)}
+function executeAiRefinement(){var ta=$("#ai-instruction");if(!ta||!ta.value.trim()){toast("Type an instruction first");return}runGeneration("Document refined ✓")}
+function runGeneration(doneMsg){
+  var ov=$("#gen-overlay");
+  if(!ov){toast(doneMsg||"Done ✓");return}
+  var items=$all("#gen-stages li"),fill=$("#gen-fill"),i=0;
+  items.forEach(function(li){li.classList.remove("done");li.textContent=li.textContent.replace(/^✓ /,"")});
+  fill.style.width="0%";
+  ov.classList.add("show");
+  var stepTimer=setInterval(function(){
+    if(i>0){items[i-1].classList.add("done");items[i-1].textContent="✓ "+items[i-1].textContent}
+    if(i>=items.length){
+      clearInterval(stepTimer);fill.style.width="100%";
+      setTimeout(function(){ov.classList.remove("show");var ta=$("#ai-instruction");if(ta)ta.value="";toast(doneMsg||"Document refined ✓")},600);
+      return
+    }
+    fill.style.width=Math.round(i/items.length*100)+"%";i++;
+  },750);
+}
 document.addEventListener("DOMContentLoaded",function(){
   var l=$("#left-sidebar"),ai=$("#ai-panel");
   var tb=$("#toggle-drawer-btn");if(tb)tb.addEventListener("click",function(){l.classList.toggle("hidden")});

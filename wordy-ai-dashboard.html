@@ -1057,6 +1057,25 @@
   </div>
 </div>
 
+<!-- ================= WELCOME ONBOARDING MODAL ================= -->
+<div class="modal-overlay" id="modalWelcome">
+  <div class="modal-card" style="max-width:520px;text-align:center">
+    <div style="font-size:44px;margin-bottom:8px">👋</div>
+    <h2 style="font-family:var(--font-display);margin:0 0 8px">Welcome to WORDY AI</h2>
+    <p style="color:var(--charcoal-soft);font-size:14px;margin:0 0 20px">Get from idea to professional document in three quick steps.</p>
+    <div style="display:grid;gap:10px;text-align:left;margin-bottom:22px">
+      <div style="display:flex;gap:12px;background:var(--surface-alt);border:1px solid var(--border);border-radius:12px;padding:12px 14px"><span style="font-weight:800;color:var(--cobalt)">1</span><span style="font-size:13.5px"><b>Verify your email</b> — click the verification link we just sent you to secure your account.</span></div>
+      <div style="display:flex;gap:12px;background:var(--surface-alt);border:1px solid var(--border);border-radius:12px;padding:12px 14px"><span style="font-weight:800;color:var(--cobalt)">2</span><span style="font-size:13.5px"><b>Create your first file</b> — describe what you need and let AI draft the Word doc or Excel sheet.</span></div>
+      <div style="display:flex;gap:12px;background:var(--surface-alt);border:1px solid var(--border);border-radius:12px;padding:12px 14px"><span style="font-weight:800;color:var(--cobalt)">3</span><span style="font-size:13.5px"><b>Refine & export</b> — polish with AI, then download a native .docx or .xlsx file.</span></div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="wordy-ai-word-creator.html" class="btn btn-primary">Create Word File</a>
+      <a href="wordy-ai-excel-creator.html" class="btn btn-green">Create Excel File</a>
+    </div>
+    <button id="welcomeSkipBtn" style="margin-top:16px;background:none;border:0;color:var(--charcoal-soft);font-size:13px;cursor:pointer;font-family:inherit">Skip tour →</button>
+  </div>
+</div>
+
 <!-- Toast notifications -->
 <div class="toast-container" id="toastContainer"></div>
 
@@ -1137,6 +1156,11 @@
   // Handle URL hash on initial load & popstate
   function handleHash() {
     const hash = window.location.hash.replace('#', '');
+    if (hash === 'welcome') {
+      switchView('dashboard');
+      openWelcome();
+      return;
+    }
     if (hash && views[hash]) {
       switchView(hash);
     } else {
@@ -1437,13 +1461,29 @@
     toast('Profile settings saved successfully ✓');
   });
 
+  /* ---------------- WELCOME ONBOARDING (first visit) ---------------- */
+  const modalWelcome = document.getElementById('modalWelcome');
+  function openWelcome() { if (modalWelcome) modalWelcome.classList.add('open'); }
+  function closeWelcome() {
+    if (modalWelcome) modalWelcome.classList.remove('open');
+    try { localStorage.setItem('wordy-onboarded', '1'); } catch (e) {}
+    if (window.location.hash === '#welcome') history.replaceState(null, '', '#dashboard');
+  }
+  const welcomeSkip = document.getElementById('welcomeSkipBtn');
+  if (welcomeSkip) welcomeSkip.addEventListener('click', closeWelcome);
+  if (modalWelcome) modalWelcome.addEventListener('click', (e) => { if (e.target === modalWelcome) closeWelcome(); });
+
   /* ---------------- INITIALIZE ---------------- */
   renderProjects();
   renderFiles();
   renderTemplates();
   handleHash();
+  try {
+    if (!localStorage.getItem('wordy-onboarded') && window.location.hash !== '#welcome') openWelcome();
+  } catch (e) {}
 
 })();
 </script>
+<script src="js/cookie-consent.js"></script>
 </body>
 </html>

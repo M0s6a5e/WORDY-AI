@@ -627,6 +627,7 @@
                 Create Account
                 <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
+              <p class="switch-row" style="margin-top:12px;font-size:12.5px;color:var(--muted,#68645A)">We'll send a verification link to your email to secure your account.</p>
             </form>
 
             <div class="divider"><span>OR</span></div>
@@ -788,7 +789,7 @@
     }
   });
 
-  // Form submission redirect to workspace
+  // Form submission: login goes to workspace, signup goes to welcome onboarding
   document.querySelectorAll('form').forEach(f => {
     f.addEventListener('submit', e => {
       e.preventDefault();
@@ -797,8 +798,9 @@
         btn.textContent = 'Signing in...';
         btn.disabled = true;
       }
+      const isSignup = f.closest('#view-signup');
       setTimeout(() => {
-        window.location.href = 'wordy-ai-dashboard.html';
+        window.location.href = isSignup ? 'wordy-ai-dashboard.html#welcome' : 'wordy-ai-dashboard.html';
       }, 400);
     });
   });
@@ -814,5 +816,6 @@
   });
 </script>
 
+<script src="js/cookie-consent.js"></script>
 </body>
 </html>

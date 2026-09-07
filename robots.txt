@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /wordy-PAY-CHECK.html
+Disallow: /auth-recovery.html
+
+Sitemap: https://m0s6a5e.github.io/WORDY-AI/sitemap.xml

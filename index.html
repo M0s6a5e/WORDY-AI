@@ -103,9 +103,12 @@
       </div>
 
       <div class="hero-visual" role="img" aria-label="WORDY CHA, the WORDY AI mascot">
-        <div class="hero-character">
+        <div class="hero-character" id="heroCharacter">
           <span class="hero-character-glow" aria-hidden="true"></span>
-          <img class="hero-character-img" src="assets/images/WORDY CHA.svg" alt="WORDY CHA, the WORDY AI mascot">
+          <button class="mascot-btn" id="mascotBtn" aria-haspopup="dialog" aria-label="Chat with Wordy, your AI assistant">
+            <img class="hero-character-img" src="assets/images/WORDY CHA.svg" alt="WORDY CHA, the WORDY AI mascot">
+          </button>
+          <span class="mascot-bubble" id="mascotBubble" aria-hidden="true">Hi! I'm <b>Wordy</b> ✦<small>Click me to chat</small></span>
         </div>
       </div>
     </div>
@@ -508,5 +511,33 @@
 <script src="js/main.js"></script>
 <script src="js/sketch-titles.js"></script>
 <script src="js/cookie-consent.js"></script>
+
+<!-- Floating Wordy assistant -->
+<button class="mascot-float" id="mascotFloat" aria-haspopup="dialog" aria-label="Chat with Wordy, your AI assistant">
+  <img src="assets/images/WORDY CHA.svg" alt="" aria-hidden="true">
+  <span class="float-dot" aria-hidden="true"></span>
+</button>
+
+<!-- Wordy AI chat panel -->
+<div class="chat-backdrop" id="chatBackdrop"></div>
+<aside class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-label="Chat with Wordy" aria-hidden="true">
+  <div class="chat-head">
+    <span class="chat-avatar"><img src="assets/images/WORDY CHA.svg" alt="" aria-hidden="true"></span>
+    <span class="chat-id"><b>Wordy</b><small><span class="online-dot"></span>Online — replies instantly</small></span>
+    <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs" aria-live="polite"></div>
+  <div class="chat-chips" id="chatChips">
+    <button type="button" data-q="I want to create a Word file">📄 Create Word</button>
+    <button type="button" data-q="I want to create an Excel sheet">📊 Create Excel</button>
+    <button type="button" data-q="How much does it cost?">💰 Pricing</button>
+    <button type="button" data-q="Where can I get help?">❓ Help</button>
+  </div>
+  <form class="chat-form" id="chatForm">
+    <input id="chatInput" type="text" placeholder="Ask Wordy anything…" autocomplete="off" aria-label="Type your message">
+    <button type="submit" aria-label="Send message">➤</button>
+  </form>
+  <p class="chat-note">Preview replies • full AI connects after backend integration</p>
+</aside>
 </body>
 </html>

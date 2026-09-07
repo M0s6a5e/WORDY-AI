@@ -83,6 +83,15 @@
       80%  { transform: skewX(-3deg) rotate(-1deg) translateY(2px); }
       100% { transform: skewX(0deg) rotate(0deg) translateY(0); }
     }
+    .cheeks {
+      transform-box: fill-box;
+      transform-origin: 50% 50%;
+      animation: blush 4.8s ease-in-out infinite;
+    }
+    @keyframes blush {
+      0%, 82%, 100% { opacity: 0.55; }
+      90%, 94%      { opacity: 1; }
+    }
   </style>
   <defs>
     <clipPath id="bowl-clip">
@@ -123,6 +132,10 @@
         <circle id="eye-2-reflection-1" cx="1158" cy="762" r="13" fill="#fff"/>
         <circle id="eye-1-reflection-2" cx="920" cy="783" r="7" fill="#fff"/>
         <circle id="eye-2-reflection-2" cx="1150" cy="783" r="7" fill="#fff"/>
+      </g>
+      <g class="cheeks">
+        <ellipse id="cheek-1" cx="872" cy="852" rx="34" ry="22" fill="#3F4CE0" opacity="0.28"/>
+        <ellipse id="cheek-2" cx="1238" cy="852" rx="34" ry="22" fill="#3F4CE0" opacity="0.28"/>
       </g>
     </g>
   </g>

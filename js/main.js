@@ -144,4 +144,160 @@
   ----------------------------------------------------------- */
   var yearEl = document.getElementById("current-year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
-})();
+
+  /* -----------------------------------------------------------
+     Wordy mascot: chat panel + floating mode on scroll
+  ----------------------------------------------------------- */
+  var mascotBtn = document.getElementById("mascotBtn");
+  var mascotFloat = document.getElementById("mascotFloat");
+  var mascotBubble = document.getElementById("mascotBubble");
+  var heroSection = document.getElementById("home");
+  var heroVisual = document.querySelector(".hero-visual");
+  var chatPanel = document.getElementById("chatPanel");
+  var chatBackdrop = document.getElementById("chatBackdrop");
+  var chatClose = document.getElementById("chatClose");
+  var chatMsgs = document.getElementById("chatMsgs");
+  var chatForm = document.getElementById("chatForm");
+  var chatInput = document.getElementById("chatInput");
+  var chatChips = document.getElementById("chatChips");
+  var chatGreeted = false;
+
+  function nowTime() {
+    var d = new Date(), h = d.getHours(), m = ("0" + d.getMinutes()).slice(-2);
+    var ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12;
+    return h + ":" + m + " " + ap;
+  }
+
+  function addMsg(text, who) {
+    if (!chatMsgs) return null;
+    var div = document.createElement("div");
+    div.className = "msg " + who;
+    div.innerHTML = text + '<span class="chat-time">' + nowTime() + "</span>";
+    chatMsgs.appendChild(div);
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    return div;
+  }
+
+  function wordyReply(q) {
+    var s = (q || "").toLowerCase().trim();
+    var link = function (href, label) { return '<a href="' + href + '">' + label + "</a>"; };
+    if (/^(hi|hello|hey|salam|ahlan|marhaba)\b/.test(s) || s === "صباح الخير" || s === "مساء الخير" || s === "سلام عليكم" || s === "السلام عليكم" || s === "اهلا" || s === "ازيك") {
+      return "Hello! Great to see you. I can help you create Word files, Excel sheets, pick a plan, or find help. What do you need?";
+    }
+    if (s.indexOf("excel") > -1 || s.indexOf("sheet") > -1 || s.indexOf("xlsx") > -1 || s.indexOf("جدول") > -1) {
+      return "For spreadsheets, open the " + link("wordy-ai-excel-creator.html", "Excel Creator Studio") + " — describe your data and I will build rows, formulas, and totals for you.";
+    }
+    if (s.indexOf("word") > -1 || s.indexOf("docx") > -1 || s.indexOf("report") > -1 || s.indexOf("document") > -1 || s.indexOf("تقرير") > -1) {
+      return "For documents, open the " + link("wordy-ai-word-creator.html", "Word Creator Studio") + " — tell me the topic and I will draft headings, tables, and a full layout.";
+    }
+    if (s.indexOf("price") > -1 || s.indexOf("cost") > -1 || s.indexOf("plan") > -1 || s.indexOf("subscription") > -1 || s.indexOf("سعر") > -1) {
+      return "Simple weekly billing — cancel anytime. See " + link("index.html#pricing", "all plans here") + ", or go straight to " + link("wordy-PAY-CHECK.html", "checkout") + ".";
+    }
+    if (s.indexOf("template") > -1 || s.indexOf("قالب") > -1) {
+      return "Browse ready-made starters in the " + link("wordy-ai-dashboard.html#templates", "Template Library") + " — one click opens the right studio.";
+    }
+    if (s.indexOf("help") > -1 || s.indexOf("support") > -1 || s.indexOf("contact") > -1 || s.indexOf("مساعدة") > -1) {
+      return "You can visit the " + link("help.html", "Help Center") + " for instant answers, or " + link("contact.html", "message support") + " — we reply within 24 hours.";
+    }
+    if (s.indexOf("login") > -1 || s.indexOf("sign") > -1 || s.indexOf("account") > -1 || s.indexOf("حساب") > -1) {
+      return "You can " + link("wordy-ai-auth.html", "log in") + " or " + link("wordy-ai-auth.html?view=signup", "create a free account") + ". Forgot your password? " + link("auth-recovery.html", "Recover it here") + ".";
+    }
+    if (s.indexOf("thank") > -1 || s.indexOf("شكرا") > -1) {
+      return "Anytime! I am here whenever you need a document. Anything else?";
+    }
+    if (s.indexOf("who are you") > -1 || s.indexOf("your name") > -1 || s.indexOf("مين") > -1) {
+      return "I am <b>Wordy</b>, your AI document assistant. I live in this little coffee pot and I love turning ideas into Word and Excel files.";
+    }
+    return "Got it! For full AI answers, describe what you want to build and I will point you to the right place — try " + link("wordy-ai-word-creator.html", "Word") + ", " + link("wordy-ai-excel-creator.html", "Excel") + ", or " + link("help.html", "Help") + ".";
+  }
+
+  function botAnswer(q) {
+    if (!chatMsgs) return;
+    var typing = document.createElement("div");
+    typing.className = "msg bot typing";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+    chatMsgs.appendChild(typing);
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+    window.setTimeout(function () {
+      typing.remove();
+      addMsg(wordyReply(q), "bot");
+    }, 900);
+  }
+
+  function openChat() {
+    if (!chatPanel) return;
+    if (mascotBtn) { mascotBtn.classList.remove("excited"); void mascotBtn.offsetWidth; mascotBtn.classList.add("excited"); }
+    chatPanel.classList.add("open");
+    chatPanel.setAttribute("aria-hidden", "false");
+    if (chatBackdrop) chatBackdrop.classList.add("show");
+    if (!chatGreeted) {
+      chatGreeted = true;
+      window.setTimeout(function () {
+        addMsg("Hi, I am <b>Wordy</b>! Ask me about Word files, Excel sheets, pricing, or anything on this site.", "bot");
+      }, 350);
+    }
+    window.setTimeout(function () { if (chatInput) chatInput.focus({ preventScroll: true }); }, 400);
+  }
+
+  function closeChat() {
+    if (!chatPanel) return;
+    chatPanel.classList.remove("open");
+    chatPanel.setAttribute("aria-hidden", "true");
+    if (chatBackdrop) chatBackdrop.classList.remove("show");
+  }
+
+  if (mascotBtn) mascotBtn.addEventListener("click", openChat);
+  if (mascotFloat) mascotFloat.addEventListener("click", openChat);
+  if (chatClose) chatClose.addEventListener("click", closeChat);
+  if (chatBackdrop) chatBackdrop.addEventListener("click", closeChat);
+
+  if (chatForm) chatForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = chatInput.value.trim();
+    if (!v) return;
+    addMsg(v.replace(/</g, "&lt;"), "user");
+    chatInput.value = "";
+    botAnswer(v);
+  });
+
+  if (chatChips) chatChips.addEventListener("click", function (e) {
+    var btn = e.target.closest("button[data-q]");
+    if (!btn || !chatInput) return;
+    chatInput.value = btn.getAttribute("data-q");
+    chatForm.dispatchEvent(new Event("submit", { cancelable: true }));
+  });
+
+  /* Speech bubble: show once on load, and on hover */
+  if (mascotBubble && mascotBtn && !reduceMotion) {
+    window.setTimeout(function () {
+      if (!document.body.classList.contains("mascot-floating")) mascotBubble.classList.add("show");
+      window.setTimeout(function () { mascotBubble.classList.remove("show"); }, 4200);
+    }, 1600);
+    mascotBtn.addEventListener("mouseenter", function () { mascotBubble.classList.add("show"); });
+    mascotBtn.addEventListener("mouseleave", function () { mascotBubble.classList.remove("show"); });
+  }
+
+  /* Scroll: floating mini-mascot + hero parallax (reversed when back) */
+  var ticking = false;
+  function updateMascotOnScroll() {
+    ticking = false;
+    if (!heroSection) return;
+    var r = heroSection.getBoundingClientRect();
+    var past = r.bottom < 140;
+    document.body.classList.toggle("mascot-floating", past);
+    if (mascotBubble) mascotBubble.classList.toggle("show", false);
+    if (heroVisual && !reduceMotion) {
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        var p = Math.min(Math.max(window.scrollY / Math.max(r.height, 1), 0), 1);
+        heroVisual.style.transform = "translateY(" + (p * 60).toFixed(1) + "px) scale(" + (1 - p * 0.08).toFixed(3) + ")";
+        heroVisual.style.opacity = (1 - p * 0.55).toFixed(2);
+      } else if (r.bottom <= 0) {
+        heroVisual.style.transform = "";
+        heroVisual.style.opacity = "";
+      }
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(updateMascotOnScroll); }
+  }, { passive: true });
+  updateMascotOnScroll();})();

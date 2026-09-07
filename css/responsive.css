@@ -45,7 +45,7 @@
   .section { padding-block: 56px; }
 
   .hero { padding-top: calc(var(--nav-height) + 32px); }
-  .hero-heading-img { width: 100%; }
+  .hero-title { max-width: 100%; }
   .hero-ctas .btn { flex: 1 1 auto; }
   .hero-visual { min-height: 340px; }
   .hero-character-img { max-width: 320px; }

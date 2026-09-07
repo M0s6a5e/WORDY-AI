@@ -218,12 +218,7 @@
     margin-bottom: 10px;
   }
 
-  .heading-title-img {
-    width: min(100%, 560px);
-    height: auto;
-    display: block;
-    margin: 0 auto 10px;
-  }
+  .page-heading h1[data-sketch] { text-align: center; }
 
   .heading-sub {
     font-size: 14px;
@@ -1128,7 +1123,7 @@
 <!-- ── PAGE HEADING ── -->
 <div class="page-heading">
   <p class="heading-eyebrow">Subscription Checkout</p>
-  <img class="heading-title-img" src="assets/images/heading-complete-plan.gif" alt="Complete your WORDY AI plan" width="460" height="147" />
+  <h1 data-sketch style="font-size:clamp(32px,4vw,50px);line-height:1.12;margin:0 auto 10px;max-width:16ch;text-align:center">Complete your WORDY AI plan</h1>
   <p class="heading-sub">Choose your plan, confirm your details, and continue to secure payment.</p>
 </div>
 
@@ -1825,6 +1820,7 @@ function changePayment() {
 // ─── START ───────────────────────────────────────────────
 init();
 </script>
+<script src="js/sketch-titles.js"></script>
 <script src="js/cookie-consent.js"></script>
 </body>
 </html>

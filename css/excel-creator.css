@@ -110,7 +110,25 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:900px}
 .toast.show{display:flex}
 .pulse{width:9px;height:9px;border-radius:50%;background:var(--green);display:inline-block;animation:pl 1.4s infinite}
 @keyframes pl{50%{opacity:.4}}
-@media(max-width:1100px){.sheets{display:none}.ai{position:fixed;right:0;top:56px;bottom:0;z-index:40;box-shadow:var(--shadow-lg)}.doc-input{width:180px}.view-switch{display:none}}
+@media(max-width:1100px){.sheets{display:none}.ai{position:fixed;right:0;top:56px;bottom:0;z-index:40;box-shadow:var(--shadow-lg)}.doc-input{width:180px}.view-switch{display:none}
+  #ai-drawer{margin-right:-340px}
+  #ai-drawer.open{margin-right:0}
+}
+@media(max-width:640px){
+  .topbar{overflow-x:auto;scrollbar-width:none;gap:8px;padding:0 10px}
+  .topbar::-webkit-scrollbar{display:none}
+  .brand{flex-shrink:0}
+  .brand-name{font-size:14px}
+  .xlsx-tag{display:none}
+  .doc-input{width:130px;font-size:13px;flex-shrink:0}
+  .top-actions{flex-shrink:0}
+  .top-actions .btn{font-size:12px;padding:7px 10px}
+  .formula-bar{overflow-x:auto;scrollbar-width:none}
+  .formula-bar::-webkit-scrollbar{display:none}
+  .fmt-mini{display:none}
+  .status-tabs{overflow-x:auto}
+  .tabs,.calc{flex-shrink:0}
+}
 /* AI generation progress overlay */
 .gen-overlay{position:fixed;inset:0;background:rgba(18,20,28,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
 .gen-overlay.show{display:flex}

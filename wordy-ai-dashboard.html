@@ -631,6 +631,24 @@
     .topbar-right .btn span { display: none; }
     .topbar-right .btn { padding: 8px 10px; }
   }
+
+  /* Small phones: compact topbar, inner-scrolling table, constrained modals */
+  @media (max-width: 600px) {
+    #planBadge { display: none; }
+    .topbar { gap: 8px; }
+    .topbar-left { gap: 8px; min-width: 0; flex: 1; }
+    .topbar-title { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .topbar-right { gap: 8px; flex-shrink: 0; }
+    .theme-toggle-btn span { display: none; }
+    .theme-toggle-btn { padding: 8px 10px; }
+    #topUploadBtn { font-size: 0; }
+    #topUploadBtn svg { font-size: 15px; }
+    .files-table-wrap { overflow-x: auto; }
+    .files-table { min-width: 560px; }
+    .modal-overlay { padding: 12px; }
+    .modal-card { max-width: calc(100vw - 24px); margin-inline: auto; min-width: 0; }
+    .modal-body { overflow-wrap: anywhere; }
+  }
 </style>
 </head>
 <body>

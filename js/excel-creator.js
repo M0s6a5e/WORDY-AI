@@ -22,7 +22,7 @@ function selectCell(td){
 }
 document.addEventListener("DOMContentLoaded",function(){
   render();
-  var t=$("#toggle-assistant-btn"),a=$("#ai-drawer");if(t)t.addEventListener("click",function(){a.classList.toggle("hidden")});
+  var t=$("#toggle-assistant-btn"),a=$("#ai-drawer");if(t)t.addEventListener("click",function(){a.classList.toggle("hidden");a.classList.toggle("open")});
   $all(".sheet-item").forEach(function(s){s.addEventListener("click",function(){$all(".sheet-item").forEach(function(x){x.classList.remove("on")});s.classList.add("on");toast(s.dataset.sheet+" sheet opened")})});
   $all(".tab").forEach(function(tb){tb.addEventListener("click",function(){$all(".tab").forEach(function(x){x.classList.remove("on")});tb.classList.add("on")})});
 });

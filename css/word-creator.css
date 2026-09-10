@@ -145,7 +145,23 @@ button{font-family:inherit;cursor:pointer} a{color:inherit;text-decoration:none}
 .toast.show{display:flex}
 .check{width:24px;height:24px;border-radius:50%;background:var(--green-wash);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:800}
 @media(max-width:1200px){:root{--sidebar:240px;--inspector:300px}.paper{padding:36px 28px}.paper h1{font-size:32px}}
-@media(max-width:960px){.sidebar{position:fixed;left:0;top:56px;bottom:0;z-index:40;box-shadow:var(--shadow-float)}.ai{position:fixed;right:0;top:56px;bottom:0;z-index:40;box-shadow:var(--shadow-float)}.topnav{display:none}.doc-context{display:none}}
+@media(max-width:960px){.sidebar{position:fixed;left:0;top:56px;bottom:0;z-index:40;box-shadow:var(--shadow-float)}.ai{position:fixed;right:0;top:56px;bottom:0;z-index:40;box-shadow:var(--shadow-float)}.topnav{display:none}.doc-context{display:none}
+  #left-sidebar{margin-left:calc(var(--sidebar) * -1)}
+  #left-sidebar.open{margin-left:0}
+  #ai-panel{margin-right:calc(var(--inspector) * -1)}
+  #ai-panel.open{margin-right:0}
+}
+@media(max-width:640px){
+  .topbar{overflow-x:auto;scrollbar-width:none;gap:8px;padding:0 12px}
+  .topbar::-webkit-scrollbar{display:none}
+  .top-actions{flex-shrink:0}
+  .mode-switch{display:none}
+  #star-btn{display:none}
+  .top-actions .btn{font-size:12px;padding:7px 10px}
+  .paper{padding:28px 18px}
+  .paper h1{font-size:27px}
+  .quickbar{max-width:calc(100vw - 24px);overflow-x:auto}
+}
 /* AI generation progress overlay */
 .gen-overlay{position:fixed;inset:0;background:rgba(18,20,28,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
 .gen-overlay.show{display:flex}

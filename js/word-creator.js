@@ -32,14 +32,14 @@ function runGeneration(doneMsg){
 }
 document.addEventListener("DOMContentLoaded",function(){
   var l=$("#left-sidebar"),ai=$("#ai-panel");
-  var tb=$("#toggle-drawer-btn");if(tb)tb.addEventListener("click",function(){l.classList.toggle("hidden")});
-  var ca=$("#close-ai-panel");if(ca)ca.addEventListener("click",function(){ai.classList.add("hidden")});
-  var tg=$("#ai-panel-toggle");if(tg)tg.addEventListener("click",function(){ai.classList.toggle("hidden")});
+  var tb=$("#toggle-drawer-btn");if(tb)tb.addEventListener("click",function(){l.classList.toggle("hidden");l.classList.toggle("open")});
+  var ca=$("#close-ai-panel");if(ca)ca.addEventListener("click",function(){ai.classList.add("hidden");ai.classList.remove("open")});
+  var tg=$("#ai-panel-toggle");if(tg)tg.addEventListener("click",function(){ai.classList.toggle("hidden");ai.classList.toggle("open")});
   var be=$("#btn-mode-edit"),bp=$("#btn-mode-preview");
   if(be&&bp){be.addEventListener("click",function(){be.classList.add("on");bp.classList.remove("on");$("#paper").contentEditable="true";$("#paper").focus()});bp.addEventListener("click",function(){bp.classList.add("on");be.classList.remove("on");$("#paper").contentEditable="false"})}
   var title=$("#doc-editable-title");if(title)title.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();title.blur();toast("Document renamed")}});  
   $all(".outline-link").forEach(function(a){a.addEventListener("click",function(){$all(".outline-link").forEach(function(x){x.classList.remove("on")});a.classList.add("on")})});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape"){ai.classList.add("hidden")}});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"){ai.classList.add("hidden");ai.classList.remove("open")}});
 });
 window.switchLeftTab=switchLeftTab;window.setDocZoom=setDocZoom;window.toggleStar=toggleStar;window.setPromptText=setPromptText;window.insertAiCommand=insertAiCommand;window.executeAiRefinement=executeAiRefinement;
 })();

@@ -949,7 +949,7 @@ svg { display: block; }
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
   cursor: pointer;
-  z-index: 60;
+  z-index: 550;
   padding: 7px;
   transform: scale(0) translateY(30px);
   opacity: 0;
@@ -989,7 +989,7 @@ body.mascot-floating .mascot-float::before {
   position: fixed;
   inset: 0;
   background: rgba(18, 20, 28, 0.35);
-  z-index: 70;
+  z-index: 600;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
@@ -1004,7 +1004,7 @@ body.mascot-floating .mascot-float::before {
   background: var(--paper);
   border-left: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
-  z-index: 71;
+  z-index: 601;
   display: flex;
   flex-direction: column;
   transform: translateX(105%);

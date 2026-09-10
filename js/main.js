@@ -232,9 +232,7 @@
     if (chatBackdrop) chatBackdrop.classList.add("show");
     if (!chatGreeted) {
       chatGreeted = true;
-      window.setTimeout(function () {
-        addMsg("Hi, I am <b>Wordy</b>! Ask me about Word files, Excel sheets, pricing, or anything on this site.", "bot");
-      }, 350);
+      addMsg("Hi, I am <b>Wordy</b>! Ask me about Word files, Excel sheets, pricing, or anything on this site.", "bot");
     }
     window.setTimeout(function () { if (chatInput) chatInput.focus({ preventScroll: true }); }, 400);
   }
@@ -250,6 +248,31 @@
   if (mascotFloat) mascotFloat.addEventListener("click", openChat);
   if (chatClose) chatClose.addEventListener("click", closeChat);
   if (chatBackdrop) chatBackdrop.addEventListener("click", closeChat);
+
+  /* Redundant delegated opener: works even if direct bindings are lost.
+     Re-queries the DOM so it never depends on cached references. */
+  window.__wordyChatOpens = 0;
+  document.addEventListener("click", function (e) {
+    var t = e.target && e.target.closest ? e.target.closest("#mascotBtn,#mascotFloat") : null;
+    if (!t) return;
+    var panel = document.getElementById("chatPanel");
+    var backdrop = document.getElementById("chatBackdrop");
+    if (!panel) return;
+    window.__wordyChatOpens++;
+    panel.classList.add("open");
+    panel.setAttribute("aria-hidden", "false");
+    if (backdrop) backdrop.classList.add("show");
+    var msgs = document.getElementById("chatMsgs");
+    if (msgs && !msgs.dataset.greeted) {
+      msgs.dataset.greeted = "1";
+      addMsg("Hi, I am <b>Wordy</b>! Ask me about Word files, Excel sheets, pricing, or anything on this site.", "bot");
+    }
+  });
+
+  /* Close chat with Escape */
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeChat();
+  });
 
   if (chatForm) chatForm.addEventListener("submit", function (e) {
     e.preventDefault();

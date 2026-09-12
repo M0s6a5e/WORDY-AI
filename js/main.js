@@ -328,7 +328,6 @@
   var ticking = false;
   function updateMascotOnScroll() {
     ticking = false;
-    updateScrollChrome();
     if (!heroSection) return;
     var r = heroSection.getBoundingClientRect();
     var past = r.bottom < 140;
@@ -349,26 +348,9 @@
     if (!ticking) { ticking = true; window.requestAnimationFrame(updateMascotOnScroll); }
   }, { passive: true });
   /* -----------------------------------------------------------
-     Modern scroll experience: progress, to-top ring, stagger,
-     marquee, and 3D tilt on showcase cards
+     Modern scroll experience: stagger, marquee,
+     and 3D tilt on showcase cards
   ----------------------------------------------------------- */
-  var scrollProgress = document.getElementById("scrollProgress");
-  var toTop = document.getElementById("toTop");
-  var toTopRing = document.getElementById("toTopRing");
-  var RING_LEN = 163.4;
-
-  function updateScrollChrome() {
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
-    if (scrollProgress) scrollProgress.style.setProperty("--scroll-p", p.toFixed(4));
-    if (toTopRing) toTopRing.style.strokeDashoffset = (RING_LEN * (1 - p)).toFixed(1);
-    if (toTop) toTop.classList.toggle("show", window.scrollY > 600);
-  }
-  updateScrollChrome();
-
-  if (toTop) toTop.addEventListener("click", function () {
-    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-  });
 
   /* Staggered cascade for grids */
   document.querySelectorAll("[data-stagger]").forEach(function (grid) {

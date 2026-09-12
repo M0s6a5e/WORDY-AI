@@ -650,6 +650,7 @@
     .modal-body { overflow-wrap: anywhere; }
   }
 </style>
+<link rel="stylesheet" href="css/glass-buttons.css" />
 </head>
 <body>
 
@@ -973,26 +974,27 @@
         <div class="view-heading">
           <h1>Subscription &amp; Billing</h1>
           <p>Manage your current plan, view invoices, and upgrade document generation limits.</p>
+          <p id="billingUsage" style="font-size:13px;color:var(--charcoal-soft);margin-top:6px"></p>
         </div>
-        <a href="wordy-PAY-CHECK.html" class="btn btn-primary">Upgrade Plan</a>
+        <span class="btn btn-secondary" style="opacity:.6;cursor:not-allowed" title="Paid plans are paused">🔒 Upgrades Paused</span>
       </div>
 
       <!-- Plan Cards -->
       <div class="plans-grid">
-        <div class="plan-card">
-          <div class="plan-name">Free Plan</div>
-          <div class="plan-price">$0 <span>/ forever</span></div>
-          <p style="font-size:13px; color:var(--charcoal-soft);">Essential tools for occasional document generation.</p>
-          <ul class="plan-benefits">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 5 AI documents / mo</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Basic Templates</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 500 MB Storage</li>
-          </ul>
-          <button class="btn btn-secondary btn-sm" onclick="toast('You are currently on Professional plan.')">Select Free</button>
-        </div>
-
         <div class="plan-card current">
           <span class="current-badge">Current Plan</span>
+          <div class="plan-name">Free Plan</div>
+          <div class="plan-price">$0 <span>/ forever</span></div>
+          <p style="font-size:13px; color:var(--charcoal-soft);">Essential tools for everyday document generation. Usage resets daily.</p>
+          <ul class="plan-benefits">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 4 projects max</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 2 AI files / day</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 500 MB Storage</li>
+          </ul>
+          <button class="btn btn-secondary btn-sm" disabled style="opacity:0.8;">Current Plan</button>
+        </div>
+
+        <div class="plan-card">
           <div class="plan-name">Professional</div>
           <div class="plan-price">$1 <span>/ week</span></div>
           <p style="font-size:13px; color:var(--charcoal-soft);">For freelancers and professionals generating regular files.</p>
@@ -1002,7 +1004,7 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 10 GB Cloud Storage</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Priority Generation</li>
           </ul>
-          <button class="btn btn-primary btn-sm" disabled style="opacity:0.8;">Active Plan</button>
+          <button class="btn btn-secondary btn-sm is-locked" disabled title="Paid plans are paused">🔒 Paused</button>
         </div>
 
         <div class="plan-card">
@@ -1015,7 +1017,7 @@
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> 100 GB Cloud Storage</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg> Dedicated Support</li>
           </ul>
-          <a href="wordy-PAY-CHECK.html?plan=business" class="btn btn-secondary btn-sm">Upgrade to Business</a>
+          <button class="btn btn-secondary btn-sm is-locked" disabled title="Paid plans are paused">🔒 Paused</button>
         </div>
       </div>
     </main>
@@ -1047,6 +1049,7 @@
         <label class="form-label">AI Prompt &amp; Structure Details</label>
         <textarea class="form-input" id="docPromptText" rows="3" placeholder="Describe the sections, tables, tone, or key figures to include..."></textarea>
       </div>
+      <p id="createLimits" style="font-size:12.5px;color:var(--charcoal-soft);margin:4px 0 0"></p>
     </div>
     <div class="modal-foot">
       <button class="btn btn-secondary btn-sm" id="cancelCreateDocBtn">Cancel</button>
@@ -1108,6 +1111,36 @@
   let files = [];
 
   let templates = [];
+
+  /* ---------------- FREE PLAN LIMITS (frontend only; enforced by backend later) ---------------- */
+  const MAX_PROJECTS = 4;
+  const DAILY_AI_LIMIT = 2;
+
+  function todayKey() {
+    const d = new Date();
+    return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  }
+  function getAiUsage() {
+    try {
+      const u = JSON.parse(localStorage.getItem("wordy-ai-usage") || "{}");
+      if (u.date !== todayKey()) return { date: todayKey(), count: 0 };
+      return u;
+    } catch (e) { return { date: todayKey(), count: 0 }; }
+  }
+  function bumpAiUsage() {
+    const u = getAiUsage();
+    u.count += 1;
+    try { localStorage.setItem("wordy-ai-usage", JSON.stringify(u)); } catch (e) {}
+    updateBillingUsage();
+    return u.count;
+  }
+  function aiLeft() { return Math.max(0, DAILY_AI_LIMIT - getAiUsage().count); }
+  function updateBillingUsage() {
+    const el = document.getElementById("billingUsage");
+    if (el) el.textContent = "Free plan usage — Projects: " + projects.length + " / " + MAX_PROJECTS + " • AI files left today: " + aiLeft() + " / " + DAILY_AI_LIMIT + " (resets daily)";
+    const cl = document.getElementById("createLimits");
+    if (cl) cl.textContent = "Free plan: " + projects.length + " / " + MAX_PROJECTS + " projects • " + aiLeft() + " / " + DAILY_AI_LIMIT + " AI files left today";
+  }
 
   /* ---------------- TOAST NOTIFICATION ---------------- */
   window.toast = function(msg) {
@@ -1261,6 +1294,7 @@
               ${p.status === 'generating' ? '<span class="spinner"></span> Generating...' : '✓ Ready'}
             </span>
             <button class="btn-ghost btn-sm" onclick="event.stopPropagation(); toast('File downloaded ✓')">Download</button>
+            <button class="btn-ghost btn-sm" onclick="event.stopPropagation(); deleteProject(${p.id})" aria-label="Delete project" title="Delete project" style="color:var(--red, #C24A3D);">✕</button>
           </div>
         </div>
       </article>
@@ -1360,7 +1394,20 @@
     }
   }
 
+  window.deleteProject = function(id) {
+    const p = projects.find(x => x.id === id);
+    if (!p) return;
+    if (!window.confirm('Delete "' + p.title + '"? This cannot be undone.')) return;
+    projects = projects.filter(x => x.id !== id);
+    renderProjects();
+    updateBillingUsage();
+    toast('Project deleted. You can now create a new one.');
+  };
+
   window.useTemplate = function(title, type) {
+    if (projects.length >= MAX_PROJECTS) { toast("Project limit reached (4 / 4). Delete a project to create another."); return; }
+    if (aiLeft() <= 0) { toast("Daily AI limit reached (2 / day). Usage resets tomorrow."); return; }
+    bumpAiUsage();
     window.location.href = type === 'word' ? 'wordy-ai-word-creator.html' : 'wordy-ai-excel-creator.html';
   };
 
@@ -1372,6 +1419,7 @@
   function openCreateModal(defaultType = 'word') {
     docPromptType.value = defaultType;
     docPromptTitle.value = defaultType === 'word' ? 'New Strategic Document' : 'New Financial Workbook';
+    updateBillingUsage();
     modalCreateDoc.classList.add('open');
   }
 
@@ -1384,6 +1432,9 @@
   document.getElementById('cancelCreateDocBtn').addEventListener('click', () => modalCreateDoc.classList.remove('open'));
 
   function createAIProject(title, type) {
+    if (projects.length >= MAX_PROJECTS) { toast("Project limit reached (4 / 4). Delete a project to create another."); return; }
+    if (aiLeft() <= 0) { toast("Daily AI limit reached (2 / day). Usage resets tomorrow."); return; }
+    bumpAiUsage();
     const newId = projects.length + 1;
     const newProject = {
       id: newId,
@@ -1396,12 +1447,14 @@
     projects.unshift(newProject);
     switchView('dashboard');
     renderProjects();
+    updateBillingUsage();
     toast(`AI is building “${newProject.title}”...`);
 
     // Simulate AI generation stages
     setTimeout(() => {
       newProject.status = 'ready';
       renderProjects();
+      updateBillingUsage();
       toast(`“${newProject.title}” is ready ✓ — opening studio…`);
       setTimeout(() => {
         window.location.href = type === 'word' ? 'wordy-ai-word-creator.html' : 'wordy-ai-excel-creator.html';
@@ -1495,6 +1548,7 @@
   renderProjects();
   renderFiles();
   renderTemplates();
+  updateBillingUsage();
   handleHash();
   try {
     if (!localStorage.getItem('wordy-onboarded') && window.location.hash !== '#welcome') openWelcome();

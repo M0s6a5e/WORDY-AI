@@ -146,8 +146,32 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
   /* -----------------------------------------------------------
-     Wordy mascot: chat panel + floating mode on scroll
+     Locked paid plans: friendly notice instead of checkout
   ----------------------------------------------------------- */
+  document.addEventListener("click", function (e) {
+    var t = e.target && e.target.closest ? e.target.closest("[data-locked-plan]") : null;
+    if (!t) return;
+    e.preventDefault();
+    var name = t.getAttribute("data-locked-plan") || "This plan";
+    var note = document.getElementById("locked-plan-note");
+    if (!note) {
+      note = document.createElement("div");
+      note.id = "locked-plan-note";
+      note.setAttribute("role", "status");
+      note.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);z-index:9999;background:#2B2924;color:#fff;font-size:13.5px;font-weight:600;padding:13px 20px;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.3);opacity:0;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px);text-align:center;font-family:Inter,-apple-system,sans-serif";
+      document.body.appendChild(note);
+    }
+    note.textContent = "🔒 " + name + " plan is paused — everyone is on the Free plan for now.";
+    window.requestAnimationFrame(function () {
+      note.style.opacity = "1";
+      note.style.transform = "translateX(-50%) translateY(0)";
+    });
+    window.clearTimeout(note._t);
+    note._t = window.setTimeout(function () {
+      note.style.opacity = "0";
+      note.style.transform = "translateX(-50%) translateY(20px)";
+    }, 3200);
+  });
   var mascotBtn = document.getElementById("mascotBtn");
   var mascotFloat = document.getElementById("mascotFloat");
   var mascotBubble = document.getElementById("mascotBubble");

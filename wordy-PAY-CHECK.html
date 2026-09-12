@@ -1066,6 +1066,7 @@
     margin: 0 24px;
   }
 </style>
+<link rel="stylesheet" href="css/glass-buttons.css" />
 </head>
 <body>
 
@@ -1128,6 +1129,7 @@
 </div>
 
 <!-- ── CHECKOUT LAYOUT ── -->
+<div id="billing-locked-banner" style="display:none;max-width:1120px;margin:18px auto 0;padding:14px 18px;background:#FBF1DF;border:1px solid #E8D9B8;border-radius:12px;font-size:14px;color:#2B2924;line-height:1.6">🔒 <b>Paid plans are temporarily paused.</b> Everyone is on the Free plan right now (4 projects max • 2 AI files/day, resets daily). <a href="wordy-ai-auth.html?view=signup" style="color:#2E4FD9;font-weight:700">Create a free account →</a></div>
 <div class="checkout-layout" id="checkout-main">
   <!-- LEFT COLUMN -->
   <div class="left-col">
@@ -1719,6 +1721,19 @@ function updatePlanUI(planKey) {
   const stickyLabel = plan.price === 0 ? 'Continue for Free →' : `Pay ${plan.currency}${plan.price}.00`;
   document.getElementById('pay-btn-text').textContent = payLabel;
   document.getElementById('sticky-pay-text').textContent = stickyLabel;
+
+  // Paid plans paused — Free plan only (frontend lock; backend enforces later)
+  window.__billingLocked = plan.price !== 0;
+  if (window.__billingLocked) {
+    document.getElementById('billing-locked-banner').style.display = 'block';
+    const payBtn = document.getElementById('pay-btn');
+    payBtn.disabled = true;
+    payBtn.style.opacity = '0.6';
+    payBtn.style.cursor = 'not-allowed';
+    document.getElementById('pay-btn-text').textContent = '🔒 Unavailable — Paid Plans Paused';
+    const sticky = document.getElementById('sticky-pay');
+    if (sticky) sticky.style.display = 'none';
+  }
 }
 
 function togglePlanSwitcher() {
@@ -1767,6 +1782,11 @@ function initiatePayment() {
     email.focus();
     email.style.borderColor = '#EF4444';
     setTimeout(() => email.style.borderColor = '', 2000);
+    return;
+  }
+
+  if (window.__billingLocked) {
+    alert('Paid plans are temporarily paused. You are on the Free plan.');
     return;
   }
 

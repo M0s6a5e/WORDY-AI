@@ -1,0 +1,147 @@
+/* =========================================================
+   WORDY AI — iOS liquid-glass treatment for primary CTAs
+   Brand colors are untouched; glass is a light/shine overlay.
+   ========================================================= */
+.btn-primary,
+.btn-green,
+.btn-export,
+.btn-nav-cta,
+.btn-on-dark,
+.btn-pay,
+.btn-primary-sm,
+.apply,
+.refine,
+.send,
+.go,
+#submitCreateDocBtn,
+.chat-form button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  backdrop-filter: blur(14px) saturate(1.5);
+  background-image: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.10) 42%,
+    rgba(255, 255, 255, 0.00) 55%,
+    rgba(0, 0, 0, 0.10) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 10px 24px -8px rgba(10, 15, 40, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.65),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.10);
+  transition:
+    transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+/* Moving shine sweep */
+.btn-primary::after,
+.btn-green::after,
+.btn-export::after,
+.btn-nav-cta::after,
+.btn-on-dark::after,
+.btn-pay::after,
+.btn-primary-sm::after,
+.apply::after,
+.refine::after,
+.send::after,
+.go::after,
+#submitCreateDocBtn::after,
+.chat-form button::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: -80%;
+  width: 55%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-primary:hover:not(:disabled),
+.btn-green:hover:not(:disabled),
+.btn-export:hover:not(:disabled),
+.btn-nav-cta:hover:not(:disabled),
+.btn-on-dark:hover:not(:disabled),
+.btn-pay:hover:not(:disabled),
+.btn-primary-sm:hover:not(:disabled),
+.apply:hover:not(:disabled),
+.refine:hover:not(:disabled),
+.send:hover:not(:disabled),
+.go:hover:not(:disabled),
+#submitCreateDocBtn:hover:not(:disabled),
+.chat-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.07) saturate(1.1);
+  box-shadow:
+    0 16px 32px -10px rgba(10, 15, 40, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.25),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.10);
+}
+
+.btn-primary:hover:not(:disabled)::after,
+.btn-green:hover:not(:disabled)::after,
+.btn-export:hover:not(:disabled)::after,
+.btn-nav-cta:hover:not(:disabled)::after,
+.btn-on-dark:hover:not(:disabled)::after,
+.btn-pay:hover:not(:disabled)::after,
+.btn-primary-sm:hover:not(:disabled)::after,
+.apply:hover:not(:disabled)::after,
+.refine:hover:not(:disabled)::after,
+.send:hover:not(:disabled)::after,
+.go:hover:not(:disabled)::after,
+#submitCreateDocBtn:hover:not(:disabled)::after,
+.chat-form button:hover:not(:disabled)::after {
+  left: 135%;
+}
+
+.btn-primary:active:not(:disabled),
+.btn-green:active:not(:disabled),
+.btn-export:active:not(:disabled),
+.btn-nav-cta:active:not(:disabled),
+.btn-on-dark:active:not(:disabled),
+.btn-pay:active:not(:disabled),
+.btn-primary-sm:active:not(:disabled),
+.apply:active:not(:disabled),
+.refine:active:not(:disabled),
+.send:active:not(:disabled),
+.go:active:not(:disabled),
+#submitCreateDocBtn:active:not(:disabled),
+.chat-form button:active:not(:disabled) {
+  transform: translateY(0) scale(0.96);
+  filter: brightness(0.98);
+  box-shadow:
+    0 4px 12px -6px rgba(10, 15, 40, 0.5),
+    inset 0 2px 6px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+/* Locked / coming-soon buttons */
+.is-locked,
+.is-locked:hover {
+  cursor: not-allowed;
+  filter: grayscale(0.6);
+  transform: none;
+  background-image: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 60%, rgba(0,0,0,.06));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary, .btn-green, .btn-export, .btn-nav-cta, .btn-on-dark,
+  .btn-pay, .btn-primary-sm, .apply, .refine, .send, .go,
+  #submitCreateDocBtn, .chat-form button {
+    transition: none;
+  }
+  .btn-primary::after, .btn-green::after, .btn-export::after,
+  .btn-nav-cta::after, .btn-on-dark::after, .btn-pay::after,
+  .btn-primary-sm::after, .apply::after, .refine::after,
+  .send::after, .go::after, #submitCreateDocBtn::after,
+  .chat-form button::after {
+    display: none;
+  }
+}

@@ -145,33 +145,6 @@
   var yearEl = document.getElementById("current-year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* -----------------------------------------------------------
-     Locked paid plans: friendly notice instead of checkout
-  ----------------------------------------------------------- */
-  document.addEventListener("click", function (e) {
-    var t = e.target && e.target.closest ? e.target.closest("[data-locked-plan]") : null;
-    if (!t) return;
-    e.preventDefault();
-    var name = t.getAttribute("data-locked-plan") || "This plan";
-    var note = document.getElementById("locked-plan-note");
-    if (!note) {
-      note = document.createElement("div");
-      note.id = "locked-plan-note";
-      note.setAttribute("role", "status");
-      note.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);z-index:9999;background:#2B2924;color:#fff;font-size:13.5px;font-weight:600;padding:13px 20px;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.3);opacity:0;transition:opacity .25s ease,transform .25s ease;max-width:calc(100vw - 32px);text-align:center;font-family:Inter,-apple-system,sans-serif";
-      document.body.appendChild(note);
-    }
-    note.textContent = "🔒 " + name + " plan is paused — everyone is on the Free plan for now.";
-    window.requestAnimationFrame(function () {
-      note.style.opacity = "1";
-      note.style.transform = "translateX(-50%) translateY(0)";
-    });
-    window.clearTimeout(note._t);
-    note._t = window.setTimeout(function () {
-      note.style.opacity = "0";
-      note.style.transform = "translateX(-50%) translateY(20px)";
-    }, 3200);
-  });
   var mascotBtn = document.getElementById("mascotBtn");
   var mascotFloat = document.getElementById("mascotFloat");
   var mascotBubble = document.getElementById("mascotBubble");
@@ -389,4 +362,96 @@
     });
   }
 
-  updateMascotOnScroll();})();
+  /* -----------------------------------------------------------
+     GSAP 3D scroll choreography (falls back to CSS reveals)
+  ----------------------------------------------------------- */
+  (function initScrollFX() {
+    if (reduceMotion) return;
+    if (!window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* HERO: mascot drifts left in 3D + blur while copy ripples */
+    var heroChar = document.getElementById("heroCharacter");
+    var heroCopy = document.querySelector(".hero-copy");
+    var heroLetters = Array.prototype.slice.call(document.querySelectorAll(".hero-title .ch"));
+    if (heroSection && heroChar) {
+      gsap.to(heroChar, {
+        xPercent: -58, rotationY: 26, scale: 0.6, filter: "blur(5px)", opacity: 0.9,
+        ease: "none", transformPerspective: 900,
+        scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 25%", scrub: 0.6 }
+      });
+    }
+    if (heroSection && heroCopy) {
+      gsap.to(heroCopy, {
+        xPercent: 4, filter: "blur(2px)", opacity: 0.45, ease: "none",
+        scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 30%", scrub: 0.6 }
+      });
+    }
+    /* Water ripple: letters part as the mascot passes through them */
+    if (heroSection && heroChar && heroLetters.length) {
+      ScrollTrigger.create({
+        trigger: heroSection, start: "top top", end: "bottom top", scrub: true,
+        onUpdate: function (self) {
+          var p = self.progress;
+          var mr = heroChar.getBoundingClientRect();
+          var mx = mr.left + mr.width / 2;
+          var amp = Math.sin(Math.min(Math.max(p * 1.15, 0), 1) * Math.PI);
+          heroLetters.forEach(function (ch) {
+            var r = ch.getBoundingClientRect();
+            var d = (r.left + r.width / 2 - mx) / 220;
+            var w = Math.exp(-d * d) * amp;
+            ch.style.transform = "translateY(" + (w * 26).toFixed(1) + "px) skewX(" + (w * -10).toFixed(1) + "deg)";
+            ch.style.filter = w > 0.02 ? "blur(" + (w * 3).toFixed(1) + "px)" : "";
+          });
+        }
+      });
+    }
+
+    /* SHOWCASE models fly out in 3D -> STEPS squares fly in */
+    var showCards = gsap.utils.toArray(".showcase-grid .showcase-card");
+    var stepCards = gsap.utils.toArray(".steps .step");
+    showCards.concat(stepCards).forEach(function (el) { el.style.transition = "none"; });
+    if (showCards.length && stepCards.length) {
+      var morph = gsap.timeline({
+        scrollTrigger: { trigger: "#how-it-works", start: "top 88%", end: "top 22%", scrub: 0.7 }
+      });
+      morph.to(showCards, {
+        y: -150, rotationX: 46, opacity: 0, filter: "blur(12px)",
+        stagger: 0.09, ease: "power2.in", transformPerspective: 900
+      }, 0);
+      morph.from(stepCards, {
+        y: 150, rotationX: -46, opacity: 0, filter: "blur(12px)",
+        stagger: 0.09, ease: "power2.out", transformPerspective: 900,
+        clearProps: "opacity,filter"
+      }, 0.12);
+    }
+
+    /* TEMPLATE LIBRARY: 3D flip-in with blur clearing */
+    var tplCards = gsap.utils.toArray(".template-card");
+    tplCards.forEach(function (el) { el.style.transition = "none"; });
+    tplCards.forEach(function (card, i) {
+      gsap.from(card, {
+        y: 90, rotationY: i % 2 ? 32 : -32, opacity: 0, filter: "blur(10px)",
+        transformPerspective: 900, ease: "power3.out", duration: 0.9, delay: (i % 4) * 0.08,
+        clearProps: "opacity,filter",
+        scrollTrigger: { trigger: card, start: "top 88%", toggleActions: "play none none reverse" }
+      });
+    });
+
+    /* WHO IT'S FOR: enter + exit both ways with blur */
+    var whoCards = gsap.utils.toArray(".usecase-card");
+    whoCards.forEach(function (el) { el.style.transition = "none"; });
+    whoCards.forEach(function (card, i) {
+      gsap.fromTo(card,
+        { y: 90, rotationX: -30, opacity: 0, filter: "blur(10px)" },
+        {
+          y: 0, rotationX: 0, opacity: 1, filter: "blur(0px)",
+          transformPerspective: 900, ease: "power3.out", duration: 0.85, delay: (i % 5) * 0.07,
+          clearProps: "opacity,filter",
+          scrollTrigger: { trigger: card, start: "top 90%", end: "top 45%", toggleActions: "play reverse play reverse" }
+        });
+    });
+
+    window.addEventListener("load", function () { ScrollTrigger.refresh(); });
+  })();
+})();

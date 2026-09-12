@@ -328,6 +328,7 @@
   var ticking = false;
   function updateMascotOnScroll() {
     ticking = false;
+    updateScrollChrome();
     if (!heroSection) return;
     var r = heroSection.getBoundingClientRect();
     var past = r.bottom < 140;
@@ -347,4 +348,63 @@
   window.addEventListener("scroll", function () {
     if (!ticking) { ticking = true; window.requestAnimationFrame(updateMascotOnScroll); }
   }, { passive: true });
+  /* -----------------------------------------------------------
+     Modern scroll experience: progress, to-top ring, stagger,
+     marquee, and 3D tilt on showcase cards
+  ----------------------------------------------------------- */
+  var scrollProgress = document.getElementById("scrollProgress");
+  var toTop = document.getElementById("toTop");
+  var toTopRing = document.getElementById("toTopRing");
+  var RING_LEN = 163.4;
+
+  function updateScrollChrome() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+    if (scrollProgress) scrollProgress.style.setProperty("--scroll-p", p.toFixed(4));
+    if (toTopRing) toTopRing.style.strokeDashoffset = (RING_LEN * (1 - p)).toFixed(1);
+    if (toTop) toTop.classList.toggle("show", window.scrollY > 600);
+  }
+  updateScrollChrome();
+
+  if (toTop) toTop.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
+
+  /* Staggered cascade for grids */
+  document.querySelectorAll("[data-stagger]").forEach(function (grid) {
+    Array.prototype.forEach.call(grid.children, function (child, i) {
+      child.style.transitionDelay = Math.min(i * 80, 480) + "ms";
+    });
+  });
+
+  /* Trust strip marquee (duplicate content for a seamless loop) */
+  var trustTags = document.querySelector(".trust-tags");
+  if (trustTags && !reduceMotion) {
+    var track = document.createElement("div");
+    track.className = "marquee-track";
+    while (trustTags.firstChild) track.appendChild(trustTags.firstChild);
+    var clone = track.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    Array.prototype.forEach.call(clone.children, function (c) { c.setAttribute("tabindex", "-1"); });
+    track.appendChild(document.createTextNode(""));
+    Array.prototype.forEach.call(clone.childNodes, function (c) { track.appendChild(c); });
+    trustTags.appendChild(track);
+    trustTags.classList.add("marquee");
+  }
+
+  /* 3D tilt on showcase cards (fine pointers only) */
+  var canTilt = !reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (canTilt) {
+    document.querySelectorAll(".showcase-card").forEach(function (card) {
+      card.classList.add("tilt");
+      card.addEventListener("mousemove", function (e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = "perspective(900px) rotateX(" + (-y * 7).toFixed(2) + "deg) rotateY(" + (x * 9).toFixed(2) + "deg) translateY(-3px)";
+      });
+      card.addEventListener("mouseleave", function () { card.style.transform = ""; });
+    });
+  }
+
   updateMascotOnScroll();})();

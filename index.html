@@ -202,11 +202,20 @@
           <h3>Word Creator</h3>
           <p>Professional typography, structured headings, tables, and page layout — generated and formatted automatically.</p>
           <div class="doc-preview" aria-hidden="true">
-            <div class="dp-title"></div>
-            <div class="dp-line w-95"></div>
-            <div class="dp-line w-80"></div>
-            <div class="dp-line w-60"></div>
-            <div class="dp-table"><span></span><span></span><span></span></div>
+            <div class="mini-doc">
+              <div class="md-head"><span class="md-dot"></span><span class="md-kicker">Q3 Strategy Report</span><span class="md-pill">Confidential</span></div>
+              <p class="md-title">Quarterly Business Performance Report</p>
+              <p class="md-sub">Fiscal Period: Q3 2026 • Strategic Operations</p>
+              <div class="md-sec">
+                <span class="md-h">01. Executive Summary</span>
+                <p class="md-p">Revenue beat estimates by <b>14.8%</b>, led by enterprise adoption of AI reporting.<span class="caret"></span></p>
+              </div>
+              <div class="md-table">
+                <div class="md-tr md-th"><span>Department</span><span>Revenue</span><span>Growth</span></div>
+                <div class="md-tr"><span>Enterprise Core</span><span>$14.8M</span><span class="up">+22.4%</span></div>
+                <div class="md-tr"><span>Excel AI Suite</span><span>$8.4M</span><span class="up">+18.1%</span></div>
+              </div>
+            </div>
           </div>
           <a href="wordy-ai-word-creator.html" class="btn btn-primary">Create Word File</a>
         </article>
@@ -219,12 +228,15 @@
           <h3>Excel Creator</h3>
           <p>Rows, columns, formulas, and totals built into a clean, professional spreadsheet — ready for real analysis.</p>
           <div class="sheet-preview" aria-hidden="true">
-            <div class="sheet-grid">
-              <span class="sc num"></span><span class="sc head">A</span><span class="sc head">B</span><span class="sc head">C</span><span class="sc head">D</span>
-              <span class="sc num">1</span><span class="sc"></span><span class="sc filled"></span><span class="sc"></span><span class="sc"></span>
-              <span class="sc num">2</span><span class="sc filled"></span><span class="sc"></span><span class="sc filled"></span><span class="sc"></span>
-              <span class="sc num">3</span><span class="sc"></span><span class="sc"></span><span class="sc filled"></span><span class="sc"></span>
-              <span class="sc num">Σ</span><span class="sc total"></span><span class="sc total"></span><span class="sc total"></span><span class="sc total"></span>
+            <div class="mini-sheet">
+              <div class="mini-fx"><span class="fx-cell">B5</span><span class="fx-f">fx</span><span class="fx-formula">=SUM(B2:B4)</span></div>
+              <div class="mini-grid">
+                <span class="mg-h"></span><span class="mg-h">Region</span><span class="mg-h">Revenue</span><span class="mg-h">Cost</span>
+                <span class="mg-rn">1</span><span class="mg-c">North America</span><span class="mg-c n">$425,000</span><span class="mg-c n">$235,000</span>
+                <span class="mg-rn">2</span><span class="mg-c">EMEA</span><span class="mg-c n">$310,000</span><span class="mg-c n">$186,000</span>
+                <span class="mg-rn">3</span><span class="mg-c">APAC</span><span class="mg-c n">$285,000</span><span class="mg-c n">$152,000</span>
+                <span class="mg-rn">4</span><span class="mg-t">Total</span><span class="mg-t n">$1,020,000</span><span class="mg-t n">$573,000</span>
+              </div>
             </div>
           </div>
           <a href="wordy-ai-excel-creator.html" class="btn btn-primary">Create Excel File</a>

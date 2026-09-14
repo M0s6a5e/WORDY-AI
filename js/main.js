@@ -370,12 +370,12 @@
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    /* HERO: video drifts left in 3D + blur while copy ripples */
-    var heroVideo = document.querySelector(".hero-video-wrapper");
+    /* HERO: doc layers drift left in 3D + blur while copy ripples */
+    var heroLayers = document.querySelector(".doc-layers");
     var heroCopy = document.querySelector(".hero-copy");
     var heroLetters = Array.prototype.slice.call(document.querySelectorAll(".hero-title .ch"));
-    if (heroSection && heroVideo) {
-      gsap.to(heroVideo, {
+    if (heroSection && heroLayers) {
+      gsap.to(heroLayers, {
         xPercent: -58, rotationY: 26, scale: 0.6, filter: "blur(5px)", opacity: 0.9,
         ease: "none", transformPerspective: 900,
         scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 25%", scrub: 0.6 }
@@ -387,13 +387,13 @@
         scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 30%", scrub: 0.6 }
       });
     }
-    /* Water ripple: letters part as the video passes through them */
-    if (heroSection && heroVideo && heroLetters.length) {
+    /* Water ripple: letters part as the layers pass through them */
+    if (heroSection && heroLayers && heroLetters.length) {
       ScrollTrigger.create({
         trigger: heroSection, start: "top top", end: "bottom top", scrub: true,
         onUpdate: function (self) {
           var p = self.progress;
-          var mr = heroVideo.getBoundingClientRect();
+          var mr = heroLayers.getBoundingClientRect();
           var mx = mr.left + mr.width / 2;
           var amp = Math.sin(Math.min(Math.max(p * 1.15, 0), 1) * Math.PI);
           heroLetters.forEach(function (ch) {

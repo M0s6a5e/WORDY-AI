@@ -104,11 +104,57 @@
       </div>
 
       <div class="hero-visual">
-        <div class="hero-video-wrapper">
-          <video class="hero-video" autoplay muted loop playsinline aria-label="WORDY AI demo video">
-            <source src="assets/hero.mp4" type="video/mp4" />
-          </video>
-          <div class="hero-video-glow" aria-hidden="true"></div>
+        <div class="doc-layers" aria-hidden="true">
+          <!-- Layer 1: Excel sheet (back) -->
+          <div class="doc-layer layer-excel">
+            <div class="dl-header"><span class="dl-dot green"></span><span class="dl-title">Budget Report.xlsx</span></div>
+            <div class="dl-grid">
+              <span class="dl-th">Dept</span><span class="dl-th">Plan</span><span class="dl-th">Actual</span>
+              <span>Marketing</span><span>$48k</span><span class="up">+6%</span>
+              <span>R&D</span><span>$120k</span><span class="up">+2%</span>
+              <span>Operations</span><span>$76k</span><span class="up">+9%</span>
+            </div>
+          </div>
+
+          <!-- Layer 2: Chart (middle-back) -->
+          <div class="doc-layer layer-chart">
+            <div class="dl-header"><span class="dl-dot blue"></span><span class="dl-title">Analytics.docx</span></div>
+            <div class="dl-chart">
+              <div class="chart-bar" style="height:40%"></div>
+              <div class="chart-bar" style="height:65%"></div>
+              <div class="chart-bar" style="height:55%"></div>
+              <div class="chart-bar" style="height:80%"></div>
+              <div class="chart-bar" style="height:45%"></div>
+              <div class="chart-bar" style="height:70%"></div>
+            </div>
+          </div>
+
+          <!-- Layer 3: Word doc (front-middle) -->
+          <div class="doc-layer layer-word">
+            <div class="dl-header"><span class="dl-dot"></span><span class="dl-title">Q3 Report.docx</span></div>
+            <div class="dl-doc">
+              <div class="dl-line w80"></div>
+              <div class="dl-line w60"></div>
+              <div class="dl-line w90"></div>
+              <div class="dl-line w45"></div>
+              <div class="dl-line w70"></div>
+            </div>
+          </div>
+
+          <!-- Layer 4: Invoice (front) -->
+          <div class="doc-layer layer-invoice">
+            <div class="dl-header"><span class="dl-dot orange"></span><span class="dl-title">Invoice.pdf</span></div>
+            <div class="dl-invoice">
+              <div class="dl-inv-row"><span>Service</span><span class="up">$2,400</span></div>
+              <div class="dl-inv-row"><span>License</span><span class="up">$800</span></div>
+              <div class="dl-inv-total"><span>Total</span><span>$3,200</span></div>
+            </div>
+          </div>
+
+          <!-- Floating accent dots -->
+          <span class="doc-accent dot-1"></span>
+          <span class="doc-accent dot-2"></span>
+          <span class="doc-accent dot-3"></span>
         </div>
       </div>
     </div>

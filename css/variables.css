@@ -6,8 +6,8 @@
   --paper: #FBF9F4;
   --paper-alt: #F1ECE0;
   --surface: #FFFFFF;
-  --primary: #DC2626;
-  --primary-dark: #B91C1C;
+  --primary: #B91C1C;
+  --primary-dark: #991B1B;
   --primary-tint: #FEE2E2;
   --green: #1E9E6C;
   --green-dark: #167A54;
@@ -27,7 +27,7 @@
   --shadow-sm: 0 1px 2px rgba(18, 20, 28, 0.06), 0 1px 1px rgba(18, 20, 28, 0.04);
   --shadow-md: 0 8px 24px rgba(18, 20, 28, 0.08), 0 2px 8px rgba(18, 20, 28, 0.05);
   --shadow-lg: 0 24px 64px rgba(18, 20, 28, 0.14), 0 8px 24px rgba(18, 20, 28, 0.08);
-  --shadow-glow-primary: 0 12px 32px rgba(220, 38, 38, 0.22);
+  --shadow-glow-primary: 0 12px 32px rgba(185, 28, 28, 0.22);
   --shadow-glow-green: 0 12px 32px rgba(30, 158, 108, 0.2);
 
   /* Type */

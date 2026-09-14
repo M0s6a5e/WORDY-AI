@@ -501,9 +501,9 @@ svg { display: block; }
 .hero-mascot {
   display: block;
   width: 100%;
-  max-width: 380px;
+  max-width: 500px;
   height: auto;
-  aspect-ratio: 9/16;
+  aspect-ratio: 16/9;
   object-fit: cover;
   border-radius: 24px;
   animation: mascotBob 4s ease-in-out infinite;

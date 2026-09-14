@@ -77,13 +77,18 @@
        HERO
   ========================================================= -->
   <section class="hero" id="home">
-    <video class="hero-video" autoplay muted loop playsinline aria-hidden="true" poster="assets/images/wordy-ai-logo.gif">
-      <source src="assets/hero.mp4" type="video/mp4" />
-    </video>
-    <div class="hero-video-overlay" aria-hidden="true"></div>
     <div class="hero-bg-grid" aria-hidden="true"></div>
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="container hero-inner">
+      <div class="hero-visual">
+        <div class="hero-video-wrapper">
+          <video class="hero-video" autoplay muted loop playsinline aria-label="WORDY AI demo video">
+            <source src="assets/hero.mp4" type="video/mp4" />
+          </video>
+          <div class="hero-video-glow" aria-hidden="true"></div>
+        </div>
+      </div>
+
       <div class="hero-copy">
         <span class="eyebrow">AI-powered document engine</span>
         <h1 class="hero-title" data-sketch>Create Professional Word &amp; Excel Files With AI</h1>
@@ -105,16 +110,6 @@
           <span class="dot" aria-hidden="true"></span>
           <span>Export to .docx &amp; .xlsx</span>
         </p>
-      </div>
-
-      <div class="hero-visual" role="img" aria-label="WORDY CHA, the WORDY AI mascot">
-        <div class="hero-character" id="heroCharacter">
-          <span class="hero-character-glow" aria-hidden="true"></span>
-          <button class="mascot-btn" id="mascotBtn" aria-haspopup="dialog" aria-label="Chat with Wordy, your AI assistant">
-            <img class="hero-character-img" src="assets/images/WORDY CHA.svg" alt="WORDY CHA, the WORDY AI mascot">
-          </button>
-          <span class="mascot-bubble" id="mascotBubble" aria-hidden="true">Hi! I'm <b>Wordy</b> ✦<small>Click me to chat</small></span>
-        </div>
       </div>
     </div>
   </section>

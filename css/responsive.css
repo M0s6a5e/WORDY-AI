@@ -16,8 +16,8 @@
   .nav-toggle { display: flex; }
 
   .hero-inner { grid-template-columns: 1fr; }
-  .hero-copy { max-width: 640px; }
-  .hero-visual { min-height: 380px; margin-top: 12px; }
+  .hero-copy { max-width: 640px; margin-left: 0; }
+  .hero-visual { margin-top: 12px; }
 
   .showcase-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -47,8 +47,7 @@
   .hero { padding-top: calc(var(--nav-height) + 32px); }
   .hero-title { max-width: 100%; }
   .hero-ctas .btn { flex: 1 1 auto; }
-  .hero-visual { min-height: 340px; }
-  .hero-character-img { max-width: 320px; }
+  .hero-video-wrapper { max-width: 100%; }
 
   .feature-grid { grid-template-columns: 1fr; }
   .usecase-grid { grid-template-columns: 1fr 1fr; }

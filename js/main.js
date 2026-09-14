@@ -370,6 +370,56 @@
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    /* HERO: mascot drifts left in 3D + blur while copy ripples */
+    var heroMascot = document.querySelector(".hero-mascot-wrap");
+    var heroCopy = document.querySelector(".hero-copy");
+    var heroLetters = Array.prototype.slice.call(document.querySelectorAll(".hero-title .ch"));
+    if (heroSection && heroMascot) {
+      gsap.to(heroMascot, {
+        xPercent: -58, rotationY: 26, scale: 0.6, filter: "blur(5px)", opacity: 0.9,
+        ease: "none", transformPerspective: 900,
+        scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 25%", scrub: 0.6 }
+      });
+    }
+    if (heroSection && heroCopy) {
+      gsap.to(heroCopy, {
+        xPercent: 4, filter: "blur(2px)", opacity: 0.45, ease: "none",
+        scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 30%", scrub: 0.6 }
+      });
+    }
+    /* Water ripple: letters part as the mascot passes through them */
+    if (heroSection && heroMascot && heroLetters.length) {
+      ScrollTrigger.create({
+        trigger: heroSection, start: "top top", end: "bottom top", scrub: true,
+        onUpdate: function (self) {
+          var p = self.progress;
+          var mr = heroMascot.getBoundingClientRect();
+          var mx = mr.left + mr.width / 2;
+          var amp = Math.sin(Math.min(Math.max(p * 1.15, 0), 1) * Math.PI);
+          heroLetters.forEach(function (ch) {
+            var r = ch.getBoundingClientRect();
+            var d = (r.left + r.width / 2 - mx) / 220;
+            var w = Math.exp(-d * d) * amp;
+            ch.style.transform = "translateY(" + (w * 26).toFixed(1) + "px) skewX(" + (w * -10).toFixed(1) + "deg)";
+            ch.style.filter = w > 0.02 ? "blur(" + (w * 3).toFixed(1) + "px)" : "";
+          });
+        }
+      });
+    }
+
+    /* PARALLAX: floating doc layers move at different speeds */
+    var pLayers = gsap.utils.toArray(".p-layer");
+    if (heroSection && pLayers.length) {
+      pLayers.forEach(function (el, i) {
+        var speed = 0.3 + (i * 0.15);
+        gsap.to(el, {
+          y: function () { return -100 * speed; },
+          ease: "none",
+          scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 0.5 }
+        });
+      });
+    }
+
     /* SHOWCASE models fly out in 3D -> STEPS squares fly in */
     var showCards = gsap.utils.toArray(".showcase-grid .showcase-card");
     var stepCards = gsap.utils.toArray(".steps .step");
@@ -416,103 +466,5 @@
     });
 
     window.addEventListener("load", function () { ScrollTrigger.refresh(); });
-  })();
-
-  /* =========================================================
-     HERO SHOWCASE — Interactive Document Cards
-     ========================================================= */
-  (function () {
-    var stage = document.querySelector(".hs-stage");
-    var heroWord = document.querySelector(".hs-hero-word");
-    var cards = document.querySelectorAll(".hs-card");
-    var closeBtn = document.querySelector(".hs-close-btn");
-    var detailPanel = document.querySelector(".hs-detail-panel");
-    var detailTitle = document.querySelector(".hs-detail-title");
-    var detailDesc = document.querySelector(".hs-detail-desc");
-    var detailSteps = document.querySelector(".hs-detail-steps");
-    if (!stage || !cards.length) return;
-
-    var docData = {
-      word: {
-        title: "Word Creator",
-        desc: "Generate polished reports, proposals, letters, invoices, and contracts — fully formatted with AI-powered precision.",
-        steps: [
-          { label: "Describe", text: "Tell WORDY AI what you need in plain language." },
-          { label: "Generate", text: "AI builds a fully structured Word document in seconds." },
-          { label: "Customize", text: "Adjust wording, formatting, and tables until perfect." },
-          { label: "Export", text: "Download as a native .docx file, ready to share." }
-        ]
-      },
-      excel: {
-        title: "Excel Creator",
-        desc: "Build structured workbooks with tables, formulas, totals, and financial sheets ready for real analysis.",
-        steps: [
-          { label: "Describe", text: "Say what data you need — budgets, forecasts, or reports." },
-          { label: "Generate", text: "AI creates structured sheets with formulas and totals." },
-          { label: "Customize", text: "Edit cells, adjust formulas, and refine the layout." },
-          { label: "Export", text: "Download as a native .xlsx file for your team." }
-        ]
-      },
-      templates: {
-        title: "Template Library",
-        desc: "50+ professionally designed starting points across every category — customize any of them with AI in a click.",
-        steps: [
-          { label: "Browse", text: "Explore templates for Finance, HR, Marketing, Education, and more." },
-          { label: "Select", text: "Pick a template that matches your needs." },
-          { label: "Customize", text: "AI adapts the structure, tone, and content for you." },
-          { label: "Export", text: "Download your customized document instantly." }
-        ]
-      }
-    };
-
-    /* Mouse parallax on hero word */
-    document.addEventListener("mousemove", function (e) {
-      var mx = (e.clientX - window.innerWidth / 2) * 0.5;
-      var my = (e.clientY - window.innerHeight / 2) * 0.5;
-      stage.style.setProperty("--mx", mx + "px");
-      stage.style.setProperty("--my", my + "px");
-    });
-
-    /* Card click → detail mode */
-    cards.forEach(function (card) {
-      card.addEventListener("click", function () {
-        var doc = card.getAttribute("data-doc");
-        var data = docData[doc];
-        if (!data) return;
-        stage.setAttribute("data-mode", "detail");
-        card.classList.add("selected");
-        detailTitle.textContent = data.title;
-        detailDesc.textContent = data.desc;
-        detailSteps.innerHTML = data.steps.map(function (s, i) {
-          return '<div class="hs-step-item"><span class="hs-step-num">' +
-            String(i + 1).padStart(2, "0") + '</span><div><strong>' + s.label +
-            '</strong><span>' + s.text + '</span></div></div>';
-        }).join("");
-      });
-
-      /* Keyboard support */
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          card.click();
-        }
-      });
-    });
-
-    /* Close detail */
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        stage.setAttribute("data-mode", "gallery");
-        cards.forEach(function (c) { c.classList.remove("selected"); });
-      });
-    }
-
-    /* Escape to close */
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && stage.getAttribute("data-mode") === "detail") {
-        stage.setAttribute("data-mode", "gallery");
-        cards.forEach(function (c) { c.classList.remove("selected"); });
-      }
-    });
   })();
 })();

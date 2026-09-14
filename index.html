@@ -76,101 +76,64 @@
 <main id="main-content">
 
   <!-- =========================================================
-       HERO — Interactive Document Showcase (ThreeUI-inspired)
+       HERO
   ========================================================= -->
-  <section class="hero-showcase" id="home" data-mode="gallery">
-    <div class="hs-stage">
-      <!-- Background layers -->
-      <div class="hs-bg" aria-hidden="true"></div>
-      <div class="hs-noise" aria-hidden="true"></div>
-
-      <!-- Top bar -->
-      <header class="hs-topbar">
-        <a href="#home" class="hs-brand">WORDY AI</a>
-        <div class="hs-nav-actions">
-          <a href="wordy-ai-dashboard.html" class="hs-ticket-btn">Get Started</a>
+  <section class="hero" id="home">
+    <div class="hero-video-bg" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/hero.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-video-overlay"></div>
+    </div>
+    <!-- Parallax floating layers -->
+    <div class="parallax-layers" aria-hidden="true">
+      <div class="p-layer p-doc-1">
+        <div class="pl-head"><span class="pl-dot"></span>Report.docx</div>
+        <div class="pl-line w80"></div><div class="pl-line w60"></div><div class="pl-line w90"></div>
+      </div>
+      <div class="p-layer p-sheet-1">
+        <div class="pl-head"><span class="pl-dot green"></span>Budget.xlsx</div>
+        <div class="pl-row"><span>Revenue</span><span>$42k</span></div>
+        <div class="pl-row"><span>Cost</span><span>$18k</span></div>
+      </div>
+      <div class="p-layer p-doc-2">
+        <div class="pl-head"><span class="pl-dot blue"></span>Proposal.docx</div>
+        <div class="pl-line w70"></div><div class="pl-line w50"></div>
+      </div>
+      <div class="p-layer p-chart-1">
+        <div class="pl-bars"><span style="height:40%"></span><span style="height:65%"></span><span style="height:50%"></span><span style="height:80%"></span></div>
+      </div>
+    </div>
+    <div class="hero-bg-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">AI-powered document engine</span>
+        <h1 class="hero-title" data-sketch>Create Professional Word &amp; Excel Files With AI</h1>
+        <p class="hero-sub">
+          WORDY AI transforms your ideas, data, and business requirements into
+          professionally structured Word and Excel documents in seconds.
+          Create reports, invoices, proposals, financial tables, and templates
+          with AI-powered precision.
+        </p>
+        <div class="hero-ctas">
+          <a href="wordy-ai-dashboard.html" class="btn btn-primary">
+            Create Your File
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="wordy-ai-dashboard.html#templates" class="btn btn-secondary">Explore Templates</a>
         </div>
-      </header>
-
-      <!-- Big hero word -->
-      <h1 class="hs-hero-word" aria-hidden="true">Documents</h1>
-
-      <!-- Gallery of 3 document cards -->
-      <section class="hs-gallery" aria-label="Document types">
-        <!-- Card 1: Word -->
-        <button class="hs-card" type="button" data-doc="word" aria-label="Open Word Creator details">
-          <div class="hs-book">
-            <div class="hs-book-shadow"></div>
-            <div class="hs-book-back" style="--cover-color:#3F4CE0"></div>
-            <div class="hs-page-block"></div>
-            <div class="hs-page-fan"><i></i><i></i><i></i><i></i></div>
-            <div class="hs-front-cover" style="--cover-color:#3F4CE0;--cover-ink:#fff">
-              <div class="hs-cover-content">
-                <span class="hs-cover-kicker">AI-Powered</span>
-                <span class="hs-cover-title">Word</span>
-                <span class="hs-cover-subtitle">Reports &amp; Proposals</span>
-                <span class="hs-cover-footer">WORDY AI</span>
-              </div>
-            </div>
-            <span class="hs-open-badge">Open</span>
-          </div>
-        </button>
-
-        <!-- Card 2: Excel -->
-        <button class="hs-card" type="button" data-doc="excel" aria-label="Open Excel Creator details">
-          <div class="hs-book">
-            <div class="hs-book-shadow"></div>
-            <div class="hs-book-back" style="--cover-color:#1E9E6C"></div>
-            <div class="hs-page-block"></div>
-            <div class="hs-page-fan"><i></i><i></i><i></i><i></i></div>
-            <div class="hs-front-cover" style="--cover-color:#1E9E6C;--cover-ink:#fff">
-              <div class="hs-cover-content">
-                <span class="hs-cover-kicker">Smart Formulas</span>
-                <span class="hs-cover-title">Excel</span>
-                <span class="hs-cover-subtitle">Budgets &amp; Data</span>
-                <span class="hs-cover-footer">WORDY AI</span>
-              </div>
-            </div>
-            <span class="hs-open-badge">Open</span>
-          </div>
-        </button>
-
-        <!-- Card 3: Templates -->
-        <button class="hs-card" type="button" data-doc="templates" aria-label="Open Template Library details">
-          <div class="hs-book">
-            <div class="hs-book-shadow"></div>
-            <div class="hs-book-back" style="--cover-color:#E8873A"></div>
-            <div class="hs-page-block"></div>
-            <div class="hs-page-fan"><i></i><i></i><i></i><i></i></div>
-            <div class="hs-front-cover" style="--cover-color:#E8873A;--cover-ink:#fff">
-              <div class="hs-cover-content">
-                <span class="hs-cover-kicker">50+ Ready</span>
-                <span class="hs-cover-title">Templates</span>
-                <span class="hs-cover-subtitle">Instant Start</span>
-                <span class="hs-cover-footer">WORDY AI</span>
-              </div>
-            </div>
-            <span class="hs-open-badge">Open</span>
-          </div>
-        </button>
-      </section>
-
-      <!-- Detail panel -->
-      <div class="hs-detail-panel">
-        <div class="hs-detail-scroll">
-          <h2 class="hs-detail-title"></h2>
-          <p class="hs-detail-desc"></p>
-          <div class="hs-detail-steps"></div>
-        </div>
+        <p class="hero-meta">
+          <span>No design skills needed</span>
+          <span class="dot" aria-hidden="true"></span>
+          <span>Export to .docx &amp; .xlsx</span>
+        </p>
       </div>
 
-      <!-- Close button -->
-      <button class="hs-close-btn" type="button" aria-label="Close details">&times;</button>
-
-      <!-- Bottom action dock -->
-      <div class="hs-bottom-dock">
-        <a href="wordy-ai-dashboard.html" class="hs-pill hs-primary">Create Your File</a>
-        <a href="wordy-ai-dashboard.html#templates" class="hs-pill hs-secondary">Explore Templates</a>
+      <div class="hero-visual">
+        <div class="hero-mascot-wrap">
+          <img class="hero-mascot" src="assets/images/WORDY CHA.svg" alt="WORDY AI mascot">
+        </div>
       </div>
     </div>
   </section>

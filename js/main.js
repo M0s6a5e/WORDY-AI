@@ -370,12 +370,12 @@
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    /* HERO: doc layers drift left in 3D + blur while copy ripples */
-    var heroLayers = document.querySelector(".doc-layers");
+    /* HERO: mascot drifts left in 3D + blur while copy ripples */
+    var heroMascot = document.querySelector(".hero-mascot-wrap");
     var heroCopy = document.querySelector(".hero-copy");
     var heroLetters = Array.prototype.slice.call(document.querySelectorAll(".hero-title .ch"));
-    if (heroSection && heroLayers) {
-      gsap.to(heroLayers, {
+    if (heroSection && heroMascot) {
+      gsap.to(heroMascot, {
         xPercent: -58, rotationY: 26, scale: 0.6, filter: "blur(5px)", opacity: 0.9,
         ease: "none", transformPerspective: 900,
         scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 25%", scrub: 0.6 }
@@ -387,13 +387,13 @@
         scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 30%", scrub: 0.6 }
       });
     }
-    /* Water ripple: letters part as the layers pass through them */
-    if (heroSection && heroLayers && heroLetters.length) {
+    /* Water ripple: letters part as the mascot passes through them */
+    if (heroSection && heroMascot && heroLetters.length) {
       ScrollTrigger.create({
         trigger: heroSection, start: "top top", end: "bottom top", scrub: true,
         onUpdate: function (self) {
           var p = self.progress;
-          var mr = heroLayers.getBoundingClientRect();
+          var mr = heroMascot.getBoundingClientRect();
           var mx = mr.left + mr.width / 2;
           var amp = Math.sin(Math.min(Math.max(p * 1.15, 0), 1) * Math.PI);
           heroLetters.forEach(function (ch) {
@@ -404,6 +404,19 @@
             ch.style.filter = w > 0.02 ? "blur(" + (w * 3).toFixed(1) + "px)" : "";
           });
         }
+      });
+    }
+
+    /* PARALLAX: floating doc layers move at different speeds */
+    var pLayers = gsap.utils.toArray(".p-layer");
+    if (heroSection && pLayers.length) {
+      pLayers.forEach(function (el, i) {
+        var speed = 0.3 + (i * 0.15);
+        gsap.to(el, {
+          y: function () { return -100 * speed; },
+          ease: "none",
+          scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom top", scrub: 0.5 }
+        });
       });
     }
 

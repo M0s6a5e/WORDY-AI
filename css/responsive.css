@@ -17,7 +17,8 @@
 
   .hero-inner { grid-template-columns: 1fr; }
   .hero-copy { max-width: 640px; }
-  .hero-visual { margin-top: 12px; min-height: 340px; }
+  .hero-visual { margin-top: 12px; }
+  .parallax-layers { display: none; }
 
   .showcase-grid { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }

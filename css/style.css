@@ -314,6 +314,10 @@ svg { display: block; }
   padding-top: calc(var(--nav-height) + clamp(48px, 8vw, 96px));
   padding-bottom: clamp(56px, 8vw, 100px);
   overflow: hidden;
+  background-image: url('../assets/images/main_hero_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .hero-bg-grid {
   position: absolute;

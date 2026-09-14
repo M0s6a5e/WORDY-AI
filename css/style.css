@@ -494,12 +494,18 @@ svg { display: block; }
 }
 .hero-mascot-wrap {
   position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(20, 20, 40, 0.3);
 }
 .hero-mascot {
+  display: block;
   width: 100%;
   max-width: 380px;
   height: auto;
-  filter: drop-shadow(0 20px 40px rgba(20,20,40,0.15));
+  aspect-ratio: 9/16;
+  object-fit: cover;
+  border-radius: 24px;
   animation: mascotBob 4s ease-in-out infinite;
 }
 @keyframes mascotBob {

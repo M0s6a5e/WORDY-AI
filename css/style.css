@@ -380,11 +380,11 @@ svg { display: block; }
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: clamp(36px, 6vw, 64px);
   align-items: center;
 }
-.hero-copy { max-width: 560px; position: relative; z-index: 2; margin-left: auto; }
+.hero-copy { max-width: 560px; position: relative; z-index: 2; }
 
 /* Sketch handwriting headlines (code recreation of the GIF titles) */
 .hero-title, .section-title-text {

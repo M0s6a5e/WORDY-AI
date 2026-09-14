@@ -16,7 +16,7 @@
   .nav-toggle { display: flex; }
 
   .hero-inner { grid-template-columns: 1fr; }
-  .hero-copy { max-width: 640px; margin-left: 0; }
+  .hero-copy { max-width: 640px; }
   .hero-visual { margin-top: 12px; }
 
   .showcase-grid { grid-template-columns: 1fr; }

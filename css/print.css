@@ -1,0 +1,13 @@
+@media print {
+  .navbar, .mobile-menu, .nav-toggle, .footer, .chat-panel, .chat-float,
+  .cookie-consent, .hero-ctas, .btn, .hero-video-bg, .parallax-layers,
+  .mascot-btn, .mascot-bubble, #scrollToTop { display: none !important; }
+  
+  body { background: #fff !important; color: #000 !important; }
+  .hero { padding-top: 20px !important; }
+  .hero-inner { grid-template-columns: 1fr !important; }
+  .hero-visual { display: none !important; }
+  .section { page-break-inside: avoid; }
+  a { text-decoration: underline; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #666; }
+}

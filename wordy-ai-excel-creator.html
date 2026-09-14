@@ -4,12 +4,25 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>WORDY AI — Excel Creator Studio</title>
-<meta name="description" content="Excel workbook creator studio. Formulas, validation, and AI data copilot." />
+<meta name="description" content="Build professional Excel spreadsheets with AI. Create budgets, financial models, and data tables." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="WORDY AI" />
+<meta property="og:title" content="Excel Creator — WORDY AI" />
+<meta property="og:description" content="Build professional Excel spreadsheets with AI. Create budgets, financial models, and data tables." />
+<meta property="og:image" content="https://m0s6a5e.github.io/WORDY-AI/assets/images/wordy%20logo.jpg" />
+<meta property="og:url" content="https://m0s6a5e.github.io/WORDY-AI/wordy-ai-excel-creator.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Excel Creator — WORDY AI" />
+<meta name="twitter:description" content="Build professional Excel spreadsheets with AI. Create budgets, financial models, and data tables." />
+<link rel="canonical" href="https://m0s6a5e.github.io/WORDY-AI/wordy-ai-excel-creator.html" />
 <link rel="icon" href="assets/images/wordy logo.jpg" type="image/jpeg" />
 <link rel="stylesheet" href="css/excel-creator.css" />
 <link rel="stylesheet" href="css/glass-buttons.css" />
 </head>
 <body>
+
+<a class="skip-link" href="#workspace">Skip to main content</a>
+
 <header class="topbar">
   <div class="brand">
     <button class="back" onclick="location.href='wordy-ai-dashboard.html'">← Projects</button>
@@ -30,7 +43,7 @@
   <div class="formula-input"><span style="color:var(--muted)">—</span> <span id="formula-text" style="display:none"></span></div>
   <div class="fmt-mini"><button><b>B</b></button><button><i>I</i></button><button>$</button><button>%</button><button>🎨</button><button>▦</button></div>
 </section>
-<div class="workspace">
+<div class="workspace" id="workspace">
   <aside class="sheets">
     <div class="sheets-head"><h4>Workbook Sheets ＋</h4>
       <div class="sheet-item on" data-sheet="Summary">◉ Summary <span class="active-pill">Active</span></div>
@@ -87,8 +100,9 @@
     <li>Validating calculations</li>
   </ul>
 </div></div>
-<div class="toast" id="toast"><span class="pulse"></span><span id="toast-msg">Workbook synced &amp; formulas validated</span><span style="color:var(--green)">✓</span></div>
+<div class="toast" id="toast" aria-live="polite" aria-atomic="true"><span class="pulse"></span><span id="toast-msg">Workbook synced &amp; formulas validated</span><span style="color:var(--green)">✓</span></div>
 <script src="js/excel-creator.js"></script>
 <script src="js/cookie-consent.js"></script>
+<script src="js/scroll-to-top.js"></script>
 </body>
 </html>

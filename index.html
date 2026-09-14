@@ -13,12 +13,14 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="WORDY AI — Create Professional Word & Excel Files With AI" />
 <meta name="twitter:description" content="Turn ideas into polished .docx reports and .xlsx workbooks in seconds with AI." />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self';" />
 <meta name="theme-color" content="#3F4CE0" />
 <link rel="canonical" href="https://m0s6a5e.github.io/WORDY-AI/index.html" />
 <link rel="icon" href="assets/images/wordy logo.jpg" type="image/jpeg" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="css/responsive.css" />
 <link rel="stylesheet" href="css/glass-buttons.css" />
+<link rel="stylesheet" href="css/print.css" media="print" />
 </head>
 <body>
 
@@ -571,7 +573,7 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <img class="nav-logo" src="assets/images/wordy-ai-logo-light.gif" alt="WORDY AI" width="168" height="42" />
+        <img class="nav-logo" src="assets/images/wordy-ai-logo-light.gif" alt="WORDY AI" width="168" height="42" loading="lazy" />
         <p>AI-powered Word and Excel document generation for businesses, offices, freelancers, students, and personal use.</p>
       </div>
 
@@ -623,15 +625,15 @@
 
 <!-- Floating Wordy assistant -->
 <button class="mascot-float" id="mascotFloat" aria-haspopup="dialog" aria-label="Chat with Wordy, your AI assistant">
-  <img src="assets/images/WORDY CHA.svg" alt="" aria-hidden="true">
+  <img src="assets/images/WORDY CHA.svg" alt="" aria-hidden="true" loading="lazy">
   <span class="float-dot" aria-hidden="true"></span>
 </button>
 
 <!-- Wordy AI chat panel -->
 <div class="chat-backdrop" id="chatBackdrop"></div>
-<aside class="chat-panel" id="chatPanel" role="dialog" aria-modal="false" aria-label="Chat with Wordy" aria-hidden="true">
+<aside class="chat-panel" id="chatPanel" role="dialog" aria-modal="true" aria-label="Chat with Wordy" aria-hidden="true">
   <div class="chat-head">
-    <span class="chat-avatar"><img src="assets/images/WORDY CHA.svg" alt="" aria-hidden="true"></span>
+    <span class="chat-avatar"><img src="assets/images/WORDY CHA.svg" alt="" aria-hidden="true" loading="lazy"></span>
     <span class="chat-id"><b>Wordy</b><small><span class="online-dot"></span>Online — replies instantly</small></span>
     <button class="chat-close" id="chatClose" aria-label="Close chat">✕</button>
   </div>
@@ -654,5 +656,6 @@
 <script src="js/main.js?v=3"></script>
 <script src="js/sketch-titles.js?v=2"></script>
 <script src="js/cookie-consent.js?v=2"></script>
+<script src="js/scroll-to-top.js"></script>
 </body>
 </html>

@@ -2,48 +2,8 @@
    WORDY AI — Design System & Base Styles
    ========================================================= */
 
+@import url('variables.css');
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Space+Mono:wght@400;700&display=swap');
-
-:root {
-  /* Color */
-  --ink: #12141C;
-  --ink-soft: #383B4A;
-  --paper: #FBF9F4;
-  --paper-alt: #F1ECE0;
-  --surface: #FFFFFF;
-  --primary: #3F4CE0;
-  --primary-dark: #2E39B0;
-  --primary-tint: #ECEDFB;
-  --green: #1E9E6C;
-  --green-dark: #167A54;
-  --green-tint: #E6F7EF;
-  --muted: #696D80;
-  --muted-soft: #9497A6;
-  --border: #E7E2D3;
-  --border-soft: #F0ECDE;
-
-  /* Radius */
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-pill: 999px;
-
-  /* Shadow */
-  --shadow-sm: 0 1px 2px rgba(18, 20, 28, 0.06), 0 1px 1px rgba(18, 20, 28, 0.04);
-  --shadow-md: 0 8px 24px rgba(18, 20, 28, 0.08), 0 2px 8px rgba(18, 20, 28, 0.05);
-  --shadow-lg: 0 24px 64px rgba(18, 20, 28, 0.14), 0 8px 24px rgba(18, 20, 28, 0.08);
-  --shadow-glow-primary: 0 12px 32px rgba(63, 76, 224, 0.22);
-  --shadow-glow-green: 0 12px 32px rgba(30, 158, 108, 0.2);
-
-  /* Type */
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  --font-mono: 'Space Mono', 'SFMono-Regular', Consolas, monospace;
-
-  /* Layout */
-  --container: 1200px;
-  --nav-height: 76px;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
 
 /* =========================================================
    Reset

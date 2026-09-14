@@ -7,12 +7,21 @@
      Sticky navbar background on scroll
   ----------------------------------------------------------- */
   var navbar = document.querySelector(".navbar");
+  var hero = document.querySelector(".hero");
   function updateNavbarState() {
     if (!navbar) return;
     if (window.scrollY > 12) {
       navbar.classList.add("is-scrolled");
     } else {
       navbar.classList.remove("is-scrolled");
+    }
+    if (hero) {
+      var heroBottom = hero.offsetTop + hero.offsetHeight;
+      if (window.scrollY + navbar.offsetHeight > heroBottom) {
+        navbar.classList.add("nav-past-hero");
+      } else {
+        navbar.classList.remove("nav-past-hero");
+      }
     }
   }
   updateNavbarState();

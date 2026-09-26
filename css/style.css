@@ -684,7 +684,18 @@ svg {
   font-size: clamp(16px, 1.6vw, 18.5px);
   color: #3d372b;
   max-width: 50ch;
-  margin-bottom: 34px;
+  margin-bottom: 0;
+}
+
+.hero-sub-box {
+  margin-top: 18px;
+  background: linear-gradient(150deg, rgba(255, 253, 240, 0.72), rgba(255, 253, 240, 0.45));
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-lg);
+  padding: clamp(18px, 2.5vw, 26px);
+  box-shadow: 0 20px 50px rgba(60, 45, 20, 0.12);
 }
 
 .hero-ctas {

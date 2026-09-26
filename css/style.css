@@ -558,24 +558,6 @@ svg {
   background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 35%, rgba(60,45,20,0.12) 100%);
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 62%;
-  background-image: url('../assets/images/bg_2.jpg');
-  background-size: cover;
-  background-position: center bottom;
-  background-repeat: no-repeat;
-  z-index: 2;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 18%);
-}
-
 .hero-bg-grid {
   display: none;
 }
@@ -590,8 +572,8 @@ svg {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: clamp(36px, 6vw, 64px);
-  align-items: center;
-  padding-bottom: 12vh;
+  align-items: start;
+  padding-bottom: 30vh;
 }
 
 .hero-copy {

@@ -211,14 +211,12 @@ svg {
 }
 
 .btn-nav-cta {
-  background: linear-gradient(135deg, var(--primary) 0%, #7f1d1d 50%, var(--green-dark) 100%);
-  background-size: 200% 200%;
-  background-position: 0% 50%;
+  background: var(--primary);
   color: #fff;
   box-shadow: 0 4px 20px rgba(185, 28, 28, 0.28);
   position: relative;
   overflow: hidden;
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background-position .4s var(--ease);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
 }
 
 .btn-nav-cta::after {
@@ -233,7 +231,7 @@ svg {
 .btn-nav-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(185, 28, 28, 0.38);
-  background-position: 100% 50%;
+  background: var(--primary-dark);
 }
 
 .btn-nav-cta:hover::after {
@@ -580,6 +578,13 @@ svg {
   max-width: 560px;
   position: relative;
   z-index: 2;
+  background: linear-gradient(150deg, rgba(255, 253, 240, 0.72), rgba(255, 253, 240, 0.45));
+  backdrop-filter: blur(10px) saturate(1.2);
+  -webkit-backdrop-filter: blur(10px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-lg);
+  padding: clamp(24px, 3.5vw, 40px);
+  box-shadow: 0 20px 50px rgba(60, 45, 20, 0.12);
 }
 
 /* Sketch handwriting headlines */
@@ -597,6 +602,8 @@ svg {
   line-height: 1.08;
   margin-bottom: 22px;
   max-width: 12ch;
+  color: #221c12;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .section-title-text {
@@ -675,7 +682,7 @@ svg {
 
 .hero-sub {
   font-size: clamp(16px, 1.6vw, 18.5px);
-  color: #4c463a;
+  color: #3d372b;
   max-width: 50ch;
   margin-bottom: 34px;
 }

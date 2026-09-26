@@ -1,41 +1,66 @@
 /* WORDY AI — Design System Tokens */
 :root {
-  /* Color */
-  --ink: #12141C;
-  --ink-soft: #383B4A;
-  --paper: #FBF9F4;
-  --paper-alt: #F1ECE0;
-  --surface: #FFFFFF;
-  --primary: #B91C1C;
-  --primary-dark: #991B1B;
-  --primary-tint: #FEE2E2;
-  --green: #1E9E6C;
-  --green-dark: #167A54;
-  --green-tint: #E6F7EF;
-  --muted: #696D80;
-  --muted-soft: #9497A6;
-  --border: #E7E2D3;
-  --border-soft: #F0ECDE;
+  /* Brand Core Colors (Electric Cobalt / Indigo & Emerald) */
+  --primary: #3F4CE0;
+  --primary-hover: #313EC7;
+  --primary-dark: #232E99;
+  --primary-tint: #EEF1FD;
+  --primary-tint-strong: #DCE3FA;
+  --primary-glow: rgba(63, 76, 224, 0.24);
 
-  /* Radius */
+  /* Secondary Accent (Emerald Green) */
+  --green: #1E9E6C;
+  --green-hover: #168257;
+  --green-dark: #126845;
+  --green-tint: #E6F7EF;
+  --green-glow: rgba(30, 158, 108, 0.22);
+
+  /* Semantic Alerts */
+  --amber: #D97706;
+  --amber-dark: #B45309;
+  --amber-tint: #FEF3C7;
+  --red: #DC2626;
+  --red-dark: #B91C1C;
+  --red-tint: #FEE2E2;
+
+  /* Neutrals & Surfaces */
+  --ink: #111827;
+  --ink-soft: #374151;
+  --ink-faint: #6B7280;
+  --muted: #64748B;
+  --muted-soft: #94A3B8;
+  --paper: #FAF8F4;
+  --paper-alt: #F2EFE7;
+  --surface: #FFFFFF;
+  --surface-alt: #F8FAFC;
+  --border: #E5DFD0;
+  --border-soft: #EFEBE0;
+  --border-strong: #D5CEBD;
+
+  /* Radii */
+  --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
+  --radius-xl: 32px;
   --radius-pill: 999px;
 
-  /* Shadow */
-  --shadow-sm: 0 1px 2px rgba(18, 20, 28, 0.06), 0 1px 1px rgba(18, 20, 28, 0.04);
-  --shadow-md: 0 8px 24px rgba(18, 20, 28, 0.08), 0 2px 8px rgba(18, 20, 28, 0.05);
-  --shadow-lg: 0 24px 64px rgba(18, 20, 28, 0.14), 0 8px 24px rgba(18, 20, 28, 0.08);
-  --shadow-glow-primary: 0 12px 32px rgba(185, 28, 28, 0.22);
-  --shadow-glow-green: 0 12px 32px rgba(30, 158, 108, 0.2);
+  /* Elevated Shadows */
+  --shadow-xs: 0 1px 2px rgba(17, 24, 39, 0.04);
+  --shadow-sm: 0 2px 6px rgba(17, 24, 39, 0.06), 0 1px 2px rgba(17, 24, 39, 0.04);
+  --shadow-md: 0 10px 30px -4px rgba(17, 24, 39, 0.08), 0 4px 12px -2px rgba(17, 24, 39, 0.04);
+  --shadow-lg: 0 24px 64px -12px rgba(17, 24, 39, 0.14), 0 8px 24px -4px rgba(17, 24, 39, 0.06);
+  --shadow-glow-primary: 0 12px 32px rgba(63, 76, 224, 0.26);
+  --shadow-glow-green: 0 12px 32px rgba(30, 158, 108, 0.22);
 
-  /* Type */
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  --font-mono: 'Space Mono', 'SFMono-Regular', Consolas, monospace;
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', 'Plus Jakarta Sans', Georgia, serif;
+  --font-mono: 'Space Mono', 'JetBrains Mono', Consolas, monospace;
 
   /* Layout */
   --container: 1200px;
-  --nav-height: 76px;
+  --nav-height: 74px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition: 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }

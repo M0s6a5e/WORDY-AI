@@ -363,10 +363,12 @@ svg {
 }
 
 .brand-icon {
-  width: 100%;
-  height: 100%;
+  width: 36px;
+  height: 36px;
   object-fit: cover;
   display: block;
+  border-radius: 9px;
+  flex-shrink: 0;
 }
 
 .nav-brand:hover .brand-badge {

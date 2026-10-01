@@ -358,6 +358,15 @@ svg {
   justify-content: center;
   box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35);
   transition: transform 0.25s var(--ease);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .nav-brand:hover .brand-badge {

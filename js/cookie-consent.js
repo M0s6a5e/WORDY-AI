@@ -1,4 +1,4 @@
-/* WORDY AI — Cookie consent banner (frontend only, preference stored locally) */
+/* WORXXEL — Cookie consent banner (frontend only, preference stored locally) */
 (function () {
   "use strict";
   var KEY = "wordy-consent";
@@ -19,7 +19,7 @@
   bar.className = "w-cookie";
   bar.setAttribute("role", "dialog");
   bar.setAttribute("aria-label", "Cookie consent");
-  bar.innerHTML = "<p>We use cookies to keep you signed in and improve WORDY AI. Read our <a href=\"policies.html#cookies\">Cookie Policy</a>.</p>"
+  bar.innerHTML = "<p>We use cookies to keep you signed in and improve WORXXEL. Read our <a href=\"policies.html#cookies\">Cookie Policy</a>.</p>"
     + "<div class=\"row\"><button class=\"no\" type=\"button\">Decline</button><button class=\"ok\" type=\"button\">Accept</button></div>";
   document.body.appendChild(bar);
 

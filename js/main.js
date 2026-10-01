@@ -379,20 +379,20 @@
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
 
-    /* HERO: mascot drifts left in 3D + blur while copy ripples */
+    /* HERO: video panel gently settles + copy lifts on scroll (centered layout) */
     var heroMascot = document.querySelector(".hero-mascot-wrap");
     var heroCopy = document.querySelector(".hero-copy");
-    var heroLetters = Array.prototype.slice.call(document.querySelectorAll(".hero-title .ch"));
+    var heroLetters = Array.prototype.slice.call(document.querySelectorAll(".hero-title .tx-ch"));
     if (heroSection && heroMascot) {
       gsap.to(heroMascot, {
-        xPercent: -58, rotationY: 26, scale: 0.6, filter: "blur(5px)", opacity: 0.9,
-        ease: "none", transformPerspective: 900,
-        scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 25%", scrub: 0.6 }
+        y: -34, scale: 0.97, opacity: 0.85,
+        ease: "none",
+        scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 30%", scrub: 0.6 }
       });
     }
     if (heroSection && heroCopy) {
       gsap.to(heroCopy, {
-        xPercent: 4, filter: "blur(2px)", opacity: 0.45, ease: "none",
+        y: -46, opacity: 0.35, ease: "none",
         scrollTrigger: { trigger: heroSection, start: "top top", end: "bottom 30%", scrub: 0.6 }
       });
     }

@@ -1,5 +1,5 @@
 /* =========================================================
-   WORDY AI — Design System & Base Styles
+   WORXXEL — Design System & Base Styles
    ========================================================= */
 
 @import url('variables.css');
@@ -364,6 +364,15 @@ svg {
   transform: scale(1.05) rotate(-2deg);
 }
 
+.brand-mark {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  line-height: 1;
+}
+
 .brand-text {
   font-family: var(--font-sans);
   font-size: 19px;
@@ -538,7 +547,7 @@ svg {
 .hero {
   position: relative;
   padding-top: calc(var(--nav-height) + clamp(48px, 8vw, 96px));
-  padding-bottom: 0;
+  padding-bottom: clamp(48px, 6vw, 80px);
   overflow: hidden;
   background-image: url('../assets/images/bg_1.jpg');
   background-size: cover;
@@ -553,7 +562,9 @@ svg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 35%, rgba(60,45,20,0.12) 100%);
+  background:
+    radial-gradient(ellipse 60% 32% at 50% 22%, rgba(255, 253, 240, 0.55), transparent 70%),
+    linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 35%, rgba(60,45,20,0.22) 100%);
 }
 
 .hero-bg-grid {
@@ -567,24 +578,27 @@ svg {
 .hero-inner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: clamp(36px, 6vw, 64px);
-  align-items: start;
-  padding-bottom: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 1080px;
 }
 
 .hero-copy {
-  max-width: 560px;
+  max-width: 880px;
   position: relative;
   z-index: 2;
-  background: linear-gradient(150deg, rgba(255, 253, 240, 0.72), rgba(255, 253, 240, 0.45));
-  backdrop-filter: blur(10px) saturate(1.2);
-  -webkit-backdrop-filter: blur(10px) saturate(1.2);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: var(--radius-lg);
-  padding: clamp(24px, 3.5vw, 40px);
-  box-shadow: 0 20px 50px rgba(60, 45, 20, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-radius: 0;
+  padding: 0;
 }
 
 /* Sketch handwriting headlines */
@@ -598,12 +612,12 @@ svg {
 }
 
 .hero-title {
-  font-size: clamp(40px, 5.6vw, 68px);
-  line-height: 1.08;
-  margin-bottom: 22px;
-  max-width: 12ch;
+  font-size: clamp(44px, 6.5vw, 88px);
+  line-height: 1.04;
+  margin-bottom: 24px;
+  max-width: 20ch;
   color: #221c12;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-shadow: 0 2px 24px rgba(255, 253, 240, 0.8), 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .section-title-text {
@@ -681,25 +695,36 @@ svg {
 }
 
 .hero-sub {
-  font-size: clamp(16px, 1.6vw, 18.5px);
+  font-size: clamp(16px, 1.6vw, 19px);
   color: #3d372b;
-  max-width: 50ch;
-  margin-bottom: 34px;
+  max-width: 62ch;
+  margin-bottom: 36px;
+  margin-inline: auto;
+  text-shadow: 0 1px 12px rgba(255, 253, 240, 0.7);
 }
 
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-bottom: 30px;
+  margin-bottom: 0;
+  justify-content: center;
 }
 
 .hero-meta {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  width: 100%;
+  max-width: 1080px;
+  margin-top: clamp(32px, 4vw, 48px);
+  padding-top: 22px;
+  border-top: 1px solid rgba(60, 45, 20, 0.25);
   font-size: 13.5px;
-  color: #6b6455;
+  letter-spacing: 0.04em;
+  color: #4a4436;
   font-family: var(--font-mono);
 }
 
@@ -887,19 +912,23 @@ svg {
   align-items: center;
   justify-content: center;
   z-index: 2;
+  width: 100%;
+  max-width: 980px;
+  margin-top: clamp(36px, 5vw, 56px);
 }
 
 .hero-mascot-wrap {
   position: relative;
+  width: 100%;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 30px 60px rgba(20, 20, 40, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 40px 80px rgba(60, 45, 20, 0.28);
 }
 
 .hero-mascot {
   display: block;
   width: 100%;
-  max-width: 640px;
   height: auto;
   aspect-ratio: 16/9;
   object-fit: cover;

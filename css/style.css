@@ -197,12 +197,19 @@ svg {
 .btn-primary {
   background: var(--primary);
   color: #fff;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 10px 24px;
   box-shadow: var(--shadow-glow-primary);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px rgba(63, 76, 224, 0.3);
+  box-shadow: 0 20px 40px rgba(63, 76, 224, 0.35);
   background: var(--primary-dark);
 }
 
@@ -211,13 +218,18 @@ svg {
 }
 
 .btn-nav-cta {
-  background: linear-gradient(135deg, var(--primary) 0%, #2e39b0 50%, var(--green-dark) 100%);
-  background-size: 200% 200%;
-  background-position: 0% 50%;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 10px 24px;
   color: #fff;
   box-shadow: 0 4px 20px rgba(63, 76, 224, 0.28);
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, var(--primary) 0%, #2e39b0 50%, var(--green) 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
   transition: transform .25s var(--ease), box-shadow .25s var(--ease), background-position .4s var(--ease);
 }
 
@@ -245,25 +257,35 @@ svg {
 }
 
 .btn-secondary {
-  background: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 10px 24px;
   color: var(--ink);
-  border-color: var(--border);
+  background: transparent;
 }
 
 .btn-secondary:hover {
   transform: translateY(-2px);
   border-color: var(--ink);
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.12);
   box-shadow: var(--shadow-sm);
 }
 
 .btn-ghost {
-  background: transparent;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 10px 24px;
   color: var(--ink);
+  background: transparent;
 }
 
 .btn-ghost:hover {
-  background: var(--paper-alt);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .btn-on-dark {
@@ -2731,14 +2753,17 @@ svg {
    Footer
    ========================================================= */
 .site-footer {
-  background: var(--ink);
-  color: #C6C9D8;
-  padding-block: 64px 32px;
+  background: var(--paper);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-top: 1px solid var(--border-soft);
+  color: var(--ink);
+  padding-block: 48px 32px;
 }
 
 .footer-top {
   display: grid;
-  grid-template-columns: 1.4fr repeat(4, 1fr);
+  grid-template-columns: 1fr repeat(3, 1fr);
   gap: 32px;
   padding-bottom: 48px;
 }
@@ -2750,7 +2775,7 @@ svg {
 
 .footer-brand p {
   font-size: 13.5px;
-  color: #9A9DB0;
+  color: var(--muted);
   max-width: 30ch;
   margin-bottom: 20px;
 }
@@ -2938,6 +2963,11 @@ svg {
 /* Floating mini mascot (appears after scrolling past hero) */
 .mascot-float {
   position: fixed;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   right: 22px;
   bottom: 22px;
   width: 68px;
@@ -2963,7 +2993,7 @@ svg {
 }
 
 .mascot-float:hover {
-  box-shadow: var(--shadow-glow-primary);
+  box-shadow: 0 8px 24px rgba(63, 76, 224, 0.3);
   transform: scale(1.08) !important;
 }
 
@@ -2971,6 +3001,7 @@ body.mascot-floating .mascot-float {
   transform: scale(1) translateY(0);
   opacity: 1;
   pointer-events: auto;
+  box-shadow: 0 8px 24px rgba(63, 76, 224, 0.3);
 }
 
 body.mascot-floating .mascot-float::before {
@@ -3033,11 +3064,10 @@ body.mascot-floating .mascot-float::before {
   right: 0;
   height: 100dvh;
   width: min(380px, calc(100vw - 24px));
-  background: rgba(250, 248, 244, 0.82);
-  backdrop-filter: blur(24px) saturate(1.5);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  border-left: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: var(--shadow-lg), inset 1px 0 0 rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: var(--shadow-lg), inset 1px 0 0 rgba(255, 255, 255, 0.5);
   z-index: 601;
   display: flex;
   flex-direction: column;
@@ -3058,6 +3088,7 @@ body.mascot-floating .mascot-float::before {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: calc(var(--radius-lg) - 4px);
 }
 
 .chat-avatar {

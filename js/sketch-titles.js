@@ -28,7 +28,8 @@
     + "transition:transform .8s cubic-bezier(.16,1,.3,1) .35s}"
     + "@media(prefers-reduced-motion:reduce){"
     + ".tx .tx-ch,.tx .tx-w{opacity:1 !important;transform:none !important;transition:none !important}"
-    + "mark::after,.hl::after{transform:scaleX(1) !important;transition:none !important}}";
+    + "mark::after,.hl::after{transform:scaleX(1) !important;transition:none !important}}"
+    + ".tx-done .tx-ch,.tx-done .tx-w{opacity:1 !important;transform:none !important;transition:none !important}";
   var st = document.createElement("style");
   st.textContent = css;
   document.head.appendChild(st);
@@ -104,13 +105,16 @@
   }
 
   function start(el) {
+    if (el.dataset.txStarted) return;
+    el.dataset.txStarted = "1";
     if (el.hasAttribute("data-sketch")) splitChars(el);
     else splitWords(el);
-    // force reflow so transitions play from the scattered state
+    // force a sync reflow so the scattered state commits before .tx-on,
+    // guaranteeing the transition plays (no rAF dependency)
     void el.offsetWidth;
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () { el.classList.add("tx-on"); });
-    });
+    el.classList.add("tx-on");
+    // safety net: never leave letters stuck mid-flight
+    setTimeout(function () { el.classList.add("tx-done"); }, 1800);
   }
 
   function init() {
@@ -131,10 +135,7 @@
         if (en.isIntersecting) { start(en.target); io.unobserve(en.target); }
       });
     }, { threshold: 0.3 });
-    els.forEach(function (el) {
-      if (el.hasAttribute("data-sketch")) splitChars(el); else splitWords(el);
-      io.observe(el);
-    });
+    els.forEach(function (el) { io.observe(el); });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

@@ -9,6 +9,7 @@
 
   var css =
     ".tx{visibility:visible}"
+    + ".tx .tx-wd{display:inline-block;white-space:nowrap}"
     + ".tx .tx-ch{display:inline-block;opacity:0;will-change:transform,opacity}"
     + ".tx:not(.tx-on) .tx-ch{transform:translate(var(--dx,0px),var(--dy,0px)) rotate(var(--dr,0deg))}"
     + ".tx.tx-on .tx-ch{opacity:1;transform:translate(0,0) rotate(0deg);"
@@ -42,20 +43,24 @@
     var nodes = Array.prototype.slice.call(el.childNodes);
     el.innerHTML = "";
     nodes.forEach(function (node) {
-      Array.prototype.forEach.call(node.textContent, function (c) {
-        if (c === " " || c === "\n" || c === "\t") {
-          el.appendChild(document.createTextNode(" "));
-          return;
-        }
-        var s = document.createElement("span");
-        s.className = "tx-ch";
-        s.setAttribute("aria-hidden", "true");
-        s.style.setProperty("--dx", rnd(-46, 46) + "px");
-        s.style.setProperty("--dy", rnd(-38, 38) + "px");
-        s.style.setProperty("--dr", rnd(-50, 50) + "deg");
-        s.style.setProperty("--dl", Math.floor(Math.random() * 480) + "ms");
-        s.textContent = c;
-        el.appendChild(s);
+      // keep words unbreakable: group each word's chars in a nowrap span
+      node.textContent.split(/(\s+)/).forEach(function (part) {
+        if (!part) return;
+        if (/^\s+$/.test(part)) { el.appendChild(document.createTextNode(" ")); return; }
+        var w = document.createElement("span");
+        w.className = "tx-wd";
+        w.setAttribute("aria-hidden", "true");
+        Array.prototype.forEach.call(part, function (c) {
+          var s = document.createElement("span");
+          s.className = "tx-ch";
+          s.style.setProperty("--dx", rnd(-46, 46) + "px");
+          s.style.setProperty("--dy", rnd(-38, 38) + "px");
+          s.style.setProperty("--dr", rnd(-50, 50) + "deg");
+          s.style.setProperty("--dl", Math.floor(Math.random() * 480) + "ms");
+          s.textContent = c;
+          w.appendChild(s);
+        });
+        el.appendChild(w);
       });
     });
   }

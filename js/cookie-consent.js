@@ -5,10 +5,10 @@
   try { if (localStorage.getItem(KEY)) return; } catch (e) { return; }
 
   var css = ".w-cookie{position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;background:#fff;border:1px solid #E8E3D7;border-radius:14px;box-shadow:0 12px 36px -6px rgba(18,20,28,.16);padding:14px 16px;display:flex;gap:14px;align-items:center;max-width:640px;margin:0 auto;font-family:'Inter',-apple-system,sans-serif;font-size:13px;color:#2B2924;line-height:1.6}"
-    + ".w-cookie p{margin:0;flex:1}.w-cookie a{color:#3F4CE0;font-weight:600;text-decoration:none}"
+    + ".w-cookie p{margin:0;flex:1}.w-cookie a{color:#B91C1C;font-weight:600;text-decoration:none}"
     + ".w-cookie .row{display:flex;gap:8px;flex-shrink:0}"
     + ".w-cookie button{border-radius:8px;font-size:12.5px;font-weight:700;padding:9px 16px;cursor:pointer;font-family:inherit}"
-    + ".w-cookie .ok{background:#3F4CE0;border:1px solid #3F4CE0;color:#fff}"
+    + ".w-cookie .ok{background:#B91C1C;border:1px solid #B91C1C;color:#fff}"
     + ".w-cookie .no{background:#fff;border:1px solid #E8E3D7;color:#2B2924}"
     + "@media(max-width:560px){.w-cookie{flex-direction:column;align-items:stretch}.w-cookie .row .ok,.w-cookie .row .no{flex:1}}";
   var st = document.createElement("style");

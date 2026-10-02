@@ -2514,13 +2514,13 @@ svg {
   width: 42px;
   height: 42px;
   border-radius: 13px;
-  background: linear-gradient(135deg, var(--primary), #2e39b0);
+  background: linear-gradient(135deg, var(--primary), #7F1D1D);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
-  box-shadow: 0 8px 18px -6px rgba(63, 76, 224, 0.5);
+  box-shadow: 0 8px 18px -6px rgba(185, 28, 28, 0.5);
 }
 
 .usecase-card:nth-child(2n) .usecase-icon {
@@ -3445,14 +3445,16 @@ body.mascot-floating .mascot-float::before {
 .step,
 .mini-doc,
 .trust-tag {
+  position: relative;
+  z-index: 1;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.32) 55%, rgba(255, 255, 255, 0.5) 100%);
-  backdrop-filter: blur(14px) saturate(1.35);
-  -webkit-backdrop-filter: blur(14px) saturate(1.35);
-  border: 1px solid rgba(255, 255, 255, 0.75);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.18) 55%, rgba(255, 255, 255, 0.38) 100%);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow:
-    0 8px 32px rgba(31, 38, 135, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 8px 32px rgba(185, 28, 28, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
     inset 0 -1px 0 rgba(255, 255, 255, 0.25);
 }
 
@@ -3491,4 +3493,52 @@ body.mascot-floating .mascot-float::before {
   .trust-tag {
     background: var(--surface);
   }
+}
+
+/* Color ambience behind glass cards */
+.feature-grid,
+.showcase-grid,
+.steps,
+.template-grid,
+.pricing-grid,
+.usecase-grid {
+  position: relative;
+}
+
+.feature-grid::before,
+.showcase-grid::before,
+.steps::before,
+.template-grid::before,
+.pricing-grid::before,
+.usecase-grid::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: -70px;
+  left: -90px;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(185, 28, 28, 0.20), transparent 65%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.feature-grid::after,
+.showcase-grid::after,
+.steps::after,
+.template-grid::after,
+.pricing-grid::after,
+.usecase-grid::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  bottom: -80px;
+  right: -90px;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 158, 108, 0.20), transparent 65%);
+  filter: blur(50px);
+  pointer-events: none;
 }

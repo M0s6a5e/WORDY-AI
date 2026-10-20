@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>WORXXEL — Document Editor (Word Studio)</title>
+<title data-i18n="editor.title">WORXXEL — Document Editor (Word Studio)</title>
 <meta name="description" content="WORXXEL Word Studio — a real document editor. Write, format, and refine Word documents with an AI assistant beside you, then export to Word." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="WORXXEL" />
@@ -15,103 +15,141 @@
 <meta name="twitter:title" content="Word Studio — WORXXEL Document Editor" />
 <meta name="twitter:description" content="Write, format, and refine professional Word documents with an AI assistant beside you." />
 <meta name="theme-color" content="#3F4CE0" />
+<meta name="worker-origin" content="" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https:;" />
 <link rel="canonical" href="https://m0s6a5e.github.io/WORDY-AI/worxxel-word-editor.html" />
 <link rel="icon" href="assets/images/favicon.jpg" type="image/jpeg" />
 <link rel="apple-touch-icon" href="assets/images/favicon.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/tokens.css" />
 <link rel="stylesheet" href="css/word-editor.css" />
 </head>
 <body>
 
-<a class="skip-link" href="#doc">Skip to document</a>
+<a class="skip-link" href="#doc" data-i18n="common.skip">Skip to document</a>
 
 <header class="top">
-  <button class="ico" id="menuBtn" aria-label="Open document outline">☰</button>
+  <button class="ico" id="menuBtn" aria-label="Open document outline" data-i18n-aria-label="editor.outline">☰</button>
   <a class="logo" href="index.html" aria-label="WORXXEL — home">WOR<span>XXEL</span></a>
   <div class="title">
-    <input id="docTitle" value="Product Launch Plan" aria-label="Document title" maxlength="120" />
-    <span class="badge" id="saveBadge">Draft · Saved</span>
+    <input id="docTitle" value="Product Launch Plan" aria-label="Document title" maxlength="120" data-i18n-placeholder="editor.untitled" />
+    <span class="badge" id="saveBadge" data-i18n="editor.draftSaved">Draft · Saved</span>
   </div>
   <div class="seg hide-m" role="group" aria-label="Editor mode">
-    <button class="on" id="mEdit">Edit</button><button id="mPrev">Preview</button>
+    <button class="on" id="mEdit" data-i18n="editor.edit">Edit</button>
+    <button id="mPrev" data-i18n="editor.preview">Preview</button>
   </div>
-  <button class="ico hide-m" id="theme" aria-label="Toggle dark mode">◐</button>
-  <button class="btn soft" id="aiToggle">✦ AI Assistant</button>
-  <button class="ico" id="saveBtn" title="Save to this browser" aria-label="Save document">⤓</button>
-  <button class="btn pri" id="exportBtn">Export .DOC</button>
+  <button class="ico hide-m" id="theme" aria-label="Toggle dark mode" data-i18n-aria-label="common.theme">◐</button>
+  <button class="btn soft" id="aiToggle" data-i18n="editor.aiAssistant">✦ AI Assistant</button>
+  <button class="ico" id="saveBtn" title="Save to this browser" aria-label="Save document" data-i18n-aria-label="editor.save">⤓</button>
+  <button class="btn pri" id="exportBtn" data-i18n="editor.exportDocx">Export .DOCX</button>
 </header>
 
 <div class="tools" id="tools" role="toolbar" aria-label="Formatting tools">
-  <button class="ico" data-c="undo" title="Undo" aria-label="Undo">↶</button><button class="ico" data-c="redo" title="Redo" aria-label="Redo">↷</button><span class="sep"></span>
-  <select id="blk" aria-label="Paragraph style"><option value="p">Normal text</option><option value="h1">Heading 1</option><option value="h2">Heading 2</option><option value="blockquote">Quote</option></select>
-  <select id="fontFam" aria-label="Font family"><option value="">Default font</option><option>Plus Jakarta Sans</option><option>Inter</option><option>Georgia</option><option>JetBrains Mono</option></select>
-  <select id="size" aria-label="Font size"><option value="3">Medium</option><option value="2">Small</option><option value="4">Large</option><option value="5">Extra large</option></select><span class="sep"></span>
-  <button class="ico" data-c="bold" title="Bold" aria-label="Bold"><b>B</b></button><button class="ico" data-c="italic" title="Italic" aria-label="Italic"><i>I</i></button><button class="ico" data-c="underline" title="Underline" aria-label="Underline"><u>U</u></button><span class="sep"></span>
-  <button class="ico" data-c="justifyLeft" title="Align left" aria-label="Align left">⇤</button><button class="ico" data-c="justifyCenter" title="Center" aria-label="Center">≡</button><button class="ico" data-c="justifyRight" title="Align right" aria-label="Align right">⇥</button><span class="sep"></span>
-  <button class="ico" data-c="insertUnorderedList" title="Bulleted list" aria-label="Bulleted list">•≡</button><button class="ico" data-c="insertOrderedList" title="Numbered list" aria-label="Numbered list">1≡</button>
-  <button class="ico" id="addTable" title="Insert table" aria-label="Insert table">▦</button>
-  <span class="stats" aria-live="polite"><b id="wc">0</b> words · <b id="rt">0</b> min read · <b id="pg">1</b> page</span>
-  <select id="zoom" aria-label="Zoom"><option value="1">100%</option><option value=".85">85%</option><option value=".7">70%</option><option value="1.15">115%</option></select>
+  <button class="ico" data-c="undo" title="Undo" aria-label="Undo" data-i18n-aria-label="editor.undo">↶</button>
+  <button class="ico" data-c="redo" title="Redo" aria-label="Redo" data-i18n-aria-label="editor.redo">↷</button>
+  <span class="sep"></span>
+  <select id="blk" aria-label="Paragraph style" data-i18n-aria-label="editor.paragraphStyle">
+    <option value="p" data-i18n="editor.normalText">Normal text</option>
+    <option value="h1" data-i18n="editor.heading1">Heading 1</option>
+    <option value="h2" data-i18n="editor.heading2">Heading 2</option>
+    <option value="blockquote" data-i18n="editor.quote">Quote</option>
+  </select>
+  <select id="fontFam" aria-label="Font family" data-i18n-aria-label="editor.font">
+    <option value="" data-i18n="editor.defaultFont">Default font</option>
+    <option>Plus Jakarta Sans</option>
+    <option>Inter</option>
+    <option>Georgia</option>
+    <option>JetBrains Mono</option>
+    <option>Cairo</option>
+  </select>
+  <select id="size" aria-label="Font size" data-i18n-aria-label="editor.fontSize">
+    <option value="3" data-i18n="editor.medium">Medium</option>
+    <option value="2" data-i18n="editor.small">Small</option>
+    <option value="4" data-i18n="editor.large">Large</option>
+    <option value="5" data-i18n="editor.extraLarge">Extra large</option>
+  </select>
+  <span class="sep"></span>
+  <button class="ico" data-c="bold" title="Bold" aria-label="Bold" data-i18n-aria-label="editor.bold"><b>B</b></button>
+  <button class="ico" data-c="italic" title="Italic" aria-label="Italic" data-i18n-aria-label="editor.italic"><i>I</i></button>
+  <button class="ico" data-c="underline" title="Underline" aria-label="Underline" data-i18n-aria-label="editor.underline"><u>U</u></button>
+  <span class="sep"></span>
+  <button class="ico" data-c="justifyLeft" title="Align left" aria-label="Align left" data-i18n-aria-label="editor.alignLeft">⇤</button>
+  <button class="ico" data-c="justifyCenter" title="Center" aria-label="Center" data-i18n-aria-label="editor.alignCenter">≡</button>
+  <button class="ico" data-c="justifyRight" title="Align right" aria-label="Align right" data-i18n-aria-label="editor.alignRight">⇥</button>
+  <span class="sep"></span>
+  <button class="ico" data-c="insertUnorderedList" title="Bulleted list" aria-label="Bulleted list" data-i18n-aria-label="editor.bulletList">•≡</button>
+  <button class="ico" data-c="insertOrderedList" title="Numbered list" aria-label="Numbered list" data-i18n-aria-label="editor.numberedList">1≡</button>
+  <button class="ico" id="addTable" title="Insert table" aria-label="Insert table" data-i18n-aria-label="editor.insertTable">▦</button>
+  <span class="stats" aria-live="polite"><b id="wc">0</b> <span data-i18n="editor.words">words</span> · <b id="rt">0</b> <span data-i18n="editor.readingTime">min read</span> · <b id="pg">1</b> <span data-i18n="editor.pages">pages</span></span>
+  <select id="zoom" aria-label="Zoom" data-i18n-aria-label="editor.zoom">
+    <option value="1">100%</option>
+    <option value=".85">85%</option>
+    <option value=".7">70%</option>
+    <option value="1.15">115%</option>
+  </select>
 </div>
 
 <div class="main">
   <aside class="side" id="side" aria-label="Document outline">
-    <h4>Document sections</h4>
+    <h4 data-i18n="editor.outline">Document sections</h4>
     <div class="ol" id="outline"></div>
-    <h4>Quick tools</h4>
+    <h4 data-i18n="editor.quickTools">Quick tools</h4>
     <div class="ol">
-      <a data-ai="doc:summarize">✦ Summarize the full document</a>
-      <a data-ai="doc:fix">✦ Fix grammar across the document</a>
-      <a data-ai="doc:bullets">✦ Turn section into bullets</a>
+      <a data-ai="doc:summarize" data-i18n="editor.summarize">✦ Summarize the full document</a>
+      <a data-ai="doc:fix" data-i18n="editor.fixGrammar">✦ Fix grammar across the document</a>
+      <a data-ai="doc:bullets" data-i18n="editor.toBullets">✦ Turn section into bullets</a>
     </div>
   </aside>
 
   <main class="stage" id="stage">
     <div class="paper" id="paper">
-      <button class="handle" id="handle" aria-label="AI options for this block">✦</button>
+      <button class="handle" id="handle" aria-label="AI options for this block" data-i18n-aria-label="editor.aiOptions">✦</button>
       <article class="doc" id="doc" contenteditable="true" spellcheck="true" aria-label="Editable document">
-        <h1>Product Launch Plan</h1>
-        <p>Prepared by the Marketing Team — Q4 2026</p>
-        <h2>Executive summary</h2>
-        <p>We aim to launch the new product within eight weeks, focusing on reaching the first thousand active users through low-cost channels and creator partnerships.</p>
-        <h2>Key objectives</h2>
-        <p>Raise brand awareness, reach a signup rate of at least 15% of visitors, and build an initial mailing list that supports upcoming campaigns.</p>
-        <h2>Timeline & budget</h2>
-        <div class="tbl"><table><tr><th>Phase</th><th>Duration</th><th>Budget</th></tr><tr><td>Preparation</td><td>2 weeks</td><td>5,000</td></tr><tr><td>Beta launch</td><td>3 weeks</td><td>8,000</td></tr></table></div>
-        <h2>Next steps</h2>
-        <p>Write here, select any text to see AI options, or hover any paragraph and press ✦.</p>
+        <h1 data-i18n="editor.sampleTitle">Product Launch Plan</h1>
+        <p data-i18n="editor.sampleSubtitle">Prepared by the Marketing Team — Q4 2026</p>
+        <h2 data-i18n="editor.sampleH1">Executive summary</h2>
+        <p data-i18n="editor.sampleP1">We aim to launch the new product within eight weeks, focusing on reaching the first thousand active users through low-cost channels and creator partnerships.</p>
+        <h2 data-i18n="editor.sampleH2">Key objectives</h2>
+        <p data-i18n="editor.sampleP2">Raise brand awareness, reach a signup rate of at least 15% of visitors, and build an initial mailing list that supports upcoming campaigns.</p>
+        <h2 data-i18n="editor.sampleH3">Timeline & budget</h2>
+        <div class="tbl"><table><tr><th data-i18n="editor.phase">Phase</th><th data-i18n="editor.duration">Duration</th><th data-i18n="editor.budget">Budget</th></tr><tr><td data-i18n="editor.preparation">Preparation</td><td>2 weeks</td><td>5,000</td></tr><tr><td data-i18n="editor.betaLaunch">Beta launch</td><td>3 weeks</td><td>8,000</td></tr></table></div>
+        <h2 data-i18n="editor.sampleH4">Next steps</h2>
+        <p data-i18n="editor.sampleP3">Write here, select any text to see AI options, or hover any paragraph and press ✦.</p>
       </article>
-      <div class="doc-foot"><span>WORXXEL Studio · <span id="footTitle">Product Launch Plan</span></span><span class="mono">Page <span id="footPg">1</span> of <span id="footTotal">1</span></span></div>
+      <div class="doc-foot"><span>WORXXEL Studio · <span id="footTitle">Product Launch Plan</span></span><span class="mono"><span data-i18n="editor.page">Page</span> <span id="footPg">1</span> <span data-i18n="editor.of">of</span> <span id="footTotal">1</span></span></div>
     </div>
   </main>
 
   <aside class="ai" id="ai" aria-label="WORXXEL assistant">
-    <div class="ai-h"><b>✦ WORXXEL Assistant</b><span class="ver">v3</span><button class="ico" id="aiClose" aria-label="Close assistant">✕</button></div>
+    <div class="ai-h"><b>✦ WORXXEL Assistant</b><span class="ver">v3</span><button class="ico" id="aiClose" aria-label="Close assistant" data-i18n-aria-label="common.close">✕</button></div>
     <div class="ai-b" id="aiBody">
       <div>
-        <div class="lbl">Scope</div>
+        <div class="lbl" data-i18n="editor.scope">Scope</div>
         <div class="chips" id="scopes" role="group" aria-label="AI scope">
-          <button class="chip on" data-s="selection">Selection</button><button class="chip" data-s="block">Paragraph</button><button class="chip" data-s="section">Section</button><button class="chip" data-s="doc">Document</button>
+          <button class="chip on" data-s="selection" data-i18n="editor.selection">Selection</button>
+          <button class="chip" data-s="block" data-i18n="editor.paragraph">Paragraph</button>
+          <button class="chip" data-s="section" data-i18n="editor.section">Section</button>
+          <button class="chip" data-s="doc" data-i18n="editor.document">Document</button>
         </div>
-        <div class="scope-info" id="scopeInfo" aria-live="polite">Select text in the document to begin.</div>
+        <div class="scope-info" id="scopeInfo" aria-live="polite" data-i18n="editor.selectText">Select text in the document to begin.</div>
       </div>
       <div>
-        <div class="lbl">Quick refinements</div>
+        <div class="lbl" data-i18n="editor.quickRefinements">Quick refinements</div>
         <div class="chips" id="quick"></div>
       </div>
       <div>
-        <div class="lbl">Custom command</div>
+        <div class="lbl" data-i18n="editor.customCommand">Custom command</div>
         <div class="box">
-          <textarea id="prompt" rows="3" placeholder="Describe what you want: rephrase, translate, add a table, draft a section…"></textarea>
-          <div class="row"><span class="hint">Enter to run</span><button class="btn pri" id="run">Run</button></div>
+          <textarea id="prompt" rows="3" placeholder="Describe what you want: rephrase, translate, add a table, draft a section…" data-i18n-placeholder="editor.promptPlaceholder"></textarea>
+          <div class="row"><span class="hint" data-i18n="editor.enterToRun">Enter to run</span><button class="btn pri" id="run" data-i18n="editor.run">Run</button></div>
         </div>
       </div>
       <div id="results" aria-live="polite"></div>
     </div>
-    <div class="ai-f"><span><span class="ok">●</span> Local sync</span><span>AI left today: <b id="aiLeft">2 / 2</b> · Tokens: <span id="tok" class="mono">0</span></span></div>
+    <div class="ai-f"><span><span class="ok">●</span> <span data-i18n="editor.localSync">Local sync</span></span><span><span data-i18n="editor.aiLeft">AI left today</span>: <b id="aiLeft">2 / 2</b> · <span data-i18n="editor.tokens">Tokens</span>: <span id="tok" class="mono">0</span></span></div>
   </aside>
 </div>
 
@@ -120,21 +158,27 @@
 <div class="ops" id="ops" role="dialog" aria-modal="true" aria-label="Assistant working" aria-hidden="true">
   <div class="ops-card">
     <span class="ops-spin" aria-hidden="true">✦</span>
-    <h3 id="opsTitle">Generating…</h3>
+    <h3 id="opsTitle" data-i18n="editor.generating">Generating…</h3>
     <div class="ops-bar"><span id="opsFill"></span></div>
     <ul class="ops-stages" id="opsStages">
-      <li>Analyzing your request</li>
-      <li>Drafting the content</li>
-      <li>Formatting & styling</li>
-      <li>Final review</li>
+      <li data-i18n="editor.analyzing">Analyzing your request</li>
+      <li data-i18n="editor.drafting">Drafting the content</li>
+      <li data-i18n="editor.formatting">Formatting & styling</li>
+      <li data-i18n="editor.finalReview">Final review</li>
     </ul>
   </div>
 </div>
 
 <div class="scrim" id="scrim"></div>
-<button class="fab" id="fab">✦ Ask AI</button>
+<button class="fab" id="fab" data-i18n="editor.askAI">✦ Ask AI</button>
 <div class="toast" id="toast" role="status"></div>
 
+<script type="module">
+import { initTheme, setLanguage, toggleLanguage, getLanguage } from "/js/core/theme.js";
+import { initI18n, t, refreshI18n } from "/js/core/i18n.js";
+import { initTheme as initThemeUI } from "/js/core/theme.js";
+// Editor core will be loaded after i18n init
+</script>
 <script type="module" src="js/word/editor.js"></script>
 <script src="js/cookie-consent.js"></script>
 </body>
